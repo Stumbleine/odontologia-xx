@@ -5,23 +5,29 @@ export const customTheme = createTheme({
 	palette: {
 		mode: 'light',
 		primary: {
-			main: '#003770',
-			light: blue[200],
+			main: '#38AFD1',
 		},
 		secondary: {
-			main: '#E30613',
+			main: '#388A9C',
+		},
+		terciary: {
+			main: '#123F4B',
+		},
+		auxiliar:{
+			main:"#F17D28"
 		},
 		background: {
 			paper: '#fff',
-			default: grey[100],
+			default: '#F4F4F4',
 		},
 		text: {
-			title: '#E95C64',
-			primary: '#003770',
-			secondary: '#547290',
-			terciario: '#3A3A3A',
+			main: '#000000',
+			primary: '#38AFD1',
+			secondary: '#388A9C',
+			terciary: '#123F4B',
+			auxiliar: "#F17D28",
 			disabled: 'rgba(0,0,0,0.6)',
-			icon: '#547290',
+			icon: '#F17D28',
 		},
 		warning: {
 			main: orange[800],

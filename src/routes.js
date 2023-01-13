@@ -17,6 +17,26 @@ export default function Router() {
 					path: 'login',
 					element: <Login />,
 				},
+				{
+					path: 'acerca-de-la-carrera',
+					element: <Login />,
+				},
+				{
+					path: 'direccion-de-carrera',
+					element: <Login />,
+				},
+				{
+					path: 'jefaturas',
+					element: <Login />,
+				},
+				{
+					path: 'recursos',
+					element: <Login />,
+				},
+				{
+					path: 'contacto',
+					element: <Login />,
+				},
 			],
 		},
 	]);
