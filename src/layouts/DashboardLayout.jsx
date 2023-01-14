@@ -1,8 +1,9 @@
 import { Outlet } from 'react-router';
-import Page from '../components/Page';
 import Navbar from './Navbar';
 import { useState } from 'react';
 import Sidebar from './Sidebar';
+import Footer from '../components/Footer';
+import styled from '@emotion/styled';
 
 export default function DashboardLayout() {
 	const [openSB, setOpenSB] = useState(false);
@@ -15,8 +16,10 @@ export default function DashboardLayout() {
 		<>
 			<Navbar onOpenSidebar={() => setOpenSB(true)} />
 			<Sidebar openSideBar={openSB} onCloseSideBar={() => setOpenSB(false)} />
+
+
 				<Outlet />
-				{/* <Footer /> */}
+			
 		</>
 	);
 }

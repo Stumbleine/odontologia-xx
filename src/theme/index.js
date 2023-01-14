@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { grey, orange, red, blue } from '@mui/material/colors';
+import ComponentsOverrides from './ComponentsOverrides';
 
 export const customTheme = createTheme({
 	palette: {
@@ -13,19 +14,20 @@ export const customTheme = createTheme({
 		terciary: {
 			main: '#123F4B',
 		},
-		auxiliar:{
-			main:"#F17D28"
+		auxiliar: {
+			main: '#F17D28',
 		},
 		background: {
 			paper: '#fff',
 			default: '#F4F4F4',
 		},
 		text: {
-			main: '#000000',
+			black: '#000000',
+			white: '#fff',
 			primary: '#38AFD1',
 			secondary: '#388A9C',
 			terciary: '#123F4B',
-			auxiliar: "#F17D28",
+			auxiliar: '#F17D28',
 			disabled: 'rgba(0,0,0,0.6)',
 			icon: '#F17D28',
 		},
@@ -47,4 +49,4 @@ export const customTheme = createTheme({
 	},
 });
 
-// lightTheme.components = componentsOverride(lightTheme);
+customTheme.components = ComponentsOverrides(customTheme);

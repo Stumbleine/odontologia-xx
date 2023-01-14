@@ -2,6 +2,8 @@ import { useRoutes } from 'react-router-dom';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import DashboardLayout from './layouts/DashboardLayout';
+import Headquarters from './pages/Headquarters';
+import RotatingInternship from './pages/Headquarters/RotatingInternship';
 
 export default function Router() {
 	return useRoutes([
@@ -27,8 +29,29 @@ export default function Router() {
 				},
 				{
 					path: 'jefaturas',
-					element: <Login />,
+					element: <Headquarters />,
 				},
+				{
+					path: 'jefaturas/internado-rotatorio',
+					element: <RotatingInternship />,
+				},
+				{
+					path: 'jefaturas/académica',
+					element: <Headquarters />,
+				},
+				{
+					path: 'jefaturas/extensión',
+					element: <Headquarters />,
+				},
+				{
+					path: 'jefaturas/investigación',
+					element: <Headquarters />,
+				},
+				{
+					path: 'jefaturas/clinica',
+					element: <Headquarters />,
+				},
+
 				{
 					path: 'recursos',
 					element: <Login />,

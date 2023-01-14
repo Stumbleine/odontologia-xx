@@ -12,7 +12,7 @@ export default function Navbar({ onOpenSidebar }) {
 				<NavLink to={props.href} style={{ textDecoration: 'none' }}>
 					<Button
 						sx={{
-							color: active ? 'primary.main' : 'text.disabled',
+							color: active ? 'auxiliar.main' : 'text.disabled',
 							fontWeight: 'bold',
 							px: 0.5,
 						}}>
@@ -27,7 +27,7 @@ export default function Navbar({ onOpenSidebar }) {
 			position="static"
 			elevation={1}
 			sx={{ zIndex: 'tooltip', background: 'white',position:'relative' }}>
-			<Container maxWidth="xl">
+			<Container  maxWidth="xl" >
 				<Toolbar disableGutters>
 					<Box
 						component="div"

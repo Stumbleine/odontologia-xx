@@ -57,12 +57,12 @@ export default function LoginForm() {
 				<Stack
 					component={Card}
 					spacing={2}
-					sx={{ p: 3, py: 4, borderRadius: 2, background: 'white' }}>
+					sx={{ p: 2, borderRadius: 2, background: 'white' }}>
 					<Box>
 						<Typography align="center" sx={{ fontWeight: 'bold' }}>
 							¿Eres administrativo?
 						</Typography>
-						<Typography align="center" sx={{ color: 'text.main' }}>
+						<Typography align="center" sx={{ color: 'text.black' }}>
 							Ingresa con tu cuenta
 						</Typography>
 					</Box>
