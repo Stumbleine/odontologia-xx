@@ -1,9 +1,23 @@
-import { useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import DashboardLayout from './layouts/DashboardLayout';
 import Headquarters from './pages/Headquarters';
 import RotatingInternship from './pages/Headquarters/RotatingInternship';
+import CreateDocument from './pages/CreateDocument';
+import Contact from './pages/Contact';
+import Academic from './pages/Headquarters/Academic';
+import Extension from './pages/Headquarters/Extension';
+import Investigation from './pages/Headquarters/Investigation';
+import Clinic from './pages/Headquarters/Clinic';
+import Resources from './pages/Resources';
+import CareerDirection from './pages/CareerDirection';
+import AboutCareer from './pages/AboutCareer';
+import CreateNew from './pages/CreateNew';
+import Users from './pages/Users';
+import AllNews from './pages/AllNews';
+import LogoLayout from './layouts/LogoLayout';
+import NotFound from './pages/NotFound';
 
 export default function Router() {
 	return useRoutes([
@@ -21,11 +35,11 @@ export default function Router() {
 				},
 				{
 					path: 'acerca-de-la-carrera',
-					element: <Login />,
+					element: <AboutCareer />,
 				},
 				{
 					path: 'direccion-de-carrera',
-					element: <Login />,
+					element: <CareerDirection />,
 				},
 				{
 					path: 'jefaturas',
@@ -36,31 +50,62 @@ export default function Router() {
 					element: <RotatingInternship />,
 				},
 				{
-					path: 'jefaturas/académica',
-					element: <Headquarters />,
+					path: 'jefaturas/academica',
+					element: <Academic />,
 				},
 				{
-					path: 'jefaturas/extensión',
-					element: <Headquarters />,
+					path: 'jefaturas/extension',
+					element: <Extension />,
 				},
 				{
-					path: 'jefaturas/investigación',
-					element: <Headquarters />,
+					path: 'jefaturas/investigacion',
+					element: <Investigation />,
 				},
 				{
 					path: 'jefaturas/clinica',
-					element: <Headquarters />,
+					element: <Clinic />,
 				},
 
 				{
 					path: 'recursos',
-					element: <Login />,
+					element: <Resources />,
 				},
 				{
 					path: 'contacto',
-					element: <Login />,
+					element: <Contact />,
+				},
+				{
+					path: 'subir-documento',
+					element: <CreateDocument />,
+				},
+				{
+					path: 'nueva-noticia',
+					element: <CreateNew />,
+				},
+				{
+					path: 'users',
+					element: <Users />,
+				},
+				{
+					path: 'noticias',
+					element: <AllNews />,
+				},
+				{
+					path: 'noticias/:noticia',
+					element: <AllNews />,
 				},
 			],
 		},
+		// not found
+		{
+			path: '/error',
+			element: <LogoLayout />,
+			children: [
+				{ path: '404', element: <NotFound /> },
+				{ path: '403', element: <NotFound /> },
+				{ path: '*', element: <Navigate to="/error/404" replace /> },
+			],
+		},
+		{ path: '*', element: <Navigate to="/error/404" replace /> },
 	]);
 }

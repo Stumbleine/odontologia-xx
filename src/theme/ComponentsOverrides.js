@@ -10,7 +10,7 @@ function Button(theme) {
 			styleOverrides: {
 				root: {
 					textTransform: 'none',
-					borderRadius: 10,
+					borderRadius: 15,
 					color: theme.palette.text.white,
 					fontWeight: 'bold',
 				},

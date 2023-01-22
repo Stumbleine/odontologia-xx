@@ -31,7 +31,7 @@ export default function AcordionHeadquarter({ name, description, path }) {
 			<AccordionDetails>
 				<Stack spacing={2} alignItems="center">
 					<Typography sx={{ color: 'text.black' }}>{description}</Typography>
-					<Box sx={{ height: 60, display: 'flex', justifyContent: 'space-between' }}>
+					{/* <Box sx={{ height: 60, display: 'flex', justifyContent: 'space-between' }}>
 						<Box
 							component="img"
 							src="imgs/noticias.png"
@@ -42,7 +42,7 @@ export default function AcordionHeadquarter({ name, description, path }) {
 							src="imgs/files.png"
 							sx={{ height: 40, width: 'auto' }}
 						/>
-					</Box>
+					</Box> */}
 					<Button variant="contained" component={Link} to={path}>
 						Visitar
 					</Button>

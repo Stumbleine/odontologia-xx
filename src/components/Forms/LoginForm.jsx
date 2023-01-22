@@ -15,8 +15,14 @@ import {
 } from '@mui/material';
 import { green, grey } from '@mui/material/colors';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
+import { signin } from '../../store/AuthSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	const [showPassword, setShowPassword] = useState(false);
 	const handleShowPassword = () => {
 		setShowPassword(show => !show);
@@ -34,20 +40,20 @@ export default function LoginForm() {
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			console.log(values);
-			/* const login = async () => {
-				await dispatch(loginAsync(values));
+			const login = async () => {
+				await dispatch(signin(values));
 			};
 			login()
 				.then(r => {
 					console.log('Login exitoso');
 					resetForm();
 					setSubmitting(false);
+					navigate('/');
 				})
 				.catch(e => {
 					console.log(e);
 					setSubmitting(false);
 				});
-                */
 		},
 	});
 	const { getFieldProps, values, errors, touched, isSubmitting } = formik;

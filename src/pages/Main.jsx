@@ -1,11 +1,12 @@
 import { Card, CardMedia, Container, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import React from 'react';
-import Logo from '../components/Logo';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/Forms/LoginForm';
 import BackgroundMain from '../components/BackgroundMain';
-import Page from '../components/Page';
+import Page from '../components/Box/Page';
 import Footer from '../components/Footer';
+import LogoSXX from '../components/LogoSXX';
+import LogoOdontologia from '../components/LogoOdontologia';
 
 export default function Main() {
 	return (
@@ -18,7 +19,6 @@ export default function Main() {
 						sx={{
 							position: 'absolute',
 							zIndex: 5,
-							marginRight: 10,
 						}}>
 						{/* titles */}
 						<Stack
@@ -34,18 +34,11 @@ export default function Main() {
 							<Typography fontWeight="bolder" sx={{ letterSpacing: 1 }}>
 								UNSXX
 							</Typography>
-							<Logo height={130} />
+							<LogoSXX height={130} />
+							<LogoOdontologia height={130} />
 						</Stack>
-						<Box
-							sx={{
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								width: '100%',
-							}}>
-							<LoginForm />
-						</Box>
-						<Stack spacing={3} alignItems="center" sx={{ marginTop: 15, mb: 10 }}>
+
+						<Stack spacing={3} alignItems="center" sx={{ marginTop: 11, mb: 10 }}>
 							<Card
 								sx={{ borderRadius: 2, display: 'flex', maxWidth: 'lg', maxHeight: 150 }}>
 								<CardMedia

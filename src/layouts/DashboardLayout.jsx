@@ -9,7 +9,7 @@ export default function DashboardLayout() {
 	const [openSB, setOpenSB] = useState(false);
 
 	// window.onload = function () {
-	// dispatch(getUserAsync(accessToken));
+	// dispatch(getUserAsync(token));
 	// };
 
 	return (

@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import { Avatar, Box, Drawer, Link, MenuItem } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useLocation, Link as RouterLink } from 'react-router-dom';
-import Logo from '../components/Logo';
+import LogoSXX from '../components/LogoSXX';
 
 export default function Sidebar({ openSideBar, onCloseSideBar }) {
 	const theme = useTheme();
@@ -17,7 +17,7 @@ export default function Sidebar({ openSideBar, onCloseSideBar }) {
 	return (
 		<Drawer open={openSideBar} onClose={onCloseSideBar}>
 			<Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-				<Logo />
+				<LogoSXX />
 			</Box>
 			{/* <Box sx={{ mb: 5, mx: 2 }}>
 				<Link underline="none" component={RouterLink} to="#">
