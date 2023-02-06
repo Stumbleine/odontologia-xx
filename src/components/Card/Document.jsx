@@ -1,6 +1,7 @@
 import {
 	Card,
 	CardActionArea,
+	CardActions,
 	CardContent,
 	CardMedia,
 	IconButton,
@@ -21,29 +22,32 @@ export default function Document({ doc }) {
 				borderRadius: 2,
 				width: '100%',
 				p: 0,
-				background: grey[200],
+				bgcolor: grey[200],
 			}}>
-			<CardContent sx={{ p: 1,display:'flex',alignItems:'center' }}>
-				<Box>{extensions[`${doc.type}`] || <FileIcon/>}</Box>
-
+			<CardContent sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
+				<Box>{extensions[`${doc.extension}`] || <FileIcon />}</Box>
 				<Box sx={{ pl: 1 }}>
-					<Typography  sx={{ textOverflow:'ellipsis',whiteSpace:'nowrap',overflow:'hidden' }}>
-						{doc.name}
-					</Typography>
 					<Typography
-						noWrap
-						variant="body2"
-						color={grey[800]}
-						sx={{ lineHeight: 1 }}>
-						{doc.unidad}
+						whiteSpace="normal"
+						textOverflow="ellipsis"
+						fontWeight={600}
+						// sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}
+					>
+						{doc.nombre}
+					</Typography>
+					<Typography noWrap color="secondary" sx={{ lineHeight: 1 }}>
+						{doc.nombre_unidad}
 					</Typography>
 				</Box>
 			</CardContent>
-			<CardActionArea
+			<CardActions
+				disableSpacing
 				sx={{
 					px: 1,
 					display: 'flex',
 					justifyContent: 'flex-end',
+					// background: 'red',s
+					py: 0.5,
 				}}
 				LinkComponent={Link}
 				to="/nuevo-documento">
@@ -56,7 +60,7 @@ export default function Document({ doc }) {
 				<IconButton>
 					<Download />
 				</IconButton>
-			</CardActionArea>
+			</CardActions>
 		</Card>
 	);
 }

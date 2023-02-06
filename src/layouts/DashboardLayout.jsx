@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import Footer from '../components/Footer';
 import styled from '@emotion/styled';
 
-export default function DashboardLayout() {
+export default function DashboardLayout({ navlinks }) {
 	const [openSB, setOpenSB] = useState(false);
 
 	// window.onload = function () {
@@ -14,12 +14,9 @@ export default function DashboardLayout() {
 
 	return (
 		<>
-			<Navbar onOpenSidebar={() => setOpenSB(true)} />
+			<Navbar onOpenSidebar={() => setOpenSB(true)} navlinks={navlinks} />
 			<Sidebar openSideBar={openSB} onCloseSideBar={() => setOpenSB(false)} />
-
-
-				<Outlet />
-			
+			<Outlet />
 		</>
 	);
 }

@@ -16,9 +16,6 @@ export default function DocumentsGrid({ documents, minimal }) {
 				alignItems="center"
 				sx={{ mt: 2 }}>
 				<Typography>No se encontraron documentos</Typography>
-				<Typography color="textSecondary">
-					Intente recargando la pagina nuevamente.
-				</Typography>
 			</Stack>
 		);
 	};
@@ -52,7 +49,7 @@ export default function DocumentsGrid({ documents, minimal }) {
 					//   ))
 				}
 			</Grid>
-			<DirectoriesGrid directories={directories}/>
+			{/* <DirectoriesGrid directories={directories}/> */}
 		</>
 	);
 }

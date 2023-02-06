@@ -25,8 +25,8 @@ import UploadFiles from './UploadFiles';
 
 export default function UploadDocumentForm() {
 	const [file, setFile] = useState(null);
-	const  {token} = useSelector(state=>state.account)
-	const dispatch = useDispatch()
+	const { token } = useSelector(state => state.account);
+	const dispatch = useDispatch();
 
 	const theme = useTheme();
 	const CustomField = styled(TextField)(() => ({
@@ -48,19 +48,18 @@ export default function UploadDocumentForm() {
 		initialValues: {
 			directory: '',
 			unidad: '',
-			accesbility:'',
-			
+			accesibility: '',
 		},
-		enableReinitialize:true,
+		enableReinitialize: true,
 		validationSchema: Yup.object({
 			directory: Yup.string().required('El nombre de directorio es obligatorio'),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
-			values = {...values,files:files}
+			values = { ...values, files: files };
 			const createNew = async () => {
-				await dispatch(createDocument(token,values));
+				await dispatch(createDocument(token, values));
 			};
-			
+
 			createNew()
 				.then(r => {
 					console.log('Registro de noticia exitoso');
@@ -111,7 +110,7 @@ export default function UploadDocumentForm() {
 						error={Boolean(touched.directory && errors.directory)}
 						helperText={touched.directory && errors.directory}
 					/>
-					
+
 					<TextField
 						fullWidth
 						InputProps={{ style: { borderRadius: 5 } }}
@@ -121,7 +120,7 @@ export default function UploadDocumentForm() {
 						error={Boolean(touched.unidad && errors.unidad)}
 						helperText={touched.unidad && errors.unidad}
 					/>
-					<UploadFiles handleChangeFiles={handleChangeFiles}/>
+					<UploadFiles handleChangeFiles={handleChangeFiles} />
 
 					<Box sx={{ width: '100%' }}>
 						{isSubmitting && <LinearProgress />}
@@ -129,7 +128,9 @@ export default function UploadDocumentForm() {
 							sx={{ textTransform: 'none' }}
 							disabled={isSubmitting}
 							startIcon={<Save />}
-							onClick={()=>{console.log(values)}}
+							onClick={() => {
+								console.log(values);
+							}}
 							type="submit"
 							size="large"
 							variant="contained"

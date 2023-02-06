@@ -169,6 +169,21 @@ export default function Main() {
 									</Typography>
 								</Card>
 							</Stack>
+							<Stack alignContent="center" alignItems="center">
+								<Card sx={{ borderRadius: 2, maxWidth: 'md', background: 'white', p: 2 }}>
+									<Typography
+										variant="h6"
+										align="center"
+										sx={{ fontWeight: 'bold', color: 'text.black' }}>
+										Organigrama
+									</Typography>
+									<CardMedia
+										component="img"
+										image="/imgs/organigrama.png"
+										sx={{ width: 500, height: 'auto' }}
+									/>
+								</Card>
+							</Stack>
 						</Stack>
 					</Container>
 				</Container>

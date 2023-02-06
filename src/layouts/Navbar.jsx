@@ -15,7 +15,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import LogoSXX from '../components/LogoSXX';
 import { useSelector } from 'react-redux';
-export default function Navbar({ onOpenSidebar }) {
+export default function Navbar({ onOpenSidebar, navlinks }) {
 	const { isAuth } = useSelector(state => state.auth);
 	const { user, token } = useSelector(state => state.account);
 
@@ -157,29 +157,36 @@ export default function Navbar({ onOpenSidebar }) {
 							},
 							flexGrow: 1,
 						}}>
-						<ItemNav href="/" text="Inicio" />
-						<ItemNav href="/acerca-de-la-carrera" text="Acerca de la carrera" />
+						{navlinks?.map((nl, index) => {
+							return (
+								<>
+									{nl.dropdown ? (
+										<ItemDropDown
+											key={index}
+											href={nl.path}
+											text={nl.text}
+											ddItems={nl.ddItems}
+										/>
+									) : (
+										<ItemNav key={index} href={nl.path} text={nl.text} />
+									)}
+								</>
+							);
+						})}
+						{/* <ItemNav href="/acerca-de-la-carrera" text="Acerca de la carrera" />
 						<ItemNav href="/direccion-de-carrera" text="Dirección de carrera" />
 						<ItemDropDown
-							href="/jefaturas"
+							href="/jefaturas"	
 							text="Jefaturas"
 							dropdown={true}
 							ddItems={ddItems}
 						/>
-						<ItemNav href="/recursos" text="Recursos virtuales" />
 						<ItemNav href="/contacto" text="Contacto" />
 						<ItemNav href="/noticias" text="Noticias" />
-
-						{!isAuth &&
-							<ItemNav href="/login" text="Ingresar" />}
-							{isAuth &&
-							<ItemNav href="/users" text="Usuarios" />}
-
+						{!isAuth && <ItemNav href="/login" text="Ingresar" />}
+						{isAuth && <ItemNav href="/users" text="Usuarios" />} */}
 					</Box>
-					{
-isAuth &&
-						<Typography>{user?.nombres + user?.apellidos}</Typography>
-					}
+					{isAuth && <Typography>{user?.nombres}</Typography>}
 				</Toolbar>
 			</Container>
 		</AppBar>
