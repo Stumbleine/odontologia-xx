@@ -4,6 +4,7 @@ import AuthSlice from './AuthSlice';
 import UsersSlice from './UsersSlice';
 import NewsSlice from './NewsSlice';
 import DocumentSlice from './DocumentSlice';
+import UnidadSlice from './UnidadSlice';
 
 const localStorageMiddleware = ({ getState }) => {
 	return next => action => {
@@ -34,6 +35,7 @@ export default configureStore({
 		users: UsersSlice,
 		news: NewsSlice,
 		documents: DocumentSlice,
+		unidad: UnidadSlice,
 	},
 	middleware: curryGetDefaultMiddleware =>
 		curryGetDefaultMiddleware().concat(localStorageMiddleware),

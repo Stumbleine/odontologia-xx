@@ -5,9 +5,6 @@ import DashboardLayout from './layouts/DashboardLayout';
 import Headquarters from './pages/public/Headquarters';
 import CreateDocument from './pages/CreateDocument';
 import Contact from './pages/public/Contact';
-import Resources from './pages/panel/Resources';
-import CareerDirection from './pages/public/CareerDirection';
-import AboutCareer from './pages/public/AboutCareer';
 import CreateNew from './pages/CreateNew';
 import Users from './pages/panel/Users';
 import AllNews from './pages/public/AllNews';
@@ -27,6 +24,9 @@ import Summary from './pages/panel/Summary';
 import { panelNavlinks, publicNavlinks } from './Utils/Navlinks';
 import { useSelector } from 'react-redux';
 import UserRegister from './pages/panel/UserRegister';
+import NewContent from './pages/NewContent';
+import CareerDirection from './pages/public/Headquarters/CareerDirection';
+import Resources from './pages/public/Resources';
 
 export default function Router() {
 	const { isAuth } = useSelector(state => state.auth);
@@ -35,11 +35,11 @@ export default function Router() {
 	return useRoutes([
 		{
 			path: '/',
-			element: !isAuth ? (
-				<DashboardLayout navlinks={publicNavlinks} />
-			) : (
-				<Navigate to="/panel" replace />
-			),
+			// !isAuth ? (
+			element: <DashboardLayout navlinks={publicNavlinks} />,
+			// ) : (
+			// 	<Navigate to="/panel" replace />
+			// )
 			children: [
 				{
 					path: '/',
@@ -49,10 +49,7 @@ export default function Router() {
 					path: 'login',
 					element: <Login />,
 				},
-				{
-					path: 'acerca-de-la-carrera',
-					element: <AboutCareer />,
-				},
+
 				{
 					path: 'direccion-de-carrera',
 					element: <CareerDirection />,
@@ -129,6 +126,8 @@ export default function Router() {
 					element: <Documents />,
 				},
 				{ path: 'noticias', element: <News /> },
+				{ path: 'noticias/:id', element: <NewContent /> },
+
 				{ path: 'usuarios', element: <Users /> },
 				{ path: 'resumen', element: <Summary /> },
 				{

@@ -1,9 +1,19 @@
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useEffect } from 'react';
 import NewCard from './Card/NewCard';
 import Carousel from 'react-material-ui-carousel';
 import { Button, Card } from '@mui/material';
-export default function NewsCarousel() {
+export default function NewsCarousel({ news }) {
+	const newsCarousel = [];
+	// const
+	for (let i = 0; i < news?.length; i += 3) {
+		const chunk = news.slice(i, i + 3);
+		newsCarousel.push(chunk);
+	}
+	useEffect(() => {
+		console.log(news);
+	}, [news]);
+
 	let itemsSectioned = [
 		[
 			{
@@ -43,7 +53,7 @@ export default function NewsCarousel() {
 
 	return (
 		<Carousel autoPlay={true} navButtonsAlwaysVisible={true}>
-			{itemsSectioned.map((items, i) => (
+			{newsCarousel?.map((items, i) => (
 				<Box
 					key={i}
 					sx={{
@@ -51,8 +61,8 @@ export default function NewsCarousel() {
 						justifyContent: 'center',
 						alignItems: 'center',
 					}}>
-					{items.map(item => (
-						<NewCard key={item.name} newest={item} />
+					{items?.map(item => (
+						<NewCard key={item.id} newest={item} />
 					))}
 				</Box>
 			))}

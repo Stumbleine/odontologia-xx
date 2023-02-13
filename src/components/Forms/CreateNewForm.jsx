@@ -8,6 +8,7 @@ import {
 	Card,
 	useTheme,
 	CardActionArea,
+	CardActions,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import * as Yup from 'yup';
@@ -25,46 +26,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { create } from '../../store/NewsSlice';
 
 export default function CreateNewForm() {
-	const dispatch = useDispatch()
-	const  {token} = useSelector(state=>state.account)
-	const theme = useTheme();
-	const CustomField = styled(TextField)(() => ({
-		'& input': {
-			paddingLeft: 23,
-		},
-		'& fieldset': {
-			borderRadius: 15,
-		},
-		color: theme.palette.text.secondary,
-	}));
-		// cover image
-		const [coverImage, setCoverImage] = useState(null);
-		const [coverFile,setCoverFile] = useState(null)
-		const handleChangeCover = e => {
-			setCoverFile(e.target.files)
-			setCoverImage(URL.createObjectURL(e.target?.files[0]));
-		};
-		const [files, setFiles] = useState(null);
-		const handleChangeFiles = files => {
-			setFiles(files);
-		};
+	const dispatch = useDispatch();
+	const { token } = useSelector(state => state.account);
+	// const theme = useTheme();
+	// const CustomField = styled(TextField)(() => ({
+	// 	'& input': {
+	// 		paddingLeft: 23,
+	// 	},
+	// 	'& fieldset': {
+	// 		borderRadius: 15,
+	// 	},
+	// 	color: theme.palette.text.secondary,
+	// }));
+	// cover image
+	const [coverImage, setCoverImage] = useState(null);
+	const [coverFile, setCoverFile] = useState(null);
+	const handleChangeCover = e => {
+		setCoverFile(e.target.files);
+		setCoverImage(URL.createObjectURL(e.target?.files[0]));
+	};
+	const [files, setFiles] = useState(null);
+	const handleChangeFiles = files => {
+		setFiles(files);
+	};
 
 	const formik = useFormik({
 		initialValues: {
 			title: '',
 			descripcion: '',
-			unidad: '',
+			// unidad: '',
 		},
 		validationSchema: Yup.object({
 			title: Yup.string().required('El titulo es obligatorio'),
 			descripcion: Yup.string().required('La descripcion de la noticia es obligatorio'),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
-			values = {...values,cover:coverFile,files:files}
+			values = { ...values, cover: coverFile, files: files };
 			const createNew = async () => {
-				await dispatch(create(token,values));
+				await dispatch(create(token, values));
 			};
-			
+
 			createNew()
 				.then(r => {
 					console.log('Registro de noticia exitoso');
@@ -75,8 +76,7 @@ export default function CreateNewForm() {
 					console.log(e);
 					setSubmitting(false);
 				});
-				setSubmitting(false);
-				
+			setSubmitting(false);
 		},
 	});
 	const {
@@ -88,8 +88,6 @@ export default function CreateNewForm() {
 		handleSubmit,
 		getFieldProps,
 	} = formik;
-
-
 
 	useEffect(() => {
 		console.log('files in form=>', files);
@@ -171,21 +169,12 @@ export default function CreateNewForm() {
 						error={Boolean(touched.descripcion && errors.descripcion)}
 						helperText={touched.descripcion && errors.descripcion}
 					/>
-					<TextField
-						fullWidth
-						label="Unidad"
-						variant="outlined"
-						{...getFieldProps('unidad')}
-						error={Boolean(touched.unidad && errors.unidad)}
-						helperText={touched.unidad && errors.unidad}
-					/>
+
 					<UploadFiles handleChangeFiles={handleChangeFiles} />
-					<CardActionArea sx={{ display: 'flex' }}>
+					<CardActions sx={{ display: 'flex' }}>
 						<Button
 							sx={{ color: 'text.primary', mx: 1 }}
 							disabled={isSubmitting}
-							type="submit"
-							size="large"
 							fullWidth
 							variant="outlined">
 							Cancelar
@@ -197,11 +186,10 @@ export default function CreateNewForm() {
 							fullWidth
 							startIcon={<Publish />}
 							type="submit"
-							size="large"
 							variant="contained">
 							Publicar
 						</Button>
-					</CardActionArea>
+					</CardActions>
 				</Stack>
 			</Form>
 		</FormikProvider>

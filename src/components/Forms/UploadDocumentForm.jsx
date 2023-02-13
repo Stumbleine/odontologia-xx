@@ -10,6 +10,11 @@ import {
 	Typography,
 	Card,
 	useTheme,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+	FormHelperText,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import * as Yup from 'yup';
@@ -24,20 +29,8 @@ import { createDocument } from '../../store/DocumentSlice';
 import UploadFiles from './UploadFiles';
 
 export default function UploadDocumentForm() {
-	const [file, setFile] = useState(null);
 	const { token } = useSelector(state => state.account);
 	const dispatch = useDispatch();
-
-	const theme = useTheme();
-	const CustomField = styled(TextField)(() => ({
-		'& input': {
-			paddingLeft: 23,
-		},
-		'& fieldset': {
-			borderRadius: 15,
-		},
-		color: theme.palette.text.secondary,
-	}));
 
 	const [files, setFiles] = useState(null);
 	const handleChangeFiles = files => {
@@ -47,17 +40,19 @@ export default function UploadDocumentForm() {
 	const formik = useFormik({
 		initialValues: {
 			directory: '',
-			unidad: '',
 			accesibility: '',
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object({
-			directory: Yup.string().required('El nombre de directorio es obligatorio'),
+			accesibility: Yup.string().required('La accesibilidad es obligatorio'),
+			// directory: Yup.string().required('El nombre de directorio es obligatorio'),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			values = { ...values, files: files };
 			const createNew = async () => {
-				await dispatch(createDocument(token, values));
+				values.accesibility === 'privado'
+					? await dispatch(createDocument(token, values))
+					: await dispatch(createDocument(token, values));
 			};
 
 			createNew()
@@ -85,41 +80,43 @@ export default function UploadDocumentForm() {
 		<FormikProvider value={formik}>
 			<Form onSubmit={handleSubmit}>
 				<Stack
-					marginTop={2}
-					spacing={3}
-					sx={{ p: 2, py: 3, borderRadius: 2 }}
+					spacing={2}
+					sx={{ p: 2, borderRadius: 2 }}
 					component={Card}
 					// divider={<Divider orientation="vertical" flexItem />}
 				>
 					<Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
 						Añadir nuevo documento
 					</Typography>
-					<TextField
-						fullWidth
-						label="Accesibilidad"
-						variant="outlined"
-						{...getFieldProps('accesbility')}
-						error={Boolean(touched.accesbility && errors.accesbility)}
-						helperText={touched.accesbility && errors.accesbility}
-					/>
-					<TextField
-						fullWidth
-						label="Nombre del directorio"
-						variant="outlined"
-						{...getFieldProps('directory')}
-						error={Boolean(touched.directory && errors.directory)}
-						helperText={touched.directory && errors.directory}
-					/>
 
-					<TextField
-						fullWidth
-						InputProps={{ style: { borderRadius: 5 } }}
-						label="Unidad"
-						variant="outlined"
-						{...getFieldProps('unidad')}
-						error={Boolean(touched.unidad && errors.unidad)}
-						helperText={touched.unidad && errors.unidad}
-					/>
+					<FormControl fullWidth>
+						<InputLabel id="access-label">Accesibilidad</InputLabel>
+						<Select
+							labelId="access-label"
+							label="Accesibilidad"
+							defaultValue="publico"
+							fullWidth
+							{...getFieldProps('accesibility')}
+							error={Boolean(touched.rol && errors.rol)}
+							inputProps={{}}>
+							<MenuItem value="publico">Publico</MenuItem>
+							<MenuItem value="privado">Privado</MenuItem>
+						</Select>
+						<FormHelperText sx={{ color: 'error.main' }}>
+							{touched.accesibility && errors.accesibility}
+						</FormHelperText>
+					</FormControl>
+					{values.accesibility === 'privado' && (
+						<TextField
+							fullWidth
+							label="Nombre del directorio"
+							variant="outlined"
+							{...getFieldProps('directory')}
+							error={Boolean(touched.directory && errors.directory)}
+							helperText={touched.directory && errors.directory}
+						/>
+					)}
+
 					<UploadFiles handleChangeFiles={handleChangeFiles} />
 
 					<Box sx={{ width: '100%' }}>

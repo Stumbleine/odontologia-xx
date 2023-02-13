@@ -4,6 +4,7 @@ import {
 	CardActions,
 	CardContent,
 	CardMedia,
+	Icon,
 	IconButton,
 	SvgIcon,
 	Typography,
@@ -14,8 +15,36 @@ import { Box } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
 import { Delete, Download, OpenInNew } from '@mui/icons-material';
+import API, { URL } from '../../Utils/Connection';
+import fileDownload from 'js-file-download';
+import { useDispatch, useSelector } from 'react-redux';
+import { type } from '@testing-library/user-event/dist/type';
+import DeleteAlert from './DeleteAlert';
+import { deleteDocument } from '../../store/DocumentSlice';
 
 export default function Document({ doc }) {
+	const { token } = useSelector(state => state.account);
+	const handleDownload = () => {
+		API.get('/archivo-privado/obtener-archivo?id=' + doc.id, {
+			headers: { Authorization: `Bearer ${token}` },
+			responseType: 'blob',
+		}).then(res => {
+			fileDownload(res.data, doc.nombre + '.' + doc.extension);
+		});
+	};
+	const dispatch = useDispatch();
+	const deleteFetch = id => {
+		const fetch = async () => {
+			await dispatch(deleteDocument(token, id));
+		};
+		fetch()
+			.then(r => {
+				console.log('Archivo eliminada exitosamente.', 'success');
+			})
+			.catch(e => {
+				console.log('Algo salió, vuelva a intentarlo.', 'error');
+			});
+	};
 	return (
 		<Card
 			sx={{
@@ -25,14 +54,20 @@ export default function Document({ doc }) {
 				bgcolor: grey[200],
 			}}>
 			<CardContent sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
-				<Box>{extensions[`${doc.extension}`] || <FileIcon />}</Box>
-				<Box sx={{ pl: 1 }}>
+				{extensions[`${doc.type}`] || <FileIcon />}
+				<Box
+					sx={{
+						ml: 1,
+						width: '100%',
+						overflow: 'hidden',
+					}}>
 					<Typography
-						whiteSpace="normal"
-						textOverflow="ellipsis"
 						fontWeight={600}
-						// sx={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}
-					>
+						sx={{
+							whiteSpace: 'nowrap',
+							textOverflow: 'ellipsis',
+							overflow: 'hidden',
+						}}>
 						{doc.nombre}
 					</Typography>
 					<Typography noWrap color="secondary" sx={{ lineHeight: 1 }}>
@@ -48,17 +83,22 @@ export default function Document({ doc }) {
 					justifyContent: 'flex-end',
 					// background: 'red',s
 					py: 0.5,
-				}}
-				LinkComponent={Link}
-				to="/nuevo-documento">
-				<IconButton>
-					<OpenInNew />
-				</IconButton>
-				<IconButton>
-					<Delete />
-				</IconButton>
-				<IconButton>
+				}}>
+				<DeleteAlert
+					item={{ name: doc.nombre, type: 'archivo', id: doc.id }}
+					deleteFetch={deleteFetch}
+				/>
+				<IconButton
+					onClick={() => {
+						handleDownload();
+					}}>
 					<Download />
+				</IconButton>
+				<IconButton
+					onClick={() => {
+						window.open(URL + doc?.direccion, '__blank');
+					}}>
+					<OpenInNew />
 				</IconButton>
 			</CardActions>
 		</Card>

@@ -18,24 +18,41 @@ import { useTheme } from '@emotion/react';
 import DirectoriesGrid from '../../components/Grid/DirectoriesGrid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDirectories, getPublicDocuments } from '../../store/DocumentSlice';
+import { grey } from '@mui/material/colors';
+import Filter from '../../components/Forms/Filter';
 
 export default function Documents() {
 	const theme = useTheme();
-	const [jefatura, setJefatura] = useState('All');
+	// const [jefatura, setJefatura] = useState('All');
 	const [mode, setMode] = useState('public');
 	const { token } = useSelector(state => state.account);
 	const { publicDocuments, directories } = useSelector(state => state.documents);
+	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
+	const [filterDir, setFilterDir] = useState({ search: 'all', unidad: 'all' });
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getPublicDocuments(token, jefatura));
-		dispatch(getDirectories(token, jefatura));
+		console.log(filterDir, filter);
+		dispatch(getPublicDocuments(token, filter.search, filter.unidad));
+		dispatch(getDirectories(token, filterDir.search, filterDir.unidad));
 	}, []);
 
-	const handleJefatura = event => {
-		setJefatura(event.target.value);
-		// dispatch(filterOffersAsync(accessToken, search, idc, event.target.value));
+	const handlePublicUnidad = event => {
+		setFilter({ ...filter, unidad: event.target.value });
+		dispatch(getPublicDocuments(token, filter.search, event.target.value));
+	};
+	const handlePublicSearch = values => {
+		setFilter({ ...filter, search: values.searchPublic });
+		dispatch(getPublicDocuments(token, values.searchPublic, filter.unidad));
+	};
+	const handleDirectoriesUnidad = event => {
+		setFilterDir({ ...filterDir, unidad: event.target.value });
+		dispatch(getPublicDocuments(token, filterDir.search, event.target.value));
+	};
+	const handleDirectoriesSearch = values => {
+		setFilterDir({ ...filterDir, search: values.searchDir });
+		dispatch(getDirectories(token, values.searchDir, filterDir.unidad));
 	};
 	return (
 		<Page settings={{ pt: 5, pb: 10 }}>
@@ -49,23 +66,10 @@ export default function Documents() {
 					}}>
 					Archivos
 				</Typography>
-				<Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ py: 2 }}>
-					<Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-						<Typography sx={{ mr: 2 }}>Ver documentos de:</Typography>
-						<FormControl sx={{ minWidth: { xs: 1, sm: 160 } }} size="small">
-							<InputLabel id="label">Jefatura</InputLabel>
-							<Select
-								labelId="label"
-								id="j-filter"
-								defaultValue={'All'}
-								onChange={handleJefatura}
-								input={<OutlinedInput id="j-filter" label="Estado" />}>
-								<MenuItem value="All">Todos</MenuItem>
-								<MenuItem value="VIGENTE">Vigente</MenuItem>
-								<MenuItem value="EXPIRADO">Expirado</MenuItem>
-							</Select>
-						</FormControl>
-					</Box>
+				<Stack
+					direction={{ xs: 'column', md: 'row' }}
+					spacing={2}
+					sx={{ py: 2, justifyContent: 'flex-end' }}>
 					<Button
 						sx={{ width: { xs: '100%', md: 'auto' } }}
 						// disabled={disabledBtn}
@@ -131,9 +135,28 @@ export default function Documents() {
 						borderColor: theme.palette.terciary.main,
 					}}>
 					{mode === 'public' ? (
-						<DocumentsGrid documents={publicDocuments} />
+						<>
+							<Filter
+								dark={true}
+								handleSearch={handlePublicSearch}
+								handleUnidad={handlePublicUnidad}
+								prefixId="public"
+							/>
+							<Box sx={{ my: 2 }}></Box>
+							<DocumentsGrid documents={publicDocuments} />
+						</>
 					) : (
-						<DirectoriesGrid directories={directories} />
+						<>
+							<Filter
+								dark={true}
+								handleSearch={handleDirectoriesSearch}
+								handleUnidad={handleDirectoriesUnidad}
+								prefixId="directory"
+							/>
+							<Box sx={{ my: 2 }}></Box>
+
+							<DirectoriesGrid directories={directories} />
+						</>
 					)}
 				</Box>
 			</Container>

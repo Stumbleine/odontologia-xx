@@ -18,8 +18,26 @@ import {
 import moment from 'moment';
 import React from 'react';
 import DirectoryContent from '../Dialog/DirectoryContent';
+import DeleteAlert from './DeleteAlert';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteDirectory } from '../../store/DocumentSlice';
 
 export default function Directory({ directory }) {
+	const { token } = useSelector(state => state.account);
+
+	const dispatch = useDispatch();
+	const deleteFetch = id => {
+		const fetch = async () => {
+			await dispatch(deleteDirectory(token, id));
+		};
+		fetch()
+			.then(r => {
+				console.log('Archivo eliminada exitosamente.', 'success');
+			})
+			.catch(e => {
+				console.log('Algo salió, vuelva a intentarlo.', 'error');
+			});
+	};
 	return (
 		<Card sx={{ width: '100%', borderRadius: 2 }}>
 			<DirectoryContent directory={directory}>
@@ -45,16 +63,11 @@ export default function Directory({ directory }) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing sx={{ justifyContent: 'flex-end' }}>
-				<IconButton>
-					<Delete />
-				</IconButton>
-				<IconButton>
-					<Edit />
-				</IconButton>
+				<DeleteAlert
+					deleteFetch={deleteFetch}
+					item={{ name: directory.nombre, id: directory.id, type: 'directorio' }}
+				/>
 
-				<IconButton>
-					<NoteAdd />
-				</IconButton>
 				<DirectoryContent openWithIcon={true} directory={directory} />
 			</CardActions>
 		</Card>

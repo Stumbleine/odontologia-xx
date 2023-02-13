@@ -10,8 +10,11 @@ import { Add, Lock } from '@mui/icons-material';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
 import { documents } from '../../../Utils/Constants';
+import { useSelector } from 'react-redux';
 
 export default function Clinic() {
+	const { publicDocuments } = useSelector(state => state.documents);
+	const { news } = useSelector(state => state.news);
 	const theme = useTheme();
 	const head = {
 		nombres: 'Dr. Roberto Juan Barrientos Salazar',
@@ -39,7 +42,7 @@ export default function Clinic() {
 									Jefatura
 								</Typography>
 								<Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
-									Internado Rotatorio
+									Clinica
 								</Typography>
 							</Box>
 							<HeadInformation head={head} />
@@ -77,7 +80,7 @@ export default function Clinic() {
 							p: 2,
 							background: theme.palette.secondary.main,
 						}}>
-						<NewsCarousel />
+						<NewsCarousel news={news} />
 					</Box>
 				</Card>
 				<Card>
@@ -91,7 +94,7 @@ export default function Clinic() {
 					</Box>
 					{/* noticias */}
 					<Box sx={{ p: 2, py: 3, background: theme.palette.terciary.main }}>
-						<Stack
+						{/* <Stack
 							spacing={2}
 							direction="row"
 							sx={{
@@ -119,9 +122,9 @@ export default function Clinic() {
 								startIcon={<Add />}>
 								Documento
 							</Button>
-						</Stack>
+						</Stack> */}
 						{router.pathname === '/jefaturas/clinica' && (
-							<DocumentsGrid documents={documents} />
+							<DocumentsGrid documents={publicDocuments} />
 						)}
 						<Outlet />
 					</Box>

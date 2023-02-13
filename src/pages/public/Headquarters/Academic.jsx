@@ -9,8 +9,11 @@ import { Link } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
 import { documents } from '../../../Utils/Constants';
 import Page from '../../../components/Box/Page';
+import { useSelector } from 'react-redux';
 
 export default function Academic() {
+	const { publicDocuments } = useSelector(state => state.documents);
+	const { news } = useSelector(state => state.news);
 	const theme = useTheme();
 	const head = {
 		nombres: 'Dr. Roberto Juan Barrientos Salazar',
@@ -35,7 +38,7 @@ export default function Academic() {
 									Jefatura
 								</Typography>
 								<Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
-									Internado Rotatorio
+									Academica
 								</Typography>
 							</Box>
 							<HeadInformation head={head} />
@@ -73,7 +76,7 @@ export default function Academic() {
 							p: 2,
 							background: theme.palette.secondary.main,
 						}}>
-						<NewsCarousel />
+						<NewsCarousel news={news} />
 					</Box>
 				</Card>
 				<Card>
@@ -87,23 +90,7 @@ export default function Academic() {
 					</Box>
 					{/* noticias */}
 					<Box sx={{ p: 2, py: 3, background: theme.palette.terciary.main }}>
-						<Box
-							sx={{
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'flex-end',
-								mb: 2,
-							}}>
-							<Button
-								variant="contained"
-								color="auxiliar"
-								component={Link}
-								to="/subir-documento"
-								startIcon={<Add />}>
-								Documento
-							</Button>
-						</Box>
-						<DocumentsGrid documents={documents} />
+						<DocumentsGrid documents={publicDocuments} />
 					</Box>
 				</Card>
 			</Container>

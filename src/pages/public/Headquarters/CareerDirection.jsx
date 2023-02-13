@@ -1,18 +1,22 @@
+import React, { useEffect } from 'react';
 import { Container } from '@mui/system';
 import { Box, Button, Card, CardMedia, Stack, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
+import NewsCarousel from '../../../components/NewsCarousel';
+import DocumentsGrid from '../../../components/Grid/DocumentsGrid';
 import { Add } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
-import Page from '../../../components/Box/Page';
-import NewsCarousel from '../../../components/NewsCarousel';
 import { documents } from '../../../Utils/Constants';
-import DocumentsGrid from '../../../components/Grid/DocumentsGrid';
-import { useSelector } from 'react-redux';
+import Page from '../../../components/Box/Page';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNews } from '../../../store/NewsSlice';
+import { getPublicDocuments } from '../../../store/DocumentSlice';
 
-export default function RotatingInternship() {
+export default function CareerDirection() {
 	const { publicDocuments } = useSelector(state => state.documents);
 	const { news } = useSelector(state => state.news);
+
 	const theme = useTheme();
 	const head = {
 		nombres: 'Dr. Roberto Juan Barrientos Salazar',
@@ -20,6 +24,13 @@ export default function RotatingInternship() {
 		cargo: 'Jefe de internado rotatorio',
 		picture: '/imgs/profileFake.jpg',
 	};
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getPublicDocuments('token'));
+		dispatch(getNews('token'));
+	}, []);
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ pb: 10 }}>
@@ -34,11 +45,11 @@ export default function RotatingInternship() {
 								<Typography
 									variant="h3"
 									sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-									Jefatura
+									Direccion de carrera
 								</Typography>
-								<Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
-									Internado Rotatorio
-								</Typography>
+								{/* <Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
+									Direccion de carrera
+								</Typography> */}
 							</Box>
 							<HeadInformation head={head} />
 						</Box>
@@ -75,22 +86,6 @@ export default function RotatingInternship() {
 							p: 2,
 							background: theme.palette.secondary.main,
 						}}>
-						<Box
-							sx={{
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'flex-end',
-								mb: 2,
-							}}>
-							<Button
-								variant="contained"
-								color="auxiliar"
-								component={Link}
-								to="/añadir-noticia"
-								startIcon={<Add />}>
-								Noticia
-							</Button>
-						</Box>
 						<NewsCarousel news={news} />
 					</Box>
 				</Card>
@@ -112,3 +107,19 @@ export default function RotatingInternship() {
 		</Page>
 	);
 }
+// <Box
+// 	sx={{
+// 		display: 'flex',
+// 		alignItems: 'center',
+// 		justifyContent: 'flex-end',
+// 		mb: 2,
+// 	}}>
+// 	<Button
+// 		variant="contained"
+// 		color="auxiliar"
+// 		component={Link}
+// 		to="/subir-documento"
+// 		startIcon={<Add />}>
+// 		Documento
+// 	</Button>
+// </Box>;

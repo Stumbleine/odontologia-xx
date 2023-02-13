@@ -1,5 +1,6 @@
 import {
 	AppBar,
+	Avatar,
 	Box,
 	Button,
 	Container,
@@ -14,11 +15,13 @@ import Hamburger from '../assets/burger-solid.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import LogoSXX from '../components/LogoSXX';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { grey } from '@mui/material/colors';
+import { logout } from '../store/AuthSlice';
 export default function Navbar({ onOpenSidebar, navlinks }) {
 	const { isAuth } = useSelector(state => state.auth);
 	const { user, token } = useSelector(state => state.account);
-
+	const dispatch = useDispatch();
 	const ItemDropDown = props => {
 		const router = useLocation();
 		const active = props.href ? router.pathname === props.href : false;
@@ -41,7 +44,7 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 					onClick={handleOpenDrop}
 					endIcon={<KeyboardArrowDown />}
 					sx={{
-						color: active ? 'auxiliar.main' : 'text.disabled',
+						color: active ? 'auxiliar.main' : 'terciary.main',
 						fontWeight: 'bold',
 						px: 1,
 						borderRadius: 1,
@@ -66,7 +69,7 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 								component={Link}
 								to={menu.href}
 								sx={{
-									color: active ? 'auxiliar.main' : 'text.disabled',
+									color: active ? 'auxiliar.main' : 'terciary.main',
 									fontWeight: 'bold',
 									px: 2.5,
 								}}
@@ -89,7 +92,7 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 					component={Link}
 					to={props.href}
 					sx={{
-						color: active ? 'auxiliar.main' : 'text.disabled',
+						color: active ? 'auxiliar.main' : 'terciary.main',
 						fontWeight: 'bold',
 						px: 1,
 						borderRadius: 1,
@@ -186,7 +189,59 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 						{!isAuth && <ItemNav href="/login" text="Ingresar" />}
 						{isAuth && <ItemNav href="/users" text="Usuarios" />} */}
 					</Box>
-					{isAuth && <Typography>{user?.nombres}</Typography>}
+					{!isAuth && (
+						<Button
+							component={Link}
+							to="/login"
+							// size="small"
+							sx={{
+								// color: active ? 'auxiliar.main' : 'text.disabled',
+								mx: 1,
+								color: 'terciary.main',
+							}}>
+							Ingresar
+						</Button>
+					)}
+					{isAuth && (
+						<Box
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+							}}>
+							<Button
+								// component={Link}
+								// to={props.href}
+								// variant="outlined"
+								// size="small"
+								onClick={() => dispatch(logout())}
+								sx={{
+									// color: active ? 'auxiliar.main' : 'text.disabled',
+									mx: 1,
+									color: 'terciary.main',
+								}}>
+								Cerrar sesión
+							</Button>
+							<Box
+								sx={{
+									p: 1,
+									my: 1,
+									borderRadius: 3,
+									background: grey[200],
+									display: 'flex',
+									alignItems: 'center',
+								}}>
+								<Box sx={{ mr: 2 }}>
+									<Typography sx={{ fontSize: 15, color: 'text.terciary' }}>
+										{user?.nombres}
+									</Typography>
+									<Typography sx={{ fontSize: 13, color: 'text.terciary' }}>
+										{user?.email}
+									</Typography>
+								</Box>
+								<Avatar src={user?.picture} />
+							</Box>
+						</Box>
+					)}
 				</Toolbar>
 			</Container>
 		</AppBar>

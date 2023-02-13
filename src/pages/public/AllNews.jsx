@@ -17,6 +17,8 @@ import API from '../../Utils/Connection';
 import { getNews } from '../../store/NewsSlice';
 import { OpenInNew } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import NewContent from '../NewContent';
+import NewCard from '../../components/Card/NewCard';
 
 export default function AllNews() {
 	const { news } = useSelector(state => state.news);
@@ -24,7 +26,7 @@ export default function AllNews() {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const listar = () => {
-			dispatch(getNews(token));
+			dispatch(getNews(token, null, 'all', 'all'));
 		};
 		listar();
 	}, []);
@@ -35,13 +37,14 @@ export default function AllNews() {
 
 	return (
 		<Page>
-			<Container maxWidth="xl" sx={{ py: 10 }}>
-				<Grid container spacing={{ xs: 1, lg: 2 }}>
+			<Container maxWidth="xl" sx={{ py: 5 }}>
+				<Grid container spacing={2}>
 					{news.length > 0 &&
 						news.map(n => {
 							return (
-								<Grid item xs={12} key={n.id}>
-									<Card>
+								<Grid item xs={12} md={6} key={n.id}>
+									<NewCard newest={n} />
+									{/* <Card>
 										<CardMedia
 											component="img"
 											sx={{ width: '100%', height: 300 }}
@@ -63,7 +66,7 @@ export default function AllNews() {
 												<OpenInNew />
 											</IconButton>
 										</CardActionArea>
-									</Card>
+									</Card> */}
 								</Grid>
 							);
 						})}

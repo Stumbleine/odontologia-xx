@@ -3,14 +3,16 @@ import { Button, Container } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import UploadDocumentForm from '../components/Forms/UploadDocumentForm';
+import Page from '../components/Box/Page';
+import Back from '../components/Back';
 
 export default function CreateDocument() {
 	return (
-		<Container maxWidth="sm">
-			<Button component={Link} to="/" startIcon={<ArrowBack></ArrowBack>}>
-				Inicio
-			</Button>
-			<UploadDocumentForm />
-		</Container>
+		<Page settings={{ pt: 5, pb: 10 }}>
+			<Container maxWidth="sm">
+				<Back />
+				<UploadDocumentForm />
+			</Container>
+		</Page>
 	);
 }

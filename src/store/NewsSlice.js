@@ -38,7 +38,7 @@ export const create = (token, values) => async dispatch => {
 	}
     */
 	try {
-		const r = await API.post('noticia/crear', newFormData, {
+		const r = await API.post('/noticia/crear', newFormData, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'multipart/form-data',
@@ -50,25 +50,39 @@ export const create = (token, values) => async dispatch => {
 	}
 };
 
-export const getNews = token => async dispatch => {
-	try {
-		const r = await API.get(`public/listar-noticias`, {
-			headers: { Authorization: `Bearer ${token}` },
-		});
-		console.log('newslist', r.data);
-		dispatch(setNews(r.data));
-	} catch (e) {
-		throw new Error(e);
+const constructURL = (search, unidad, id) => {
+	if (search !== 'all' || unidad !== 'all') {
+		return `/noticia/filtro?search=${search}&unidad=${unidad}`;
+	} else if (id !== undefined && id !== null) {
+		return `/noticia/listar-noticias?id_noticia=${id}`;
 	}
+	return `/public/listar-noticias`;
 };
 
-export const deleteNew = token => async dispatch => {
+export const getNews =
+	(token, id = null, search = 'all', unidad = 'all') =>
+	async dispatch => {
+		console.log(id, search, unidad);
+		let url = constructURL(search, unidad, id);
+		try {
+			const r = await API.get(url, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			console.log('newslist', r.data);
+			dispatch(setNews(r.data));
+		} catch (e) {
+			throw new Error(e);
+		}
+	};
+
+export const deleteNew = (token, idNew) => async dispatch => {
 	try {
-		const r = await API.get(`public/listar-noticias`, {
+		const r = await API.delete(`/noticia/eliminar?id=` + idNew, {
 			headers: { Authorization: `Bearer ${token}` },
 		});
 		console.log('newslist', r.data);
-		dispatch(setNews(r.data));
+		// dispatch(setNews(r.data));
+		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -78,26 +92,32 @@ export const updateNew = (token, values) => async dispatch => {
 	let newFormData = new FormData();
 	newFormData.append('titulo', values.title);
 	newFormData.append('subtitulo', values.descripcion);
-
 	newFormData.append('foto', foto);
 	newFormData.append('id_unidad', 1);
 
-	values.files.forEach(element => {
-		newFormData.append('files[]', element);
-	});
-	/*
-	for (const value of newFormData.values()) {
-		console.log(value);
-	}
-    */
 	try {
-		const r = await API.post('noticia/crear', newFormData, {
+		const r = await API.post('/noticia/actualizar?id_noticia=' + values.id, newFormData, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'multipart/form-data',
 			},
 		});
-		console.log('createNew->r :', r);
+		dispatch(getNews(token));
+	} catch (e) {
+		throw new Error(e);
+	}
+};
+
+export const deleteNewFile = (token, idNew, idFile) => async dispatch => {
+	try {
+		const r = await API.delete(
+			`/noticia/eliminar-adjunto?id=${idNew}?id_adjunto=${idFile}`,
+			{
+				headers: { Authorization: `Bearer ${token}` },
+			}
+		);
+		// console.log('newslist', r.data);
+		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);
 	}

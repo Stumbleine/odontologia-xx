@@ -27,7 +27,7 @@ export default function Contact() {
 						</Typography>
 						<Box
 							sx={{
-								height: 400,
+								height: 500,
 								width: '100%',
 							}}>
 							<MapView />

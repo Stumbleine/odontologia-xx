@@ -4,12 +4,12 @@ import DocumentsGrid from '../Grid/DocumentsGrid';
 import { documents } from '../../Utils/Constants';
 import { Add } from '@mui/icons-material';
 
-export default function UploadFiles({ handleChangeFiles }) {
+export default function UploadFiles({ handleChangeFiles, children }) {
 	const [uploadedFiles, setUploadedFiles] = useState([]);
 
 	const handleFileEvent = e => {
 		const chosenFiles = Array.prototype.slice.call(e.target.files);
-		console.log(chosenFiles)
+		console.log(chosenFiles);
 		setUploadedFiles(chosenFiles);
 		handleChangeFiles(chosenFiles);
 	};
@@ -19,7 +19,7 @@ export default function UploadFiles({ handleChangeFiles }) {
 				sx={{
 					width: '100%',
 					height: 'auto',
-					minHeight:150,
+					minHeight: 100,
 					border: 1,
 					p: 1,
 					borderRadius: 2,
@@ -39,14 +39,15 @@ export default function UploadFiles({ handleChangeFiles }) {
 					sx={{
 						display: 'flex',
 						justifyContent: 'flex-end',
-						width: '100%',
 					}}>
+					{children}
 					<Button
 						component="span"
-						sx={{ color: 'text.primary' }}
+						sx={{ color: 'text.primary', ml: 2 }}
 						startIcon={<Add />}
+						// fullWidth
 						variant="outlined">
-						{uploadedFiles ? 'Cambiar documentos' : 'Adjuntar documentos'}
+						{uploadedFiles.length > 0 ? 'Cambiar' : 'Buscar'}
 					</Button>
 				</Box>
 			</label>

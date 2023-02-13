@@ -109,7 +109,7 @@ export const extensions = {
 	'application/x-tar': <ZipperIcon />,
 	'text/javascript': <JavaScriptIcon />,
 	'application/xhtml+xml': <HtmlIcon />,
-	'text/css': <TextPlain />,
+	'text/css': <TextPlainIcon />,
 	'application/vnd.ms-powerpoint': <PowerPointIcon />,
 	'application/vnd.openxmlformats-officedocument.presentationml.presentation': (
 		<PowerPointIcon />

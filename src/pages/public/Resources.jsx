@@ -16,32 +16,23 @@ import {
 import { Link } from 'react-router-dom';
 import { Add } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNews } from '../../store/NewsSlice';
-import NewCard from '../../components/Card/NewCard';
 import Filter from '../../components/Forms/Filter';
+import { getPublicDocuments } from '../../store/DocumentSlice';
+import ResourcesTable from '../../components/Table/ResourcesTable';
 
-export default function News() {
+export default function Resources() {
 	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
-
-	const { news } = useSelector(state => state.news);
-
-	const { token } = useSelector(state => state.account);
 	const dispatch = useDispatch();
-	useEffect(() => {
-		const listar = () => {
-			dispatch(getNews(token, null, filter.search, filter.unidad));
-		};
-		listar();
-	}, []);
+	const { publicDocuments } = useSelector(state => state.documents);
+
 	const handleUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
-		dispatch(getNews(token, null, filter.search, event.target.value));
+		dispatch(getPublicDocuments('token', filter.search, event.target.value));
 	};
 	const handleSearch = values => {
 		setFilter({ ...filter, search: values.search });
-		dispatch(getNews(token, null, values.search, filter.unidad));
+		dispatch(getPublicDocuments('token', values.search, filter.unidad));
 	};
-
 	return (
 		<Page settings={{ pt: 5, pb: 10 }}>
 			<Container maxWidth="xl" sx={{}}>
@@ -52,30 +43,15 @@ export default function News() {
 						fontWeight: 'bold',
 						color: 'text.auxiliar',
 					}}>
-					Noticias
+					Recursos virtuales
 				</Typography>
 				<Stack
 					direction={{ xs: 'column', md: 'row' }}
 					spacing={2}
 					sx={{ mb: 2, justifyContent: 'space-between' }}>
 					<Filter handleSearch={handleSearch} handleUnidad={handleUnidad} />
-					<Button
-						sx={{ width: { xs: '100%', md: 'auto' } }}
-						// disabled={disabledBtn}
-						component={Link}
-						to="/panel/añadir-noticia"
-						startIcon={<Add />}
-						variant="contained">
-						Noticia
-					</Button>
 				</Stack>
-				<Grid container spacing={{ xs: 1 }}>
-					{news?.map(n => (
-						<Grid item key={n.id} xs={6} md={4} lg={4} xl={3}>
-							<NewCard newest={n} />
-						</Grid>
-					))}
-				</Grid>
+				<ResourcesTable resources={publicDocuments} />
 			</Container>
 		</Page>
 	);

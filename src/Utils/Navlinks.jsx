@@ -1,11 +1,5 @@
 export const publicNavlinks = [
 	{ path: '/', text: 'Inicio', icon: '' },
-	{
-		path: '/acerca-de-la-carrera',
-		text: 'Acerca de la carrera',
-		icon: '',
-		dropdown: false,
-	},
 
 	{
 		path: '/direccion-de-carrera',
@@ -46,6 +40,12 @@ export const publicNavlinks = [
 		],
 	},
 	{
+		path: '/recursos',
+		text: 'Recursos virtuales',
+		icon: '',
+		dropdown: false,
+	},
+	{
 		path: '/contacto',
 		text: 'Contacto',
 		icon: '',
@@ -64,5 +64,5 @@ export const panelNavlinks = [
 	{ path: '/panel/archivos', text: 'Archivos', icon: '' },
 	{ path: '/panel/noticias', text: 'Noticias', icon: '' },
 	{ path: '/panel/usuarios', text: 'Usuarios', icon: '' },
-	{ path: '/panel/resumen', text: 'Resumen', icon: '' },
+	// { path: '/panel/resumen', text: 'Resumen', icon: '' },
 ];
