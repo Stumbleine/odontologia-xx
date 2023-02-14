@@ -51,8 +51,8 @@ export default function Documents() {
 		dispatch(getPublicDocuments(token, filterDir.search, event.target.value));
 	};
 	const handleDirectoriesSearch = values => {
-		setFilterDir({ ...filterDir, search: values.searchDir });
-		dispatch(getDirectories(token, values.searchDir, filterDir.unidad));
+		setFilterDir({ ...filterDir, search: values.search });
+		dispatch(getDirectories(token, values.search, filterDir.unidad));
 	};
 	return (
 		<Page settings={{ pt: 5, pb: 10 }}>

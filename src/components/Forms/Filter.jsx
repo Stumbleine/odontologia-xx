@@ -14,7 +14,13 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
-export default function Filter({ handleSearch, handleUnidad, dark, prefixId, children }) {
+export default function Filter({
+	handleSearch,
+	handleUnidad,
+	dark,
+	prefixId = 'input',
+	children,
+}) {
 	const [backScapePressed, setBackScapePressed] = useState(false);
 	const { unidades } = useSelector(state => state.unidad);
 
@@ -30,10 +36,14 @@ export default function Filter({ handleSearch, handleUnidad, dark, prefixId, chi
 
 	const formik = useFormik({
 		initialValues: prefixId === 'public' ? initialPblic : initialDir,
-		validationSchema: Yup.object({
-			searchPublic: Yup.string().required(),
-			// searchDir: Yup.string().required(),
-		}),
+		validationSchema:
+			prefixId === 'public'
+				? Yup.object({
+						searchPublic: Yup.string().required(),
+				  })
+				: Yup.object({
+						search: Yup.string().required(),
+				  }),
 		onSubmit: values => {
 			handleSearch(values);
 		},
@@ -42,11 +52,11 @@ export default function Filter({ handleSearch, handleUnidad, dark, prefixId, chi
 	useEffect(() => {
 		if (prefixId === 'public') {
 			if (values.searchPublic === '' && backScapePressed) {
-				handleSearch(values);
+				handleSearch({ searchPublic: 'all' });
 			}
 		} else {
-			if (values.searchDir === '' && backScapePressed) {
-				handleSearch(values);
+			if (values.search === '' && backScapePressed) {
+				handleSearch({ search: 'all' });
 			}
 		}
 	}, [backScapePressed, values]);
@@ -91,7 +101,7 @@ export default function Filter({ handleSearch, handleUnidad, dark, prefixId, chi
 						size="small"
 						// name="search"
 						onKeyDown={handleKeyDown}
-						{...getFieldProps(prefixId === 'public' ? 'searchPublic' : 'searchDir')}
+						{...getFieldProps(prefixId === 'public' ? 'searchPublic' : 'search')}
 						variant="outlined"
 						placerholder="Buscar usuario"
 						fullWidth

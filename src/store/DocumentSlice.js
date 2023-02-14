@@ -36,17 +36,19 @@ export const getPublicDocuments =
 		let url = constructDocumentURL(search, unidad);
 		try {
 			const r = await API.get(url);
-			dispatch(setDocuments(r.data));
+			dispatch(setDocuments(r.data.data));
 		} catch (e) {
 			throw new Error(e);
 		}
 	};
+
 const constructDirectoryURL = (search, unidad) => {
 	if (search !== 'all' || unidad !== 'all') {
 		return `/directorio/filtro?search=${search}&unidad=${unidad}`;
 	}
 	return `/directorio/listar?id_unidad=${1}`;
 };
+
 export const getDirectories = (token, search, unidad) => async dispatch => {
 	let url = constructDirectoryURL(search, unidad);
 
