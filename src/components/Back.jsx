@@ -7,7 +7,7 @@ export default function Back() {
 	const navigate = useNavigate();
 
 	return (
-		<Box sx={{ mb: 2 }}>
+		<Box sx={{ mb: 2, width: '100%' }}>
 			<Button
 				variant="outlined"
 				sx={{ color: 'primary.main' }}

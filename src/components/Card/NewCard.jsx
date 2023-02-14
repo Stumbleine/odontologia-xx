@@ -11,13 +11,13 @@ import DeleteAlert from './DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteNew } from '../../store/NewsSlice';
 import { OpenInNew } from '@mui/icons-material';
-import { Link, createSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EditNew from '../Dialog/EditNew';
 import EditNewFiles from '../Dialog/EditNewFiles';
 
 export default function NewCard({ newest }) {
 	const dispatch = useDispatch();
-	const { token } = useSelector(state => state.account);
+	const { token, rol } = useSelector(state => state.account);
 
 	const deleteFetch = id => {
 		const fetch = async () => {
@@ -78,13 +78,16 @@ export default function NewCard({ newest }) {
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ pt: 0, justifyContent: 'flex-end' }}>
-				<DeleteAlert
-					deleteFetch={deleteFetch}
-					item={{ name: newest.titulo, type: 'noticia', id: newest.id }}
-				/>
-				<EditNewFiles newest={newest} />
-				<EditNew newest={newest} />
-
+				{rol === 'ADM' && (
+					<>
+						<DeleteAlert
+							deleteFetch={deleteFetch}
+							item={{ name: newest.titulo, type: 'noticia', id: newest.id }}
+						/>
+						<EditNewFiles newest={newest} />
+						<EditNew newest={newest} />
+					</>
+				)}
 				<IconButton onClick={openNew}>
 					<OpenInNew />
 				</IconButton>

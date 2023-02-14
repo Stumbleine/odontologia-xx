@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const accountSlice = createSlice({
-	name: 'auth',
+	name: 'account',
 	initialState,
 	reducers: {
 		setToken: (state, { payload }) => {

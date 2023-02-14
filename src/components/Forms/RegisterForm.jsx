@@ -22,41 +22,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { registerUser } from '../../store/UsersSlice';
 import API from '../../Utils/Connection';
+import Back from '../Back';
 
 export default function RegisterForm() {
 	const dispatch = useDispatch();
 	const [showPassword, setShowPassword] = useState(false);
-    const {token} = useSelector(state=>state.account)
+	const { token } = useSelector(state => state.account);
+	const { unidades } = useSelector(state => state.unidad);
+
 	const handleShowPassword = () => {
 		setShowPassword(show => !show);
 	};
-    const [entities, setEntities] = useState(null)
 
-    useEffect(() => {
-      const getEntities= async ()=>{
-        console.log(token)
-        try {
-            const r = await API.get('unidad/listar',{
-            headers: { Authorization: `Bearer ${token}` },
-            });
-            setEntities(r.data)
-            console.log(r.data,'unidades')
-        }catch(e){
-		throw new Error(e); 
-
-        }
-    }
-    getEntities()
-    }, [])
-    
 	const formik = useFormik({
 		initialValues: {
 			nombres: '',
 			apellidos: '',
 			email: '',
 			password: '',
-            rol:'',
-            unidad:''
+			rol: '',
+			unidad: '',
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object().shape({
@@ -68,7 +53,7 @@ export default function RegisterForm() {
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			console.log(values);
 			const login = async () => {
-				await dispatch(registerUser(token,values));
+				await dispatch(registerUser(token, values));
 			};
 			login()
 				.then(r => {
@@ -88,12 +73,13 @@ export default function RegisterForm() {
 		<FormikProvider value={formik}>
 			<Form>
 				<Stack
-                maxWidth="sm"
+					// maxWidth="md"
+					width={400}
 					component={Card}
 					spacing={2}
 					sx={{ p: 2, borderRadius: 2, background: 'white' }}>
 					<Box>
-						<Typography align="center" sx={{ color: 'text.black' }}>
+						<Typography variant="h5" align="center" sx={{ color: 'text.black' }}>
 							Registrar usuario
 						</Typography>
 					</Box>
@@ -135,50 +121,48 @@ export default function RegisterForm() {
 									<IconButton onClick={handleShowPassword}>
 										{showPassword ? <Visibility /> : <VisibilityOff />}
 									</IconButton>
-								</InputAdornment> 
+								</InputAdornment>
 							),
 						}}
 					/>
-						<FormControl fullWidth size="small">
-							<InputLabel id="role-label">Rol</InputLabel>
-							<Select
-								labelId="role-label"
-								label="Rol"
-								fullWidth
-								{...getFieldProps('rol')}
-								error={Boolean(touched.rol && errors.rol)}
-								size="small"
-								inputProps={{}}>
-								{rols.map(rol => (
-									<MenuItem key={rol.rol} value={rol.rol}>
-										{rol.label}
-									</MenuItem>
-								))}
-							</Select>
-							<FormHelperText sx={{ color: 'error.main' }}>
-								{touched.rol && errors.rol}
-							</FormHelperText>
-						</FormControl>
-                        <FormControl fullWidth size="small">
-							<InputLabel id="unidad-label">Unidad</InputLabel>
-							<Select
-								labelId="unidad-label"
-								label="Unidad"
-								fullWidth
-								{...getFieldProps('unidad')}
-								error={Boolean(touched.unidad && errors.unidad)}
-								size="small"
-								inputProps={{}}>
-								{entities?.map(e => (
-									<MenuItem key={e.id} value={e.id}>
-										{e.nombre}
-									</MenuItem>
-								))}
-							</Select>
-							<FormHelperText sx={{ color: 'error.main' }}>
-								{touched.rol && errors.rol}
-							</FormHelperText>
-						</FormControl>
+					<FormControl fullWidth>
+						<InputLabel id="role-label">Rol</InputLabel>
+						<Select
+							labelId="role-label"
+							label="Rol"
+							fullWidth
+							{...getFieldProps('rol')}
+							error={Boolean(touched.rol && errors.rol)}
+							inputProps={{}}>
+							{rols.map(rol => (
+								<MenuItem key={rol.rol} value={rol.rol}>
+									{rol.label}
+								</MenuItem>
+							))}
+						</Select>
+						<FormHelperText sx={{ color: 'error.main' }}>
+							{touched.rol && errors.rol}
+						</FormHelperText>
+					</FormControl>
+					<FormControl fullWidth>
+						<InputLabel id="unidad-label">Unidad</InputLabel>
+						<Select
+							labelId="unidad-label"
+							label="Unidad"
+							fullWidth
+							{...getFieldProps('unidad')}
+							error={Boolean(touched.unidad && errors.unidad)}
+							inputProps={{}}>
+							{unidades?.map(und => (
+								<MenuItem key={und.id} value={und.id}>
+									{und.nombre}
+								</MenuItem>
+							))}
+						</Select>
+						<FormHelperText sx={{ color: 'error.main' }}>
+							{touched.rol && errors.rol}
+						</FormHelperText>
+					</FormControl>
 					<Box sx={{ pt: 1, position: 'relative' }}>
 						<Button
 							color="secondary"
@@ -188,7 +172,7 @@ export default function RegisterForm() {
 							disabled={isSubmitting}
 							sx={{ fontWeight: 'bold' }}
 							variant="contained">
-							Ingresar
+							Registrar
 						</Button>
 						{isSubmitting && (
 							<CircularProgress
@@ -210,6 +194,7 @@ export default function RegisterForm() {
 	);
 }
 export const rols = [
-	{ id_rol: 2, rol: 'admin', label: 'Administrador' },
+	{ id_rol: 2, rol: 'administrador', label: 'Administrador' },
 	{ id_rol: 1, rol: 'secretaria', label: 'Secretaria' },
+	// { id_rol: 1, rol: 'superadministrador', label: 'Super administrador' },
 ];

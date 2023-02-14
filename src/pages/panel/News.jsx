@@ -25,7 +25,7 @@ export default function News() {
 
 	const { news } = useSelector(state => state.news);
 
-	const { token } = useSelector(state => state.account);
+	const { token, rol } = useSelector(state => state.account);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const listar = () => {
@@ -59,15 +59,17 @@ export default function News() {
 					spacing={2}
 					sx={{ mb: 2, justifyContent: 'space-between' }}>
 					<Filter handleSearch={handleSearch} handleUnidad={handleUnidad} />
-					<Button
-						sx={{ width: { xs: '100%', md: 'auto' } }}
-						// disabled={disabledBtn}
-						component={Link}
-						to="/panel/añadir-noticia"
-						startIcon={<Add />}
-						variant="contained">
-						Noticia
-					</Button>
+					{rol === 'ADM' && (
+						<Button
+							sx={{ width: { xs: '100%', md: 'auto' } }}
+							// disabled={disabledBtn}
+							component={Link}
+							to="/panel/añadir-noticia"
+							startIcon={<Add />}
+							variant="contained">
+							Noticia
+						</Button>
+					)}
 				</Stack>
 				<Grid container spacing={{ xs: 1 }}>
 					{news?.map(n => (

@@ -25,7 +25,7 @@ export default function Documents() {
 	const theme = useTheme();
 	// const [jefatura, setJefatura] = useState('All');
 	const [mode, setMode] = useState('public');
-	const { token } = useSelector(state => state.account);
+	const { token, rol } = useSelector(state => state.account);
 	const { publicDocuments, directories } = useSelector(state => state.documents);
 	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
 	const [filterDir, setFilterDir] = useState({ search: 'all', unidad: 'all' });
@@ -66,20 +66,22 @@ export default function Documents() {
 					}}>
 					Archivos
 				</Typography>
-				<Stack
-					direction={{ xs: 'column', md: 'row' }}
-					spacing={2}
-					sx={{ py: 2, justifyContent: 'flex-end' }}>
-					<Button
-						sx={{ width: { xs: '100%', md: 'auto' } }}
-						// disabled={disabledBtn}
-						component={Link}
-						to="/panel/subir-documento"
-						startIcon={<Add />}
-						variant="contained">
-						Archivo
-					</Button>
-				</Stack>
+				{rol === 'ADM' && (
+					<Stack
+						direction={{ xs: 'column', md: 'row' }}
+						spacing={2}
+						sx={{ py: 2, justifyContent: 'flex-end' }}>
+						<Button
+							sx={{ width: { xs: '100%', md: 'auto' } }}
+							// disabled={disabledBtn}
+							component={Link}
+							to="/panel/subir-documento"
+							startIcon={<Add />}
+							variant="contained">
+							Archivo
+						</Button>
+					</Stack>
+				)}
 				<Stack direction="row">
 					<Button
 						sx={{

@@ -21,17 +21,21 @@ import Clinic from './pages/public/Headquarters/Clinic';
 import Documents from './pages/panel/Documents';
 import News from './pages/panel/News';
 import Summary from './pages/panel/Summary';
-import { panelNavlinks, publicNavlinks } from './Utils/Navlinks';
+import { getNavlinks, panelNavlinks, publicNavlinks } from './Utils/Navlinks';
 import { useSelector } from 'react-redux';
 import UserRegister from './pages/panel/UserRegister';
 import NewContent from './pages/NewContent';
 import CareerDirection from './pages/public/Headquarters/CareerDirection';
 import Resources from './pages/public/Resources';
+import Logs from './pages/panel/Logs';
 
 export default function Router() {
 	const { isAuth } = useSelector(state => state.auth);
+	const { rol } = useSelector(state => state.account);
+
 	const router = useLocation();
 	console.log(router.pathname);
+	const navlinks = getNavlinks(rol);
 	return useRoutes([
 		{
 			path: '/',
@@ -115,7 +119,7 @@ export default function Router() {
 		{
 			path: 'panel',
 			element: isAuth ? (
-				<DashboardLayout navlinks={panelNavlinks} />
+				<DashboardLayout navlinks={navlinks} />
 			) : (
 				<Navigate to="/" replace />
 			),
@@ -141,6 +145,10 @@ export default function Router() {
 				{
 					path: 'añadir-usuario',
 					element: <UserRegister />,
+				},
+				{
+					path: 'logs',
+					element: <Logs />,
 				},
 			],
 		},

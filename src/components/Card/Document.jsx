@@ -23,7 +23,7 @@ import DeleteAlert from './DeleteAlert';
 import { deleteDocument } from '../../store/DocumentSlice';
 
 export default function Document({ doc }) {
-	const { token } = useSelector(state => state.account);
+	const { token, rol } = useSelector(state => state.account);
 	const handleDownload = () => {
 		API.get('/archivo-privado/obtener-archivo?id=' + doc.id, {
 			headers: { Authorization: `Bearer ${token}` },
@@ -84,10 +84,12 @@ export default function Document({ doc }) {
 					// background: 'red',s
 					py: 0.5,
 				}}>
-				<DeleteAlert
-					item={{ name: doc.nombre, type: 'archivo', id: doc.id }}
-					deleteFetch={deleteFetch}
-				/>
+				{rol === 'ADM' && (
+					<DeleteAlert
+						item={{ name: doc.nombre, type: 'archivo', id: doc.id }}
+						deleteFetch={deleteFetch}
+					/>
+				)}
 				<IconButton
 					onClick={() => {
 						handleDownload();
