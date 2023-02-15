@@ -18,7 +18,7 @@ import UploadFiles from '../Forms/UploadFiles';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
 import { Box } from '@mui/system';
 import { grey } from '@mui/material/colors';
-import { deleteNewFile } from '../../store/NewsSlice';
+import { deleteNewFile, updateNewFiles } from '../../store/NewsSlice';
 
 export default function EditNewFiles({ disabled, newest }) {
 	const dispatch = useDispatch();
@@ -153,7 +153,7 @@ export default function EditNewFiles({ disabled, newest }) {
 						disabled={isSubmitting}
 						fullWidth
 						startIcon={<Save />}
-						type="submit"
+						onClick={() => dispatch(updateNewFiles(token, newest.id, files))}
 						variant="contained">
 						Guardar
 					</Button>

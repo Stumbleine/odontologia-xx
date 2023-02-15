@@ -25,7 +25,7 @@ export default function RotatingInternship() {
 	const fetchNews = async () => {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 3);
-			setDocuments(r.data.data);
+			setDocuments(r.data);
 		} catch (e) {
 			console.log(e);
 		}

@@ -34,7 +34,10 @@ export default function NewCard({ newest }) {
 
 	const navigate = useNavigate();
 	const openNew = () => {
-		navigate(`/panel/noticias/${newest.id}`, {
+		const route =
+			rol === 'guest' ? `/noticias/${newest.id}` : `/panel/noticias/${newest.id}`;
+
+		navigate(route, {
 			state: { newest: newest },
 		});
 	};

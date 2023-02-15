@@ -30,7 +30,7 @@ export default function Clinic() {
 	const fetchNews = async () => {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 5);
-			setDocuments(r.data.data);
+			setDocuments(r.data);
 		} catch (e) {
 			console.log(e);
 		}

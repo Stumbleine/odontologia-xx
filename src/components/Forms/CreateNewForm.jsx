@@ -75,7 +75,11 @@ export default function CreateNewForm() {
 					console.log('Registro de noticia exitoso');
 					resetForm();
 					setSubmitting(false);
-					fireAlert({ title: 'Registro exitoso', icon: 'success' });
+					fireAlert({
+						title: 'Registro exitoso',
+						icon: 'success',
+						path: '/panel/noticias',
+					});
 				})
 				.catch(e => {
 					console.log(e);

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export const fireAlert = setting => {
@@ -8,5 +9,10 @@ export const fireAlert = setting => {
 		confirmButtonText: 'OK',
 		// cancelButtonText: 'Cancel',
 		icon: setting?.icon || 'success',
+	}).then(() => {
+		// navigate(setting?.path);
+		if (setting.path) {
+			window.location.href = setting.path;
+		}
 	});
 };

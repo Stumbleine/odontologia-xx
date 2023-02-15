@@ -26,7 +26,7 @@ export default function Extension() {
 	const fetchNews = async () => {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 1);
-			setDocuments(r.data.data);
+			setDocuments(r.data);
 		} catch (e) {
 			console.log(e);
 		}

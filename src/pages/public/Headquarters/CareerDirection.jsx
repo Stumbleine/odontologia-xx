@@ -28,7 +28,7 @@ export default function CareerDirection() {
 	const fetchNews = async () => {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 6);
-			setDocuments(r.data.data);
+			setDocuments(r.data);
 		} catch (e) {
 			console.log(e);
 		}

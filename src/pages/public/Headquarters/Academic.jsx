@@ -25,7 +25,7 @@ export default function Academic() {
 	const fetchNews = async () => {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 4);
-			setDocuments(r.data.data);
+			setDocuments(r.data);
 		} catch (e) {
 			console.log(e);
 		}

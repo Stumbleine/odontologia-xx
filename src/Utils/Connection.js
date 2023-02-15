@@ -5,7 +5,8 @@ import axios from 'axios';
  * @exports API
  */
 
-export const URL = 'http://192.168.100.55:8080';
+// export const URL = 'http://192.168.100.55:8080';
+export const URL = 'https://backend-sigloxx.herokuapp.com';
 const API = axios.create({
 	baseURL: URL,
 	responseEncoding: 'utf8',

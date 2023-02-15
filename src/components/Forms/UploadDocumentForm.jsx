@@ -28,10 +28,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createDirectory, createDocument } from '../../store/DocumentSlice';
 import UploadFiles from './UploadFiles';
 import { fireAlert } from '../../Utils/Sweet';
+import { useNavigate } from 'react-router-dom';
 
 export default function UploadDocumentForm() {
 	const { token } = useSelector(state => state.account);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const [files, setFiles] = useState(null);
 	const handleChangeFiles = files => {
@@ -72,13 +74,20 @@ export default function UploadDocumentForm() {
 
 			createNew()
 				.then(r => {
-					fireAlert({ title: 'Registro exitoso', icon: 'success' });
+					fireAlert({
+						title: 'Registro exitoso',
+						icon: 'success',
+						path: '/panel/archivos',
+					});
 					setSubmitting(false);
 					resetForm();
 					setFiles(null);
 				})
 				.catch(e => {
-					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' });
+					fireAlert(
+						{ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' },
+						navigate
+					);
 					console.log(e);
 					setSubmitting(false);
 				});

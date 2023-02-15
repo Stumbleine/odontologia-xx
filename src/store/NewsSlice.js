@@ -121,3 +121,23 @@ export const deleteNewFile = (token, idNew, idFile) => async dispatch => {
 		throw new Error(e);
 	}
 };
+
+export const updateNewFiles = (token, idNew, files) => async dispatch => {
+	let newFormData = new FormData();
+
+	newFormData.append('id_unidad', 1);
+	files.forEach(element => {
+		newFormData.append('files[]', element);
+	});
+	try {
+		const r = await API.post('/noticia/agregar-adjuntos?id=' + idNew, newFormData, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'multipart/form-data',
+			},
+		});
+		dispatch(getNews(token));
+	} catch (e) {
+		throw new Error(e);
+	}
+};

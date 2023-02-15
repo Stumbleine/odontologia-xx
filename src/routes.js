@@ -113,7 +113,7 @@ export default function Router() {
 				},
 				{
 					path: 'noticias/:noticia',
-					element: <AllNews />,
+					element: <NewContent />,
 				},
 			],
 		},
