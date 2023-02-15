@@ -39,11 +39,12 @@ export default function Router() {
 	return useRoutes([
 		{
 			path: '/',
-			// !isAuth ? (
-			element: <DashboardLayout navlinks={publicNavlinks} />,
-			// ) : (
-			// 	<Navigate to="/panel" replace />
-			// )
+
+			element: !isAuth ? (
+				<DashboardLayout navlinks={publicNavlinks} />
+			) : (
+				<Navigate to="/panel" replace />
+			),
 			children: [
 				{
 					path: '/',

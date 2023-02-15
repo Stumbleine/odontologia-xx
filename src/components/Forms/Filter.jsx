@@ -23,6 +23,7 @@ export default function Filter({
 }) {
 	const [backScapePressed, setBackScapePressed] = useState(false);
 	const { unidades } = useSelector(state => state.unidad);
+	const { rol } = useSelector(state => state.account);
 
 	const handleKeyDown = event => {
 		if (event.key === 'Backspace') {
@@ -66,37 +67,39 @@ export default function Filter({
 				<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
 					{/* <Typography>{prefixId}</Typography> */}
 					{children}
-					<FormControl
-						sx={{ minWidth: { xs: 1, sm: 160 } }}
-						size="small"
-						key={prefixId}
-						id={prefixId + '-formcontrol'}>
-						<InputLabel sx={{ color: dark && 'white' }} id={prefixId + 'label'}>
-							Jefatura
-						</InputLabel>
-						<Select
-							labelId={prefixId + 'label'}
-							id={prefixId + '-filter'}
-							sx={{
-								color: dark && 'white',
-								'&.MuiOutlinedInput-root': {
-									'& fieldset': {
-										borderColor: dark && 'white',
+					{rol === 'SUPER' && (
+						<FormControl
+							sx={{ minWidth: { xs: 1, sm: 160 } }}
+							size="small"
+							key={prefixId}
+							id={prefixId + '-formcontrol'}>
+							<InputLabel sx={{ color: dark && 'white' }} id={prefixId + 'label'}>
+								Jefatura
+							</InputLabel>
+							<Select
+								labelId={prefixId + 'label'}
+								id={prefixId + '-filter'}
+								sx={{
+									color: dark && 'white',
+									'&.MuiOutlinedInput-root': {
+										'& fieldset': {
+											borderColor: dark && 'white',
+										},
 									},
-								},
-							}}
-							defaultValue={'all'}
-							onChange={handleUnidad}
-							input={<OutlinedInput id={prefixId + '-filter'} label="Jefatura" />}>
-							<MenuItem value="all">Todos</MenuItem>
-							{unidades?.map(und => (
-								<MenuItem key={und.id} value={und.id}>
-									{und.nombre}
-								</MenuItem>
-							))}
-							{/* <MenuItem value="EXPIRADO">Expirado</MenuItem> */}
-						</Select>
-					</FormControl>
+								}}
+								defaultValue={'all'}
+								onChange={handleUnidad}
+								input={<OutlinedInput id={prefixId + '-filter'} label="Jefatura" />}>
+								<MenuItem value="all">Todos</MenuItem>
+								{unidades?.map(und => (
+									<MenuItem key={und.id} value={und.id}>
+										{und.nombre}
+									</MenuItem>
+								))}
+								{/* <MenuItem value="EXPIRADO">Expirado</MenuItem> */}
+							</Select>
+						</FormControl>
+					)}
 					<TextField
 						size="small"
 						// name="search"

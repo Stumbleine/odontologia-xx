@@ -21,9 +21,10 @@ export default function LogItemDetail({ disabled, data }) {
 	return (
 		<>
 			<Button
-				color="secondary"
+				sx={{ color: 'primary.main' }}
 				disabled={disabled}
 				size="small"
+				variant="outlined"
 				onClick={handleClickOpen}>
 				Ver detalle
 			</Button>
@@ -34,7 +35,7 @@ export default function LogItemDetail({ disabled, data }) {
 				disableEscapeKeyDown={true}>
 				<DialogTitle>Informacion capturado</DialogTitle>
 				<DialogContent sx={{ minWidth: 500 }}>
-					<Typography color="terciary" component="pre">
+					<Typography color="terciary" component="pre" sx={{ color: 'terciary.main' }}>
 						{JSON.stringify(data, null, 2)}
 					</Typography>
 					<DialogActions sx={{ p: 0 }}>
@@ -43,7 +44,7 @@ export default function LogItemDetail({ disabled, data }) {
 							onClick={handleClose}
 							// fullWidth
 							variant="outlined">
-							Cancelar
+							Cerrar
 						</Button>
 					</DialogActions>
 				</DialogContent>

@@ -27,7 +27,6 @@ export const create = (token, values) => async dispatch => {
 	newFormData.append('subtitulo', values.descripcion);
 
 	newFormData.append('foto', foto);
-	newFormData.append('id_unidad', 1);
 
 	values.files.forEach(element => {
 		newFormData.append('files[]', element);

@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser } from '../../store/UsersSlice';
 import { Download, OpenInNew } from '@mui/icons-material';
 import fileDownload from 'js-file-download';
-import API from '../../Utils/Connection';
+import API, { URL } from '../../Utils/Connection';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
 
 export default function ResourcesTable({ resources }) {
@@ -98,7 +98,7 @@ export default function ResourcesTable({ resources }) {
 								<Box sx={{ display: 'flex' }}>
 									<IconButton
 										onClick={() => {
-											handleDownload();
+											handleDownload(doc);
 										}}>
 										<Download />
 									</IconButton>

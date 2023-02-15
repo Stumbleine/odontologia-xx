@@ -9,10 +9,10 @@ import NewsCarousel from '../../../components/NewsCarousel';
 import { documents } from '../../../Utils/Constants';
 import DocumentsGrid from '../../../components/Grid/DocumentsGrid';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import API from '../../../Utils/Connection';
 
 export default function RotatingInternship() {
-	const { publicDocuments } = useSelector(state => state.documents);
-	const { news } = useSelector(state => state.news);
 	const theme = useTheme();
 	const head = {
 		nombres: 'Dr. Roberto Juan Barrientos Salazar',
@@ -20,6 +20,29 @@ export default function RotatingInternship() {
 		cargo: 'Jefe de internado rotatorio',
 		picture: '/imgs/profileFake.jpg',
 	};
+	const [documents, setDocuments] = useState(null);
+	const [news, setNews] = useState(null);
+	const fetchNews = async () => {
+		try {
+			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 3);
+			setDocuments(r.data.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	const fetchDocuments = async () => {
+		try {
+			const r = await API.get('/public/listar-noticias?id_unidad=' + 3);
+			setNews(r.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+	useEffect(() => {
+		fetchNews();
+		fetchDocuments();
+	}, []);
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ pb: 10 }}>
@@ -105,7 +128,7 @@ export default function RotatingInternship() {
 					</Box>
 					{/* noticias */}
 					<Box sx={{ p: 2, py: 3, background: theme.palette.terciary.main }}>
-						<DocumentsGrid documents={publicDocuments} />
+						<DocumentsGrid documents={documents} />
 					</Box>
 				</Card>
 			</Container>

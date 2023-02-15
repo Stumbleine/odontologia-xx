@@ -11,16 +11,16 @@ import { getNews } from '../store/NewsSlice';
 
 export default function DashboardLayout({ navlinks }) {
 	const [openSB, setOpenSB] = useState(false);
-	const { token } = useSelector(state => state.account);
+	const { token, rol } = useSelector(state => state.account);
 
 	// window.onload = function () {
 	// dispatch(getUserAsync(token));
 	// };
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getunidades(token));
-		dispatch(getPublicDocuments('token'));
-		dispatch(getNews('token'));
+		rol !== 'guest' && dispatch(getunidades(token));
+		// dispatch(getPublicDocuments('token'));
+		// dispatch(getNews('token'));
 	}, []);
 
 	return (

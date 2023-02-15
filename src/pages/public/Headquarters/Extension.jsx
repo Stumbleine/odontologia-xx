@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from '../../../components/Box/Page';
 import { Container } from '@mui/system';
 import { Box, Button, Card, CardMedia, Stack, Typography } from '@mui/material';
@@ -11,10 +11,9 @@ import { Link } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
 import { documents } from '../../../Utils/Constants';
 import { useSelector } from 'react-redux';
+import API from '../../../Utils/Connection';
 
 export default function Extension() {
-	const { publicDocuments } = useSelector(state => state.documents);
-	const { news } = useSelector(state => state.news);
 	const theme = useTheme();
 	const head = {
 		nombres: 'Dr. Roberto Juan Barrientos Salazar',
@@ -22,6 +21,29 @@ export default function Extension() {
 		cargo: 'Jefe de internado rotatorio',
 		picture: '/imgs/profileFake.jpg',
 	};
+	const [documents, setDocuments] = useState(null);
+	const [news, setNews] = useState(null);
+	const fetchNews = async () => {
+		try {
+			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 1);
+			setDocuments(r.data.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	const fetchDocuments = async () => {
+		try {
+			const r = await API.get('/public/listar-noticias?id_unidad=' + 1);
+			setNews(r.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+	useEffect(() => {
+		fetchNews();
+		fetchDocuments();
+	}, []);
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ pb: 10 }}>
@@ -91,7 +113,7 @@ export default function Extension() {
 					</Box>
 					{/* noticias */}
 					<Box sx={{ p: 2, py: 3, background: theme.palette.terciary.main }}>
-						<DocumentsGrid documents={publicDocuments} />
+						<DocumentsGrid documents={documents} />
 					</Box>
 				</Card>
 			</Container>

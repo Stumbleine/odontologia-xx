@@ -105,7 +105,7 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 
 	return (
 		<AppBar
-			position="static"
+			position="sticky"
 			elevation={1}
 			sx={{ zIndex: 'tooltip', background: 'white', position: 'relative' }}>
 			<Container maxWidth="xl">

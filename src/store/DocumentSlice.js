@@ -31,7 +31,7 @@ const constructDocumentURL = (search, unidad) => {
 };
 
 export const getPublicDocuments =
-	(token, search = 'all', unidad = 'all') =>
+	(search = 'all', unidad = 'all') =>
 	async dispatch => {
 		let url = constructDocumentURL(search, unidad);
 		try {
@@ -42,45 +42,22 @@ export const getPublicDocuments =
 		}
 	};
 
-const constructDirectoryURL = (search, unidad) => {
-	if (search !== 'all' || unidad !== 'all') {
-		return `/directorio/filtro?search=${search}&unidad=${unidad}`;
-	}
-	return `/directorio/listar?id_unidad=${1}`;
-};
-
-export const getDirectories = (token, search, unidad) => async dispatch => {
-	let url = constructDirectoryURL(search, unidad);
-
-	try {
-		const r = await API.get(url, {
-			headers: { Authorization: `Bearer ${token}` },
-		});
-		dispatch(setDirectories(r.data));
-	} catch (e) {
-		throw new Error(e);
-	}
-};
-
 export const createDocument = (token, values) => async dispatch => {
 	let newFormData = new FormData();
 	newFormData.append('nombre', values.directory);
 	newFormData.append('id_unidad', values.unidad);
-	newFormData.append('descripcion', 'descripcion');
-
-	newFormData.append('accesibilidad', values.accesibility);
 	values.files.forEach(element => {
 		newFormData.append('files[]', element);
 	});
 	try {
-		const r = await API.post('/directorio/crear', newFormData, {
+		const r = await API.post('/archivo-publico/crear', newFormData, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'multipart/form-data',
 			},
 		});
 		console.log('loginManual->r :', r);
-		dispatch(getDirectories(token));
+		// dispatch(getDirectories(token));
 		dispatch(getPublicDocuments(token));
 	} catch (e) {
 		throw new Error(e);
@@ -105,8 +82,53 @@ export const updateDocument = (token, values) => async dispatch => {
 			},
 		});
 		console.log('loginManual->r :', r);
-		dispatch(getDirectories(token));
+		// dispatch(getDirectories(token));
 		dispatch(getPublicDocuments(token));
+	} catch (e) {
+		throw new Error(e);
+	}
+};
+
+// directories
+const constructDirectoryURL = (search, unidad) => {
+	if (search !== 'all' || unidad !== 'all') {
+		return `/directorio/filtro?search=${search}&unidad=${unidad}`;
+	}
+	return `/directorio/listar?id_unidad=${1}`;
+};
+
+export const getDirectories =
+	(token, search = 'all', unidad = 'all') =>
+	async dispatch => {
+		let url = constructDirectoryURL(search, unidad);
+
+		try {
+			const r = await API.get(url, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			dispatch(setDirectories(r.data));
+		} catch (e) {
+			throw new Error(e);
+		}
+	};
+
+export const createDirectory = (token, values) => async dispatch => {
+	let newFormData = new FormData();
+	newFormData.append('nombre', values.directory);
+	newFormData.append('descripcion', values.descripcion);
+	values.files.forEach(element => {
+		newFormData.append('files[]', element);
+	});
+	try {
+		const r = await API.post('/directorio/crear', newFormData, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'multipart/form-data',
+			},
+		});
+		console.log('loginManual->r :', r);
+		dispatch(getDirectories(token));
+		// dispatch(getPublicDocuments(token));
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -118,19 +140,19 @@ export const deleteDocument = (token, idDocument) => async dispatch => {
 			headers: { Authorization: `Bearer ${token}` },
 		});
 		dispatch(getDirectories(token));
-		dispatch(getPublicDocuments(token));
+		// dispatch(getPublicDocuments(token));
 	} catch (e) {
 		throw new Error(e);
 	}
 };
-
+// directorie (archivos privados)
 export const deleteDirectory = (token, idDirectory) => async dispatch => {
 	try {
 		const r = await API.delete(`/directorio/eliminar?id=${idDirectory}`, {
 			headers: { Authorization: `Bearer ${token}` },
 		});
 		dispatch(getDirectories(token));
-		dispatch(getPublicDocuments(token));
+		// dispatch(getPublicDocuments(token));
 	} catch (e) {
 		throw new Error(e);
 	}

@@ -5,7 +5,7 @@ import axios from 'axios';
  * @exports API
  */
 
-export const URL = 'https://backend-sigloxx.herokuapp.com/';
+export const URL = 'https://backend-sigloxx.herokuapp.com';
 const API = axios.create({
 	baseURL: URL,
 	responseEncoding: 'utf8',

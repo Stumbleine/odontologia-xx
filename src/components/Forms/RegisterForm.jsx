@@ -23,6 +23,8 @@ import * as Yup from 'yup';
 import { registerUser } from '../../store/UsersSlice';
 import API from '../../Utils/Connection';
 import Back from '../Back';
+import Swal from 'sweetalert2';
+import { fireAlert } from '../../Utils/Sweet';
 
 export default function RegisterForm() {
 	const dispatch = useDispatch();
@@ -57,18 +59,34 @@ export default function RegisterForm() {
 			};
 			login()
 				.then(r => {
-					console.log('Login exitoso');
+					fireAlert({ title: 'Registro exitoso', icon: 'success' });
+
 					resetForm();
 					setSubmitting(false);
 				})
 				.catch(e => {
+					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' });
 					console.log(e);
 					setSubmitting(false);
 				});
 		},
 	});
 	const { getFieldProps, values, errors, touched, isSubmitting } = formik;
-
+	// const fireAlert = () => {
+	// 	Swal.fire({
+	// 		title: 'I am Sweet Alert 2.',
+	// 		showConfirmButton: true,
+	// 		showCancelButton: true,
+	// 		confirmButtonText: 'OK',
+	// 		cancelButtonText: 'Cancel',
+	// 		icon: 'warning',
+	// 	}).then(result => {
+	// 		/* Read more about isConfirmed, isDenied below */
+	// 		if (result.isConfirmed) {
+	// 			Swal.fire('Nice to meet you', '', 'success');
+	// 		} else Swal.fire(' Cancelled', '', 'error');
+	// 	});
+	// };
 	return (
 		<FormikProvider value={formik}>
 			<Form>
@@ -163,6 +181,7 @@ export default function RegisterForm() {
 							{touched.rol && errors.rol}
 						</FormHelperText>
 					</FormControl>
+
 					<Box sx={{ pt: 1, position: 'relative' }}>
 						<Button
 							color="secondary"

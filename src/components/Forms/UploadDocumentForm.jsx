@@ -25,8 +25,9 @@ import { Box } from '@mui/system';
 import { grey } from '@mui/material/colors';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { createDocument } from '../../store/DocumentSlice';
+import { createDirectory, createDocument } from '../../store/DocumentSlice';
 import UploadFiles from './UploadFiles';
+import { fireAlert } from '../../Utils/Sweet';
 
 export default function UploadDocumentForm() {
 	const { token } = useSelector(state => state.account);
@@ -40,28 +41,44 @@ export default function UploadDocumentForm() {
 	const formik = useFormik({
 		initialValues: {
 			directory: '',
-			accesibility: '',
+			descripcion: '',
+			accesibility: 'publico',
+			files: '',
 		},
 		enableReinitialize: true,
+		validate: values => {
+			let errores = {};
+			if (files === null) {
+				errores.files = 'Debe subir al menos 1 archivo.';
+			}
+			if (values.accesibility === 'privado' && values.directory === '') {
+				errores.directory = 'El nombre del directorio es obligatorio';
+			}
+			return errores;
+		},
 		validationSchema: Yup.object({
 			accesibility: Yup.string().required('La accesibilidad es obligatorio'),
-			// directory: Yup.string().required('El nombre de directorio es obligatorio'),
+			// directory:
+			// values.accesibility === 'private' &&
+			// Yup.string().required('El nombre de directorio es obligatorio'),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			values = { ...values, files: files };
 			const createNew = async () => {
-				values.accesibility === 'privado'
+				values.accesibility === 'publico'
 					? await dispatch(createDocument(token, values))
-					: await dispatch(createDocument(token, values));
+					: await dispatch(createDirectory(token, values));
 			};
 
 			createNew()
 				.then(r => {
-					console.log('Registro de noticia exitoso');
-					resetForm();
+					fireAlert({ title: 'Registro exitoso', icon: 'success' });
 					setSubmitting(false);
+					resetForm();
+					setFiles(null);
 				})
 				.catch(e => {
+					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' });
 					console.log(e);
 					setSubmitting(false);
 				});
@@ -89,15 +106,17 @@ export default function UploadDocumentForm() {
 						Añadir nuevo documento
 					</Typography>
 
-					<FormControl fullWidth>
+					<FormControl fullWidth required>
 						<InputLabel id="access-label">Accesibilidad</InputLabel>
 						<Select
 							labelId="access-label"
 							label="Accesibilidad"
+							required
 							defaultValue="publico"
 							fullWidth
+							// value="publico"
 							{...getFieldProps('accesibility')}
-							error={Boolean(touched.rol && errors.rol)}
+							error={Boolean(touched.accesibility && errors.accesibility)}
 							inputProps={{}}>
 							<MenuItem value="publico">Publico</MenuItem>
 							<MenuItem value="privado">Privado</MenuItem>
@@ -107,17 +126,30 @@ export default function UploadDocumentForm() {
 						</FormHelperText>
 					</FormControl>
 					{values.accesibility === 'privado' && (
-						<TextField
-							fullWidth
-							label="Nombre del directorio"
-							variant="outlined"
-							{...getFieldProps('directory')}
-							error={Boolean(touched.directory && errors.directory)}
-							helperText={touched.directory && errors.directory}
-						/>
+						<>
+							<TextField
+								fullWidth
+								label="Nombre del directorio"
+								variant="outlined"
+								{...getFieldProps('directory')}
+								required
+								error={Boolean(touched.directory && errors.directory)}
+								helperText={touched.directory && errors.directory}
+							/>
+							<TextField
+								fullWidth
+								required
+								label="Descripcion"
+								variant="outlined"
+								{...getFieldProps('descripcion')}
+							/>
+						</>
 					)}
 
 					<UploadFiles handleChangeFiles={handleChangeFiles} />
+					<FormHelperText sx={{ color: 'error.main', ml: 2 }}>
+						{touched.files && errors.files}
+					</FormHelperText>
 
 					<Box sx={{ width: '100%' }}>
 						{isSubmitting && <LinearProgress />}

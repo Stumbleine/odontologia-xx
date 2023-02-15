@@ -24,6 +24,7 @@ import { documents } from '../../Utils/Constants';
 import UploadFiles from './UploadFiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { create } from '../../store/NewsSlice';
+import { fireAlert } from '../../Utils/Sweet';
 
 export default function CreateNewForm() {
 	const dispatch = useDispatch();
@@ -71,10 +72,12 @@ export default function CreateNewForm() {
 					console.log('Registro de noticia exitoso');
 					resetForm();
 					setSubmitting(false);
+					fireAlert({ title: 'Registro exitoso', icon: 'success' });
 				})
 				.catch(e => {
 					console.log(e);
 					setSubmitting(false);
+					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' });
 				});
 			setSubmitting(false);
 		},

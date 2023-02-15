@@ -90,7 +90,7 @@ export default function UsersTable({ users }) {
 								sx={{
 									color: 'text.terciary',
 								}}>
-								{user.unidad.nombre}
+								{user.unidad?.nombre}
 							</TableCell>
 							<TableCell
 								sx={{

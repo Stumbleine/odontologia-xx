@@ -17,6 +17,8 @@ import DeleteAlert from '../Card/DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser } from '../../store/UsersSlice';
 import LogItemDetail from '../Dialog/LogItemDetail';
+import Swal from 'sweetalert2';
+import LogUserDetail from '../Dialog/LogUserDetail';
 
 export default function LogsTable({ logs }) {
 	const TABLE_HEAD = [
@@ -66,7 +68,7 @@ export default function LogsTable({ logs }) {
 								<LogItemDetail data={log.data} />
 							</TableCell>
 							<TableCell>
-								<LogItemDetail data={log.user} />
+								<LogUserDetail user={log.data_user} />
 							</TableCell>
 						</TableRow>
 					))}

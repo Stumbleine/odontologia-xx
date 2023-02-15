@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from '../../../components/Box/Page';
 import { Container } from '@mui/system';
 import { Box, Button, Card, CardMedia, Stack, Typography } from '@mui/material';
@@ -6,15 +6,19 @@ import { useTheme } from '@emotion/react';
 import NewCard from '../../../components/Card/NewCard';
 import NewsCarousel from '../../../components/NewsCarousel';
 import DocumentsGrid from '../../../components/Grid/DocumentsGrid';
-import { Add, Lock } from '@mui/icons-material';
+import { Add, Lock, Search } from '@mui/icons-material';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
 import { documents } from '../../../Utils/Constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import API from '../../../Utils/Connection';
+import { getPublicDocuments } from '../../../store/DocumentSlice';
+import { getNews } from '../../../store/NewsSlice';
 
 export default function Clinic() {
-	const { publicDocuments } = useSelector(state => state.documents);
-	const { news } = useSelector(state => state.news);
+	const [documents, setDocuments] = useState(null);
+	const [news, setNews] = useState(null);
+
 	const theme = useTheme();
 	const head = {
 		nombres: 'Dr. Roberto Juan Barrientos Salazar',
@@ -22,6 +26,28 @@ export default function Clinic() {
 		cargo: 'Jefe de internado rotatorio',
 		picture: '/imgs/profileFake.jpg',
 	};
+
+	const fetchNews = async () => {
+		try {
+			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 5);
+			setDocuments(r.data.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	const fetchDocuments = async () => {
+		try {
+			const r = await API.get('/public/listar-noticias?id_unidad=' + 5);
+			setNews(r.data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+	useEffect(() => {
+		fetchNews();
+		fetchDocuments();
+	}, []);
 
 	const router = useLocation();
 	const [modePrivate, setModePrivate] = useState(false);
@@ -124,7 +150,7 @@ export default function Clinic() {
 							</Button>
 						</Stack> */}
 						{router.pathname === '/jefaturas/clinica' && (
-							<DocumentsGrid documents={publicDocuments} />
+							<DocumentsGrid documents={documents} />
 						)}
 						<Outlet />
 					</Box>
