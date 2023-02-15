@@ -18,6 +18,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { signin } from '../../store/AuthSlice';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function LoginForm() {
 	const navigate = useNavigate();
@@ -51,7 +52,6 @@ export default function LoginForm() {
 					navigate('/');
 				})
 				.catch(e => {
-					console.log(e);
 					setSubmitting(false);
 				});
 		},

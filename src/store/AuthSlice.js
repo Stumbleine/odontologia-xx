@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Swal from 'sweetalert2';
 import API from '../Utils/Connection';
 import { account, setToken, setcClearAccount } from './AccountSlice';
 
@@ -37,6 +38,7 @@ export const signin = user => async dispatch => {
 		await dispatch(account(r.data.token));
 		dispatch(setAuth());
 	} catch (e) {
+		Swal.fire("Error", "Las credenciales no son válidas", "error")
 		dispatch(setAuthFailed());
 		throw new Error(e);
 	}
