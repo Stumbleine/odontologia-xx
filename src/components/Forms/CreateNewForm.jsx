@@ -25,10 +25,13 @@ import UploadFiles from './UploadFiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { create } from '../../store/NewsSlice';
 import { fireAlert } from '../../Utils/Sweet';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateNewForm() {
 	const dispatch = useDispatch();
 	const { token } = useSelector(state => state.account);
+	const navigate = useNavigate();
+
 	// const theme = useTheme();
 	// const CustomField = styled(TextField)(() => ({
 	// 	'& input': {
@@ -179,6 +182,7 @@ export default function CreateNewForm() {
 							sx={{ color: 'text.primary', mx: 1 }}
 							disabled={isSubmitting}
 							fullWidth
+							onClick={() => navigate(-1)}
 							variant="outlined">
 							Cancelar
 						</Button>

@@ -30,9 +30,18 @@ const constructDocumentURL = (search, unidad) => {
 	return `/public/listar-archivos-publicos`;
 };
 
+
+const constructPersonalDocumentURL = (search) => {
+	if (search !== 'all') {
+		return `/archivo-publico/listar?search=${search}`;
+	}
+	return `/archivo-publico/listar`;
+};
+
 export const getPublicDocuments =
 	(search = 'all', unidad = 'all') =>
 	async dispatch => {
+		console.log(search);
 		let url = constructDocumentURL(search, unidad);
 		try {
 			const r = await API.get(url);
@@ -42,6 +51,22 @@ export const getPublicDocuments =
 		}
 	};
 
+export const getPersonalPublicDocuments = 
+(token, search = 'all') =>
+	async dispatch => {
+		console.log(search);
+		let url = constructPersonalDocumentURL(search);
+		try {
+			const r = await API.get(url, {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			});
+			dispatch(setDocuments(r.data.data));
+		} catch (e) {
+			throw new Error(e);
+		}
+	};
 export const createDocument = (token, values) => async dispatch => {
 	let newFormData = new FormData();
 	newFormData.append('nombre', values.directory);

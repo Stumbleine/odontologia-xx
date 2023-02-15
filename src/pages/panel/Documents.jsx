@@ -17,7 +17,7 @@ import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import DirectoriesGrid from '../../components/Grid/DirectoriesGrid';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDirectories, getPublicDocuments } from '../../store/DocumentSlice';
+import { getDirectories, getPersonalPublicDocuments } from '../../store/DocumentSlice';
 import { grey } from '@mui/material/colors';
 import Filter from '../../components/Forms/Filter';
 
@@ -34,21 +34,21 @@ export default function Documents() {
 
 	useEffect(() => {
 		console.log(filterDir, filter);
-		dispatch(getPublicDocuments(token, filter.search, filter.unidad));
+		dispatch(getPersonalPublicDocuments(token,filter.search));
 		dispatch(getDirectories(token, filterDir.search, filterDir.unidad));
 	}, []);
 
 	const handlePublicUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
-		dispatch(getPublicDocuments(token, filter.search, event.target.value));
+		dispatch(getPersonalPublicDocuments(token,filter.search, event.target.value));
 	};
 	const handlePublicSearch = values => {
 		setFilter({ ...filter, search: values.searchPublic });
-		dispatch(getPublicDocuments(token, values.searchPublic, filter.unidad));
+		dispatch(getPersonalPublicDocuments(token,values.searchPublic));
 	};
 	const handleDirectoriesUnidad = event => {
 		setFilterDir({ ...filterDir, unidad: event.target.value });
-		dispatch(getPublicDocuments(token, filterDir.search, event.target.value));
+		dispatch(getPersonalPublicDocuments(token,filterDir.search, event.target.value));
 	};
 	const handleDirectoriesSearch = values => {
 		setFilterDir({ ...filterDir, search: values.search });

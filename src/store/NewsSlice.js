@@ -110,7 +110,7 @@ export const updateNew = (token, values) => async dispatch => {
 export const deleteNewFile = (token, idNew, idFile) => async dispatch => {
 	try {
 		const r = await API.delete(
-			`/noticia/eliminar-adjunto?id=${idNew}?id_adjunto=${idFile}`,
+			`/noticia/eliminar-adjunto?id=${idNew}&id_adjunto=${idFile}`,
 			{
 				headers: { Authorization: `Bearer ${token}` },
 			}

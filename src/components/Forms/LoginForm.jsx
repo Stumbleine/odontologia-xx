@@ -35,8 +35,8 @@ export default function LoginForm() {
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object().shape({
-			email: Yup.string().required(),
-			password: Yup.string().required(),
+			email: Yup.string().required('El email es obligatorio'),
+			password: Yup.string().required('La contraseña no es válida'),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			console.log(values);

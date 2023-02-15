@@ -27,11 +27,11 @@ export default function Resources() {
 
 	const handleUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
-		dispatch(getPublicDocuments('token', filter.search, event.target.value));
+		dispatch(getPublicDocuments(filter.search, event.target.value));
 	};
 	const handleSearch = values => {
 		setFilter({ ...filter, search: values.search });
-		dispatch(getPublicDocuments('token', values.search, filter.unidad));
+		dispatch(getPublicDocuments(values.search, filter.unidad));
 	};
 	return (
 		<Page settings={{ pt: 5, pb: 10 }}>
