@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { type } from '@testing-library/user-event/dist/type';
 import DeleteAlert from './DeleteAlert';
 import { deleteDocument } from '../../store/DocumentSlice';
+import { fireAlert } from '../../Utils/Sweet';
 
 export default function Document({ doc }) {
 	const { token, rol } = useSelector(state => state.account);
@@ -32,6 +33,15 @@ export default function Document({ doc }) {
 			fileDownload(res.data, doc.nombre + '.' + doc.extension);
 		});
 	};
+	const handleDownloadPublic = () => {
+		API.get('/public/obtener-archivo?id=' + doc.id, {
+			headers: { Authorization: `Bearer ${token}` },
+			responseType: 'blob',
+		}).then(res => {
+			fileDownload(res.data, doc.nombre + '.' + doc.extension);
+		});
+	};
+
 	const dispatch = useDispatch();
 	const deleteFetch = id => {
 		const fetch = async () => {
@@ -39,10 +49,10 @@ export default function Document({ doc }) {
 		};
 		fetch()
 			.then(r => {
-				console.log('Archivo eliminada exitosamente.', 'success');
+				fireAlert({title:"Archivo eliminado correctamente", icon:"success"})
 			})
 			.catch(e => {
-				console.log('Algo salió, vuelva a intentarlo.', 'error');
+				fireAlert({title:"Algo salió mal, vuelva a intentarlo", icon:"error"})
 			});
 	};
 	return (
@@ -92,7 +102,7 @@ export default function Document({ doc }) {
 				)}
 				<IconButton
 					onClick={() => {
-						handleDownload();
+						!doc.direccion.includes("/uploads/noticia")? handleDownload() : handleDownloadPublic();
 					}}>
 					<Download />
 				</IconButton>

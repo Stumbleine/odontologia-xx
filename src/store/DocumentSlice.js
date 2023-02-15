@@ -41,7 +41,7 @@ const constructPersonalDocumentURL = (search) => {
 export const getPublicDocuments =
 	(search = 'all', unidad = 'all') =>
 	async dispatch => {
-		console.log(search);
+		console.log("HOLA",search);
 		let url = constructDocumentURL(search, unidad);
 		try {
 			const r = await API.get(url);
@@ -167,7 +167,14 @@ export const deleteDocument = (token, idDocument) => async dispatch => {
 		dispatch(getDirectories(token));
 		// dispatch(getPublicDocuments(token));
 	} catch (e) {
-		throw new Error(e);
+		try {
+			const r = await API.delete(`/archivo-publico/eliminar?id_archivo=${idDocument}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			dispatch(getPersonalPublicDocuments(token));
+		} catch (error) {
+			throw new Error(e);
+		}
 	}
 };
 // directorie (archivos privados)

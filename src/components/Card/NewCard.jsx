@@ -25,7 +25,7 @@ export default function NewCard({ newest }) {
 		};
 		fetch()
 			.then(r => {
-				console.log('Archivo eliminada exitosamente.', 'success');
+				console.log('Archivo eliminada exitosamentes.', 'success');
 			})
 			.catch(e => {
 				console.log('Algo salió, vuelva a intentarlo.', 'error');

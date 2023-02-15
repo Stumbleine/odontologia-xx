@@ -19,6 +19,7 @@ import { FileIcon, extensions } from '../../Utils/extensionsFile';
 import { Box } from '@mui/system';
 import { grey } from '@mui/material/colors';
 import { deleteNewFile, updateNewFiles } from '../../store/NewsSlice';
+import { fireAlert } from '../../Utils/Sweet';
 
 export default function EditNewFiles({ disabled, newest }) {
 	const dispatch = useDispatch();
@@ -46,7 +47,7 @@ export default function EditNewFiles({ disabled, newest }) {
 				console.log('Archivo eliminada exitosamente.', 'success');
 			})
 			.catch(e => {
-				console.log('Algo salió, vuelva a intentarlo.', 'error');
+				fireAlert({title: "Ha ocurrido un error", icon: 'error'})
 			});
 	};
 
@@ -153,7 +154,7 @@ export default function EditNewFiles({ disabled, newest }) {
 						disabled={isSubmitting}
 						fullWidth
 						startIcon={<Save />}
-						onClick={() => dispatch(updateNewFiles(token, newest.id, files))}
+						onClick={() => {dispatch(updateNewFiles(token, newest.id, files)); handleClose()}}
 						variant="contained">
 						Guardar
 					</Button>

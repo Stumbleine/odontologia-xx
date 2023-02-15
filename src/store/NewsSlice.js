@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import API from '../Utils/Connection';
 import { account, setToken } from './AccountSlice';
 import { convertToB64 } from '../Utils/Converter';
+import { fireAlert } from '../Utils/Sweet';
 
 const initialState = {
 	news: [],
@@ -55,7 +56,7 @@ const constructURL = (search, unidad, id) => {
 	} else if (id !== undefined && id !== null) {
 		return `/noticia/listar-noticias?id_noticia=${id}`;
 	}
-	return `/public/listar-noticias`;
+	return `/noticia/filtro`;
 };
 
 export const getNews =
@@ -87,12 +88,13 @@ export const deleteNew = (token, idNew) => async dispatch => {
 	}
 };
 export const updateNew = (token, values) => async dispatch => {
-	const foto = await convertToB64(values.cover);
 	let newFormData = new FormData();
+	if(values.cover){
+		const foto = await convertToB64(values.cover);
+		newFormData.append('foto', foto);
+	}
 	newFormData.append('titulo', values.title);
 	newFormData.append('subtitulo', values.descripcion);
-	newFormData.append('foto', foto);
-	newFormData.append('id_unidad', 1);
 
 	try {
 		const r = await API.post('/noticia/actualizar?id_noticia=' + values.id, newFormData, {
@@ -101,6 +103,7 @@ export const updateNew = (token, values) => async dispatch => {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
+		fireAlert({title: "Noticia actualizada con exito", icon: 'success'})
 		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);
@@ -136,6 +139,7 @@ export const updateNewFiles = (token, idNew, files) => async dispatch => {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
+		fireAlert({title: "Archivo añadido correctamente", icon: 'success'})
 		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);

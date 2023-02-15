@@ -63,8 +63,8 @@ export default function EditNew({ newest, disabled }) {
 
 			createNew()
 				.then(r => {
-					console.log('Registro de noticia exitoso');
-					resetForm();
+					// resetForm();
+					handleClose();
 					setSubmitting(false);
 				})
 				.catch(e => {

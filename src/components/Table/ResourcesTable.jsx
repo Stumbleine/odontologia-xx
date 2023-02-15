@@ -40,6 +40,15 @@ export default function ResourcesTable({ resources }) {
 		});
 	};
 
+	const handleDownloadPublic = doc => {
+		API.get('/public/obtener-archivo?id=' + doc.id, {
+			headers: { Authorization: `Bearer ${token}` },
+			responseType: 'blob',
+		}).then(res => {
+			fileDownload(res.data, doc.nombre + '.' + doc.extension);
+		});
+	};
+
 	return (
 		<TableContainer component={Paper} sx={{ borderRadius: 2 }}>
 			<Table size="small">
@@ -98,7 +107,7 @@ export default function ResourcesTable({ resources }) {
 								<Box sx={{ display: 'flex' }}>
 									<IconButton
 										onClick={() => {
-											handleDownload(doc);
+											handleDownloadPublic(doc);
 										}}>
 										<Download />
 									</IconButton>

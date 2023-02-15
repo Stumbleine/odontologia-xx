@@ -25,6 +25,11 @@ export default function Resources() {
 	const dispatch = useDispatch();
 	const { publicDocuments } = useSelector(state => state.documents);
 
+
+	useEffect(() => {
+		dispatch(getPublicDocuments(filter.search));
+	}, []);
+
 	const handleUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
 		dispatch(getPublicDocuments(filter.search, event.target.value));
