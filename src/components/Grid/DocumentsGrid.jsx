@@ -6,7 +6,7 @@ import DocumentMinimal from '../Card/DocumentMinimal';
 import DirectoriesGrid from './DirectoriesGrid';
 import { directories } from '../../Utils/Constants';
 
-export default function DocumentsGrid({ documents, minimal }) {
+export default function DocumentsGrid({ documents, minimal, onlyRead = false }) {
 	const msgDocsNull = () => {
 		return (
 			<Stack
@@ -37,7 +37,11 @@ export default function DocumentsGrid({ documents, minimal }) {
 										alignItems: 'center',
 										display: 'flex',
 									}}>
-									{minimal ? <DocumentMinimal doc={doc} /> : <Document doc={doc} />}
+									{minimal ? (
+										<DocumentMinimal doc={doc} />
+									) : (
+										<Document onlyRead={onlyRead} doc={doc} />
+									)}
 								</Grid>
 						  ))
 						: msgDocsNull()

@@ -12,7 +12,7 @@ import {
 import React from 'react';
 import { blue, green, grey, purple, red } from '@mui/material/colors';
 import { Box } from '@mui/system';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
 import { Delete, Download, OpenInNew } from '@mui/icons-material';
 import API, { URL } from '../../Utils/Connection';
@@ -23,8 +23,10 @@ import DeleteAlert from './DeleteAlert';
 import { deleteDocument } from '../../store/DocumentSlice';
 import { fireAlert } from '../../Utils/Sweet';
 
-export default function Document({ doc }) {
+export default function Document({ doc, onlyRead = false }) {
 	const { token, rol } = useSelector(state => state.account);
+	const location = useLocation();
+
 	const handleDownload = () => {
 		API.get('/archivo-privado/obtener-archivo?id=' + doc.id, {
 			headers: { Authorization: `Bearer ${token}` },
@@ -49,10 +51,10 @@ export default function Document({ doc }) {
 		};
 		fetch()
 			.then(r => {
-				fireAlert({title:"Archivo eliminado correctamente", icon:"success"})
+				fireAlert({ title: 'Archivo eliminado correctamente', icon: 'success' });
 			})
 			.catch(e => {
-				fireAlert({title:"Algo salió mal, vuelva a intentarlo", icon:"error"})
+				fireAlert({ title: 'Algo salió mal, vuelva a intentarlo', icon: 'error' });
 			});
 	};
 	return (
@@ -94,7 +96,7 @@ export default function Document({ doc }) {
 					// background: 'red',s
 					py: 0.5,
 				}}>
-				{rol === 'ADM' && (
+				{rol === 'ADM' && onlyRead === false && (
 					<DeleteAlert
 						item={{ name: doc.nombre, type: 'archivo', id: doc.id }}
 						deleteFetch={deleteFetch}
@@ -102,7 +104,14 @@ export default function Document({ doc }) {
 				)}
 				<IconButton
 					onClick={() => {
-						!doc.direccion.includes("/uploads/noticia")? handleDownload() : handleDownloadPublic();
+						if (
+							doc.direccion.includes('/uploads/noticia') ||
+							doc.direccion.includes('/uploads/public')
+						) {
+							handleDownloadPublic();
+						} else {
+							handleDownload();
+						}
 					}}>
 					<Download />
 				</IconButton>

@@ -75,6 +75,29 @@ export const getNews =
 		}
 	};
 
+const constructPublicURL = (search, unidad, id) => {
+	if (search !== 'all' || unidad !== 'all') {
+		return `/public/filtro?search=${search}&unidad=${unidad}`;
+	} else if (id !== undefined && id !== null) {
+		return `/public/listar-noticias?id_noticia=${id}`;
+	}
+	return `/public/listar-noticias`;
+};
+export const getPublicNews =
+	(token, id = null, search = 'all', unidad = 'all') =>
+	async dispatch => {
+		let url = constructPublicURL(search, unidad, id);
+		try {
+			const r = await API.get(url, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			console.log('newspubliclist', r.data);
+			dispatch(setNews(r.data));
+		} catch (e) {
+			throw new Error(e);
+		}
+	};
+
 export const deleteNew = (token, idNew) => async dispatch => {
 	try {
 		const r = await API.delete(`/noticia/eliminar?id=` + idNew, {
@@ -89,7 +112,7 @@ export const deleteNew = (token, idNew) => async dispatch => {
 };
 export const updateNew = (token, values) => async dispatch => {
 	let newFormData = new FormData();
-	if(values.cover){
+	if (values.cover) {
 		const foto = await convertToB64(values.cover);
 		newFormData.append('foto', foto);
 	}
@@ -103,7 +126,7 @@ export const updateNew = (token, values) => async dispatch => {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
-		fireAlert({title: "Noticia actualizada con exito", icon: 'success'})
+		fireAlert({ title: 'Noticia actualizada con exito', icon: 'success' });
 		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);
@@ -139,7 +162,7 @@ export const updateNewFiles = (token, idNew, files) => async dispatch => {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
-		fireAlert({title: "Archivo añadido correctamente", icon: 'success'})
+		fireAlert({ title: 'Archivo añadido correctamente', icon: 'success' });
 		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);

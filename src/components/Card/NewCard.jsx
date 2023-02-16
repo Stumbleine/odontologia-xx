@@ -11,7 +11,7 @@ import DeleteAlert from './DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteNew } from '../../store/NewsSlice';
 import { OpenInNew } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EditNew from '../Dialog/EditNew';
 import EditNewFiles from '../Dialog/EditNewFiles';
 

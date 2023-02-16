@@ -79,7 +79,7 @@ export default function NewContent() {
 								borderRadius: 2,
 								mb: 1,
 							}}>
-							<DocumentsGrid documents={data?.archivos_adjuntos} />
+							<DocumentsGrid documents={data?.archivos_adjuntos} onlyRead={true} />
 						</Box>
 					</CardContent>
 				</Card>

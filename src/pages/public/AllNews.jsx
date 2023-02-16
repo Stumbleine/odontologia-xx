@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/system';
 import DocumentsGrid from '../../components/Grid/DocumentsGrid';
 import API from '../../Utils/Connection';
-import { getNews } from '../../store/NewsSlice';
+import { getNews, getPublicNews } from '../../store/NewsSlice';
 import { OpenInNew } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import NewContent from '../NewContent';
@@ -26,7 +26,7 @@ export default function AllNews() {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const listar = () => {
-			dispatch(getNews(token, null, 'all', 'all'));
+			dispatch(getPublicNews(token, null, 'all', 'all'));
 		};
 		listar();
 	}, []);
