@@ -8,6 +8,12 @@ export const publicNavlinks = [
 		dropdown: false,
 	},
 	{
+		path: '/uegc',
+		text: 'Unidad de evaluación y gestión de calidad',
+		icon: '',
+		dropdown: false,
+	},
+	{
 		path: '/jefaturas',
 		text: 'Jefaturas',
 		icon: '',

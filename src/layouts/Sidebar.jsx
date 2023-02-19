@@ -97,6 +97,27 @@ export default function Sidebar({ openSideBar, onCloseSideBar }) {
 						color: 'text.secondary',
 					}}
 					component={RouterLink}
+					to="/uegc">
+					{/* <Box
+							component="img"
+							src={`/svgs/icons/nav/${item.icon}.svg`}
+							style={{ color: 'red' }}
+							sx={{
+								marginRight: '20px',
+								width: 26,
+								height: 26,
+							}}
+						/> */}
+					Unidad de evaluación y gestión de calidad
+				</MenuItem>
+				<MenuItem
+					sx={{
+						py: 2,
+						px: 2,
+						borderRadius: 2,
+						color: 'text.secondary',
+					}}
+					component={RouterLink}
 					to="/jefaturas">
 					{/* <Box
 							component="img"

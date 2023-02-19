@@ -28,6 +28,7 @@ import NewContent from './pages/NewContent';
 import CareerDirection from './pages/public/Headquarters/CareerDirection';
 import Resources from './pages/public/Resources';
 import Logs from './pages/panel/Logs';
+import Uegc from './pages/public/Headquarters/Uegc';
 
 export default function Router() {
 	const { isAuth } = useSelector(state => state.auth);
@@ -54,7 +55,10 @@ export default function Router() {
 					path: 'login',
 					element: <Login />,
 				},
-
+				{
+					path: 'uegc',
+					element: <Uegc/>
+				},
 				{
 					path: 'direccion-de-carrera',
 					element: <CareerDirection />,
