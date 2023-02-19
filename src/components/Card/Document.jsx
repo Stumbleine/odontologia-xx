@@ -51,10 +51,10 @@ export default function Document({ doc, onlyRead = false }) {
 		};
 		fetch()
 			.then(r => {
-				fireAlert({ title: 'Archivo eliminado correctamente', icon: 'success' });
+				// fireAlert({ title: 'Archivo eliminado correctamente', icon: 'success' });
 			})
 			.catch(e => {
-				fireAlert({ title: 'Algo salió mal, vuelva a intentarlo', icon: 'error' });
+				// fireAlert({ title: 'Algo salió mal, vuelva a intentarlo', icon: 'error' });
 			});
 	};
 	return (

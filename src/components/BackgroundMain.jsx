@@ -8,7 +8,7 @@ export default function BackgroundMain({ height, filter }) {
 			style={{
 				position: 'absolute',
 				zIndex: 1,
-				backgroundImage: `url("imgs/imageMain.png")`,
+				backgroundImage: `url("imgs/sigloxx.jpeg")`,
 				left: 0,
 				width: '100%',
 				height: 'auto',
@@ -16,7 +16,7 @@ export default function BackgroundMain({ height, filter }) {
 				objectFit: 'fill',
 
 				backgroundRepeat: 'round',
-				filter: 'blur(4px)',
+				filter: 'blur(0px)',
 				//	background: 'rgba(56, 194, 209, 0.7)',
 			}}>
 			{/* <Box
