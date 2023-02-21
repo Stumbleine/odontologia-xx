@@ -75,7 +75,6 @@ export default function Users() {
 								<MenuItem value="all">Todos</MenuItem>
 								<MenuItem value="ADM">Administrador</MenuItem>
 								<MenuItem value="SUPER">Super Administrador</MenuItem>
-								<MenuItem value="SCRE">Secretaria</MenuItem>
 								{/* <MenuItem value="EXPIRADO">Expirado</MenuItem> */}
 							</Select>
 						</FormControl>
@@ -85,7 +84,7 @@ export default function Users() {
 						sx={{ width: { xs: '100%', md: 'auto' } }}
 						// disabled={disabledBtn}
 						component={Link}
-						to="/panel/añadir-usuario"
+						to="/panel/aniadir-usuario"
 						startIcon={<Add />}
 						variant="contained">
 						Usuario

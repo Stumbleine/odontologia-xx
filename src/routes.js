@@ -57,7 +57,7 @@ export default function Router() {
 				},
 				{
 					path: 'uegc',
-					element: <Uegc/>
+					element: <Uegc />,
 				},
 				{
 					path: 'direccion-de-carrera',
@@ -148,7 +148,7 @@ export default function Router() {
 					element: <CreateNew />,
 				},
 				{
-					path: 'añadir-usuario',
+					path: 'aniadir-usuario',
 					element: <UserRegister />,
 				},
 				{

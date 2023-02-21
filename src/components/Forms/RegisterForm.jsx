@@ -42,18 +42,18 @@ export default function RegisterForm() {
 			apellidos: '',
 			email: '',
 			password: '',
-			rol: '',
+			// rol: '',
 			unidad: '',
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object().shape({
-			nombres: Yup.string().required(),
-			apellidos: Yup.string().required(),
-			email: Yup.string().required(),
-			password: Yup.string().required(),
+			nombres: Yup.string().required('Los nombres son requeridos'),
+			apellidos: Yup.string().required('Los apellidos es requerido'),
+			email: Yup.string().required('El correo electronico es requerido'),
+			password: Yup.string().required('La contrañesa es requerido'),
+			unidad: Yup.string().required('Debe elegir una unidad.'),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
-			console.log(values);
 			const login = async () => {
 				await dispatch(registerUser(token, values));
 			};
@@ -72,21 +72,6 @@ export default function RegisterForm() {
 		},
 	});
 	const { getFieldProps, values, errors, touched, isSubmitting } = formik;
-	// const fireAlert = () => {
-	// 	Swal.fire({
-	// 		title: 'I am Sweet Alert 2.',
-	// 		showConfirmButton: true,
-	// 		showCancelButton: true,
-	// 		confirmButtonText: 'OK',
-	// 		cancelButtonText: 'Cancel',
-	// 		icon: 'warning',
-	// 	}).then(result => {
-	// 		/* Read more about isConfirmed, isDenied below */
-	// 		if (result.isConfirmed) {
-	// 			Swal.fire('Nice to meet you', '', 'success');
-	// 		} else Swal.fire(' Cancelled', '', 'error');
-	// 	});
-	// };
 	return (
 		<FormikProvider value={formik}>
 			<Form>
@@ -98,7 +83,7 @@ export default function RegisterForm() {
 					sx={{ p: 2, borderRadius: 2, background: 'white' }}>
 					<Box>
 						<Typography variant="h5" align="center" sx={{ color: 'text.black' }}>
-							Registrar usuario
+							Registrar Usuario Administrador
 						</Typography>
 					</Box>
 					<TextField
@@ -143,7 +128,7 @@ export default function RegisterForm() {
 							),
 						}}
 					/>
-					<FormControl fullWidth>
+					{/* <FormControl fullWidth>
 						<InputLabel id="role-label">Rol</InputLabel>
 						<Select
 							labelId="role-label"
@@ -161,7 +146,7 @@ export default function RegisterForm() {
 						<FormHelperText sx={{ color: 'error.main' }}>
 							{touched.rol && errors.rol}
 						</FormHelperText>
-					</FormControl>
+					</FormControl> */}
 					<FormControl fullWidth>
 						<InputLabel id="unidad-label">Unidad</InputLabel>
 						<Select
@@ -178,7 +163,7 @@ export default function RegisterForm() {
 							))}
 						</Select>
 						<FormHelperText sx={{ color: 'error.main' }}>
-							{touched.rol && errors.rol}
+							{touched.unidad && errors.unidad}
 						</FormHelperText>
 					</FormControl>
 
@@ -214,6 +199,6 @@ export default function RegisterForm() {
 }
 export const rols = [
 	{ id_rol: 2, rol: 'administrador', label: 'Administrador' },
-	{ id_rol: 1, rol: 'secretaria', label: 'Secretaria' },
+	// { id_rol: 1, rol: 'secretaria', label: 'Secretaria' },
 	// { id_rol: 1, rol: 'superadministrador', label: 'Super administrador' },
 ];

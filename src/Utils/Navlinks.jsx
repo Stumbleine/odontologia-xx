@@ -79,17 +79,9 @@ export const panelADM = [
 	// { path: '/panel/usuarios', text: 'Usuarios', icon: '' },
 	// { path: '/panel/resumen', text: 'Resumen', icon: '' },
 ];
-export const panelSCRE = [
-	{ path: '/', text: 'Inicio', icon: '' },
-	{ path: '/panel/archivos', text: 'Archivos', icon: '' },
-	{ path: '/panel/noticias', text: 'Noticias', icon: '' },
-	// { path: '/panel/usuarios', text: 'Usuarios', icon: '' },
-	// { path: '/panel/resumen', text: 'Resumen', icon: '' },
-];
 
 export const getNavlinks = (rol = 'guest') => {
 	if (rol === 'guest') return publicNavlinks;
 	if (rol === 'ADM') return panelADM;
-	if (rol === 'SCRE') return panelSCRE;
 	if (rol === 'SUPER') return panelSUPER;
 };

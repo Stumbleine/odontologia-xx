@@ -83,7 +83,6 @@ export default function UsersTable({ users }) {
 									color: 'text.terciary',
 								}}>
 								{user.tag_rol === 'ADMIN' && 'Administrador'}
-								{user.tag_rol === 'SCRE' && 'Secretaria'}
 								{user.tag_rol === 'SUPER' && 'Super Administrador'}
 							</TableCell>
 							<TableCell

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import API from '../Utils/Connection';
-import { account, setToken } from './AccountSlice';
 
 const initialState = {
 	users: null,

@@ -59,17 +59,15 @@ export default function News() {
 					spacing={2}
 					sx={{ mb: 2, justifyContent: 'space-between' }}>
 					<Filter handleSearch={handleSearch} handleUnidad={handleUnidad} />
-					{rol === 'ADM' && (
-						<Button
-							sx={{ width: { xs: '100%', md: 'auto' } }}
-							// disabled={disabledBtn}
-							component={Link}
-							to="/panel/añadir-noticia"
-							startIcon={<Add />}
-							variant="contained">
-							Noticia
-						</Button>
-					)}
+					<Button
+						sx={{ width: { xs: '100%', md: 'auto' } }}
+						// disabled={disabledBtn}
+						component={Link}
+						to="/panel/añadir-noticia"
+						startIcon={<Add />}
+						variant="contained">
+						Noticia
+					</Button>
 				</Stack>
 				<Grid container spacing={{ xs: 1 }}>
 					{news?.map(n => (

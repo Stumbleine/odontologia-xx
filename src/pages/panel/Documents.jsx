@@ -34,21 +34,21 @@ export default function Documents() {
 
 	useEffect(() => {
 		console.log(filterDir, filter);
-		dispatch(getPersonalPublicDocuments(token,filter.search));
+		dispatch(getPersonalPublicDocuments(token, filter.search));
 		dispatch(getDirectories(token, filterDir.search, filterDir.unidad));
 	}, []);
 
 	const handlePublicUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
-		dispatch(getPersonalPublicDocuments(token,filter.search, event.target.value));
+		dispatch(getPersonalPublicDocuments(token, filter.search, event.target.value));
 	};
 	const handlePublicSearch = values => {
 		setFilter({ ...filter, search: values.searchPublic });
-		dispatch(getPersonalPublicDocuments(token,values.searchPublic));
+		dispatch(getPersonalPublicDocuments(token, values.searchPublic));
 	};
 	const handleDirectoriesUnidad = event => {
 		setFilterDir({ ...filterDir, unidad: event.target.value });
-		dispatch(getPersonalPublicDocuments(token,filterDir.search, event.target.value));
+		dispatch(getPersonalPublicDocuments(token, filterDir.search, event.target.value));
 	};
 	const handleDirectoriesSearch = values => {
 		setFilterDir({ ...filterDir, search: values.search });
@@ -66,22 +66,22 @@ export default function Documents() {
 					}}>
 					Archivos
 				</Typography>
-				{rol === 'ADM' && (
-					<Stack
-						direction={{ xs: 'column', md: 'row' }}
-						spacing={2}
-						sx={{ py: 2, justifyContent: 'flex-end' }}>
-						<Button
-							sx={{ width: { xs: '100%', md: 'auto' } }}
-							// disabled={disabledBtn}
-							component={Link}
-							to="/panel/subir-documento"
-							startIcon={<Add />}
-							variant="contained">
-							Archivo
-						</Button>
-					</Stack>
-				)}
+				{/* {rol === 'ADM' && ( */}
+				<Stack
+					direction={{ xs: 'column', md: 'row' }}
+					spacing={2}
+					sx={{ py: 2, justifyContent: 'flex-end' }}>
+					<Button
+						sx={{ width: { xs: '100%', md: 'auto' } }}
+						// disabled={disabledBtn}
+						component={Link}
+						to="/panel/subir-documento"
+						startIcon={<Add />}
+						variant="contained">
+						Archivo
+					</Button>
+				</Stack>
+				{/* )} */}
 				<Stack direction="row">
 					<Button
 						sx={{
