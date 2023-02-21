@@ -23,7 +23,6 @@ export const registerUser = (token, user) => async dispatch => {
 		const r = await API.post('user/registro', user, {
 			headers: { Authorization: `Bearer ${token}` },
 		});
-		console.log('loginManual->r :', r);
 		dispatch(getUsers(token));
 	} catch (e) {
 		throw new Error(e);

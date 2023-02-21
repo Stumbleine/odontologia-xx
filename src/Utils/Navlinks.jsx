@@ -71,13 +71,14 @@ export const panelSUPER = [
 	{ path: '/panel/noticias', text: 'Noticias', icon: '' },
 	{ path: '/panel/usuarios', text: 'Usuarios', icon: '' },
 	{ path: '/panel/logs', text: 'Logs', icon: '' },
+	{ path: '/panel/resumen', text: 'Resumen', icon: '' },
 ];
 export const panelADM = [
 	{ path: '/', text: 'Inicio', icon: '' },
 	{ path: '/panel/archivos', text: 'Archivos', icon: '' },
 	{ path: '/panel/noticias', text: 'Noticias', icon: '' },
 	// { path: '/panel/usuarios', text: 'Usuarios', icon: '' },
-	// { path: '/panel/resumen', text: 'Resumen', icon: '' },
+	{ path: '/panel/resumen', text: 'Resumen', icon: '' },
 ];
 
 export const getNavlinks = (rol = 'guest') => {
