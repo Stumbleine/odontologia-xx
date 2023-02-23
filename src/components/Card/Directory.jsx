@@ -32,7 +32,7 @@ export default function Directory({ directory }) {
 		};
 		fetch()
 			.then(r => {
-				console.log('Archivo eliminada exitosamente.', 'success');
+				console.log('Directorio eliminado exitosamente.', 'success');
 			})
 			.catch(e => {
 				console.log('Algo salió, vuelva a intentarlo.', 'error');

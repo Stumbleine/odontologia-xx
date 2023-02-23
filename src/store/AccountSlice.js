@@ -36,7 +36,6 @@ export const account = token => async dispatch => {
 		const r = await API.get('/user/cuenta', {
 			headers: { Authorization: `Bearer ${token}` },
 		});
-		console.log('account->r :', r);
 		dispatch(setUser(r.data));
 	} catch (e) {
 		throw new Error(e);

@@ -35,7 +35,6 @@ export default function Router() {
 	const { rol } = useSelector(state => state.account);
 
 	const router = useLocation();
-	console.log(router.pathname);
 	const navlinks = getNavlinks(rol);
 	return useRoutes([
 		{

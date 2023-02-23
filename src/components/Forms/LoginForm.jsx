@@ -40,13 +40,11 @@ export default function LoginForm() {
 			password: Yup.string().required('La contraseña no es válida'),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
-			console.log(values);
 			const login = async () => {
 				await dispatch(signin(values));
 			};
 			login()
 				.then(r => {
-					console.log('Login exitoso');
 					resetForm();
 					setSubmitting(false);
 					navigate('/');

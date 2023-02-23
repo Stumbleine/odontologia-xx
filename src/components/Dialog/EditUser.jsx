@@ -44,7 +44,6 @@ export default function EditUser({ user, disabled }) {
 			email: Yup.string().required(),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
-			console.log(values);
 			const login = async () => {
 				await dispatch(updateUser(token, values, user.id));
 			};
@@ -127,9 +126,6 @@ export default function EditUser({ user, disabled }) {
 											fullWidth
 											size="large"
 											type="submit"
-											onClick={() => {
-												console.log(values);
-											}}
 											disabled={isSubmitting}>
 											Guardar
 										</Button>

@@ -33,19 +33,17 @@ export default authSlice.reducer;
 export const signin = user => async dispatch => {
 	try {
 		const r = await API.post('/auth/login', user);
-		console.log('loginManual->r :', r);
 		await dispatch(setToken(r.data.token));
 		await dispatch(account(r.data.token));
 		dispatch(setAuth());
 	} catch (e) {
-		Swal.fire("Error", "Las credenciales no son válidas", "error")
+		Swal.fire('Error', 'Las credenciales no son válidas', 'error');
 		dispatch(setAuthFailed());
 		throw new Error(e);
 	}
 };
 
 export const logout = () => async dispatch => {
-	console.log('logoput');
 	dispatch(setcClearAccount());
 	dispatch(setLogout());
 };

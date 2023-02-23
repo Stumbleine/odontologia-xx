@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from '../../components/Box/Page';
 import {
-	Card,
-	CardActionArea,
-	CardContent,
-	CardMedia,
 	Container,
 	Grid,
 	IconButton,
+	Pagination,
+	Stack,
 	Typography,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,58 +17,49 @@ import { OpenInNew } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import NewContent from '../NewContent';
 import NewCard from '../../components/Card/NewCard';
+import Msg from '../../components/Box/Msg';
 
 export default function AllNews() {
 	const { news } = useSelector(state => state.news);
 	const { token } = useSelector(state => state.account);
 	const dispatch = useDispatch();
+	const [page, setPage] = useState(0);
+	const count = Math.ceil(20 / 20);
 	useEffect(() => {
 		const listar = () => {
 			dispatch(getPublicNews(token, null, 'all', 'all'));
 		};
 		listar();
-	}, []);
+	}, [page]);
 
-	useEffect(() => {
-		console.log('Noticias', news);
-	}, [news]);
-
+	const handlePageActual = (event, value) => {
+		dispatch(setPage(parseInt(value) - 1));
+	};
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ py: 5 }}>
 				<Grid container spacing={2}>
-					{news.length > 0 &&
+					{news?.length > 0 ? (
 						news.map(n => {
 							return (
 								<Grid item xs={12} md={6} key={n.id}>
 									<NewCard newest={n} />
-									{/* <Card>
-										<CardMedia
-											component="img"
-											sx={{ width: '100%', height: 300 }}
-											image={n.foto}
-										/>
-										<CardContent sx={{ flexGrow: 1 }}>
-											<Typography
-												variant="h6"
-												sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-												{n.titulo}
-											</Typography>
-										</CardContent>
-										<DocumentsGrid />
-										<CardActionArea>
-											<IconButton
-												target="_blank"
-												component={Link}
-												to={`/noticias/${n.id}`}>
-												<OpenInNew />
-											</IconButton>
-										</CardActionArea>
-									</Card> */}
 								</Grid>
 							);
-						})}
+						})
+					) : (
+						<Msg msg={'No se econtraron noticias.'} />
+					)}
 				</Grid>
+				<Stack spacing={2} sx={{ mt: 2 }} alignItems="center">
+					<Pagination
+						count={count}
+						variant="outlined"
+						shape="rounded"
+						page={parseInt(page) + 1}
+						onChange={handlePageActual}
+					/>
+				</Stack>
 			</Container>
 		</Page>
 	);

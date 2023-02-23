@@ -6,6 +6,7 @@ import { fireAlert } from '../Utils/Sweet';
 
 const initialState = {
 	news: [],
+	page: 0,
 };
 
 const newsSlice = createSlice({
@@ -32,11 +33,7 @@ export const create = (token, values) => async dispatch => {
 	values.files.forEach(element => {
 		newFormData.append('files[]', element);
 	});
-	/*
-	for (const value of newFormData.values()) {
-		console.log(value);
-	}
-    */
+
 	try {
 		const r = await API.post('/noticia/crear', newFormData, {
 			headers: {
@@ -44,7 +41,6 @@ export const create = (token, values) => async dispatch => {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
-		console.log('createNew->r :', r);
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -62,13 +58,11 @@ const constructURL = (search, unidad, id) => {
 export const getNews =
 	(token, id = null, search = 'all', unidad = 'all') =>
 	async dispatch => {
-		console.log(id, search, unidad);
 		let url = constructURL(search, unidad, id);
 		try {
 			const r = await API.get(url, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			console.log('newslist', r.data);
 			dispatch(setNews(r.data));
 		} catch (e) {
 			throw new Error(e);
@@ -91,7 +85,6 @@ export const getPublicNews =
 			const r = await API.get(url, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			console.log('newspubliclist', r.data);
 			dispatch(setNews(r.data));
 		} catch (e) {
 			throw new Error(e);
@@ -103,8 +96,6 @@ export const deleteNew = (token, idNew) => async dispatch => {
 		const r = await API.delete(`/noticia/eliminar?id=` + idNew, {
 			headers: { Authorization: `Bearer ${token}` },
 		});
-		console.log('newslist', r.data);
-		// dispatch(setNews(r.data));
 		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);
@@ -141,7 +132,6 @@ export const deleteNewFile = (token, idNew, idFile) => async dispatch => {
 				headers: { Authorization: `Bearer ${token}` },
 			}
 		);
-		// console.log('newslist', r.data);
 		dispatch(getNews(token));
 	} catch (e) {
 		throw new Error(e);

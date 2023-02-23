@@ -13,18 +13,15 @@ const localStorageMiddleware = ({ getState }) => {
 		const appState = {
 			auth: st.auth,
 			account: st.account,
-			// setting: st.setting,
 		};
-		// console.log('appState=>', appState);
 		localStorage.setItem('app', JSON.stringify(appState));
 		return result;
 	};
 };
 
 const reHydrateStore = () => {
-	// console.log('Rehydrate=>', localStorage.getItem('appState'));
 	if (localStorage.getItem('app') !== null) {
-		return JSON.parse(localStorage.getItem('app')); // re-hydrate the store
+		return JSON.parse(localStorage.getItem('app'));
 	}
 };
 

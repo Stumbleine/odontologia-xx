@@ -186,9 +186,6 @@ export default function UploadDocumentForm() {
 							sx={{ textTransform: 'none' }}
 							disabled={isSubmitting}
 							startIcon={<Save />}
-							onClick={() => {
-								console.log(values);
-							}}
 							type="submit"
 							size="large"
 							variant="contained"

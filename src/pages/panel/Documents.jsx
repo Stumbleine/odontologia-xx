@@ -8,6 +8,7 @@ import {
 	InputLabel,
 	MenuItem,
 	OutlinedInput,
+	Pagination,
 	Select,
 	Typography,
 } from '@mui/material';
@@ -20,39 +21,59 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDirectories, getPersonalPublicDocuments } from '../../store/DocumentSlice';
 import { grey } from '@mui/material/colors';
 import Filter from '../../components/Forms/Filter';
+import Msg from '../../components/Box/Msg';
 
 export default function Documents() {
 	const theme = useTheme();
 	// const [jefatura, setJefatura] = useState('All');
 	const [mode, setMode] = useState('public');
 	const { token, rol } = useSelector(state => state.account);
-	const { publicDocuments, directories } = useSelector(state => state.documents);
+	const { publicDocuments, directories, totalPD, totalD } = useSelector(
+		state => state.documents
+	);
 	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
 	const [filterDir, setFilterDir] = useState({ search: 'all', unidad: 'all' });
+	const [pagePD, setPagePD] = useState(0);
+	const [pageD, setPageD] = useState(0);
+
+	const countPD = Math.ceil(totalPD / 20);
+	const countD = Math.ceil(totalD / 20);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log(filterDir, filter);
-		dispatch(getPersonalPublicDocuments(token, filter.search));
-		dispatch(getDirectories(token, filterDir.search, filterDir.unidad));
-	}, []);
+		dispatch(getPersonalPublicDocuments(token, pagePD, filter.search));
+	}, [pagePD]);
+
+	useEffect(() => {
+		dispatch(getDirectories(token, pagePD, filterDir.search, filterDir.unidad));
+	}, [pageD]);
 
 	const handlePublicUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
-		dispatch(getPersonalPublicDocuments(token, filter.search, event.target.value));
+		dispatch(
+			getPersonalPublicDocuments(token, pagePD, filter.search, event.target.value)
+		);
 	};
 	const handlePublicSearch = values => {
 		setFilter({ ...filter, search: values.searchPublic });
-		dispatch(getPersonalPublicDocuments(token, values.searchPublic));
+		dispatch(getPersonalPublicDocuments(token, pagePD, values.searchPublic));
 	};
 	const handleDirectoriesUnidad = event => {
 		setFilterDir({ ...filterDir, unidad: event.target.value });
-		dispatch(getPersonalPublicDocuments(token, filterDir.search, event.target.value));
+		dispatch(
+			getPersonalPublicDocuments(token, pagePD, filterDir.search, event.target.value)
+		);
 	};
 	const handleDirectoriesSearch = values => {
 		setFilterDir({ ...filterDir, search: values.search });
 		dispatch(getDirectories(token, values.search, filterDir.unidad));
+	};
+	const handlePagePublic = (event, value) => {
+		dispatch(setPagePD(parseInt(value) - 1));
+	};
+	const handlePageDirectories = (event, value) => {
+		dispatch(setPageD(parseInt(value) - 1));
 	};
 	return (
 		<Page settings={{ pt: 5, pb: 10 }}>
@@ -145,7 +166,21 @@ export default function Documents() {
 								prefixId="public"
 							/>
 							<Box sx={{ my: 2 }}></Box>
-							<DocumentsGrid documents={publicDocuments} />
+							{publicDocuments?.length > 0 ? (
+								<DocumentsGrid documents={publicDocuments} />
+							) : (
+								<Msg msg={'No se encontraron archivos publicos.'} />
+							)}
+							<Stack spacing={2} sx={{ mt: 2 }} alignItems="center">
+								<Pagination
+									count={countPD}
+									variant="outlined"
+									shape="rounded"
+									sx={{ color: 'primary', borderColor: 'white' }}
+									page={parseInt(pagePD) + 1}
+									onChange={handlePagePublic}
+								/>
+							</Stack>
 						</>
 					) : (
 						<>
@@ -156,8 +191,21 @@ export default function Documents() {
 								prefixId="directory"
 							/>
 							<Box sx={{ my: 2 }}></Box>
-
-							<DirectoriesGrid directories={directories} />
+							{directories?.length > 0 ? (
+								<DirectoriesGrid directories={directories} />
+							) : (
+								<Msg msg={'No se encontraron archivos/directorios.'} />
+							)}
+							<Stack spacing={2} sx={{ mt: 2 }} alignItems="center">
+								<Pagination
+									count={countD}
+									variant="outlined"
+									shape="rounded"
+									page={parseInt(pageD) + 1}
+									sx={{ color: 'primary' }}
+									onChange={handlePageDirectories}
+								/>
+							</Stack>
 						</>
 					)}
 				</Box>

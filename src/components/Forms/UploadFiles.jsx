@@ -9,7 +9,6 @@ export default function UploadFiles({ handleChangeFiles, children }) {
 
 	const handleFileEvent = e => {
 		const chosenFiles = Array.prototype.slice.call(e.target.files);
-		console.log(chosenFiles);
 		setUploadedFiles(chosenFiles);
 		handleChangeFiles(chosenFiles);
 	};

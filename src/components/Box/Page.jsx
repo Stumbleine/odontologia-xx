@@ -5,10 +5,6 @@ import React, { useEffect } from 'react';
 import Footer from '../Footer';
 
 export default function Page({ children, settings }) {
-	useEffect(() => {
-		console.log(settings);
-	}, []);
-
 	return (
 		<Box
 			sx={{
@@ -17,7 +13,7 @@ export default function Page({ children, settings }) {
 				paddingBottom: settings?.pb,
 				// background:'blue',
 				//	height:'100vh',
-				zIndex:0
+				zIndex: 0,
 			}}>
 			{children}
 			{/* <Footer /> */}

@@ -25,7 +25,6 @@ export const getunidades = token => async dispatch => {
 		const r = await API.get('/unidad/listar', {
 			headers: { Authorization: `Bearer ${token}` },
 		});
-		console.log('unidades', r.data);
 		dispatch(setUnidades(r.data));
 	} catch (e) {
 		throw new Error(e);
