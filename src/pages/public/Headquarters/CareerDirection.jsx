@@ -27,7 +27,7 @@ export default function CareerDirection() {
 	const [news, setNews] = useState(null);
 	const fetchNews = async () => {
 		try {
-			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 3);
+			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 6);
 			setDocuments(r.data);
 		} catch (e) {
 			console.log(e);
@@ -36,7 +36,7 @@ export default function CareerDirection() {
 
 	const fetchDocuments = async () => {
 		try {
-			const r = await API.get('/public/listar-noticias?id_unidad=' + 3);
+			const r = await API.get('/public/listar-noticias?id_unidad=' + 6);
 			setNews(r.data);
 		} catch (e) {
 			console.log(e);

@@ -263,7 +263,7 @@ export const ddItems = [
 	},
 	{
 		href: '/jefaturas/clinica',
-		text: 'Jefatura clínica',
+		text: 'Jefatura de clínicas',
 	},
 	{
 		href: '/jefaturas/internado-rotatorio',

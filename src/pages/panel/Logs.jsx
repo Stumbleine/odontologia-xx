@@ -20,7 +20,7 @@ export default function Logs() {
 
 		fetchLogs()
 			.then(r => {
-				setLogs(r.data);
+				setLogs(r.data.data);
 			})
 			.catch(e => {
 				console.log('error', e);

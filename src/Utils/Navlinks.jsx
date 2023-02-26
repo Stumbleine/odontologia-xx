@@ -33,7 +33,7 @@ export const publicNavlinks = [
 			},
 			{
 				href: '/jefaturas/clinica',
-				text: 'Jefatura clínica',
+				text: 'Jefatura de clínicas',
 			},
 			{
 				href: '/jefaturas/internado-rotatorio',

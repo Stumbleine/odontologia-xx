@@ -24,7 +24,7 @@ export default function Academic() {
 	const [news, setNews] = useState(null);
 	const fetchNews = async () => {
 		try {
-			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 2);
+			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 4);
 			setDocuments(r.data);
 		} catch (e) {
 			console.log(e);
@@ -33,7 +33,7 @@ export default function Academic() {
 
 	const fetchDocuments = async () => {
 		try {
-			const r = await API.get('/public/listar-noticias?id_unidad=' + 2);
+			const r = await API.get('/public/listar-noticias?id_unidad=' + 4);
 			setNews(r.data);
 		} catch (e) {
 			console.log(e);

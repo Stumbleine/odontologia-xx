@@ -63,7 +63,7 @@ export const getNews =
 			const r = await API.get(url, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			dispatch(setNews(r.data));
+			dispatch(setNews(r.data.data));
 		} catch (e) {
 			throw new Error(e);
 		}
@@ -85,7 +85,7 @@ export const getPublicNews =
 			const r = await API.get(url, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			dispatch(setNews(r.data));
+			dispatch(setNews(r.data.data));
 		} catch (e) {
 			throw new Error(e);
 		}
