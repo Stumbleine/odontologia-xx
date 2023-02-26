@@ -37,7 +37,7 @@ export default function CareerDirection() {
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 6);
-			setNews(r.data);
+			setNews(r.data.data);
 		} catch (e) {
 			console.log(e);
 		}
@@ -61,7 +61,7 @@ export default function CareerDirection() {
 								<Typography
 									variant="h3"
 									sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-									Direccion de carrera
+									Dirección de carrera
 								</Typography>
 								{/* <Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
 									Direccion de carrera

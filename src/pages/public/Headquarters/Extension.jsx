@@ -35,7 +35,7 @@ export default function Extension() {
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 1);
-			setNews(r.data);
+			setNews(r.data.data);
 		} catch (e) {
 			console.log(e);
 		}

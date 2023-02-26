@@ -34,7 +34,7 @@ export default function RotatingInternship() {
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 3);
-			setNews(r.data);
+			setNews(r.data.data);
 		} catch (e) {
 			console.log(e);
 		}
@@ -98,7 +98,7 @@ export default function RotatingInternship() {
 							p: 2,
 							background: theme.palette.secondary.main,
 						}}>
-						<Box
+						{/* <Box
 							sx={{
 								display: 'flex',
 								alignItems: 'center',
@@ -113,7 +113,7 @@ export default function RotatingInternship() {
 								startIcon={<Add />}>
 								Noticia
 							</Button>
-						</Box>
+						</Box> */}
 						<NewsCarousel news={news} />
 					</Box>
 				</Card>

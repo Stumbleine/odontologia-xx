@@ -171,8 +171,8 @@ Participar activamente en proyectos y programas de la salud bucodental en equipo
 									</Typography>
 									<CardMedia
 										component="img"
-										image="/imgs/organigrama.png"
-										sx={{ width: 500, height: 'auto' }}
+										image="/imgs/organigrama.jpeg"
+										sx={{ width: 880, height: 'auto' }}
 									/>
 								</Card>
 							</Stack>

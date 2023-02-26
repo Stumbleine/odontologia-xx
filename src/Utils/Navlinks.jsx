@@ -3,7 +3,7 @@ export const publicNavlinks = [
 
 	{
 		path: '/direccion-de-carrera',
-		text: 'Direccion de carrera',
+		text: 'Dirección de carrera',
 		icon: '',
 		dropdown: false,
 	},

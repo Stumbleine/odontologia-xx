@@ -31,7 +31,7 @@ import { fireAlert } from '../../Utils/Sweet';
 import { useNavigate } from 'react-router-dom';
 
 export default function UploadDocumentForm() {
-	const { token } = useSelector(state => state.account);
+	const { token, user } = useSelector(state => state.account);
 	const { unidades } = useSelector(state => state.unidad);
 
 	const dispatch = useDispatch();
@@ -63,7 +63,7 @@ export default function UploadDocumentForm() {
 		},
 		validationSchema: Yup.object({
 			accesibility: Yup.string().required('La accesibilidad es obligatorio'),
-			unidad: Yup.string().required('Debe elegir una unidad.'),
+			unidad: user.tag_rol === "SUPER"? (Yup.string().required('Debe elegir una unidad.')):Yup.string(),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			values = { ...values, files: files };
@@ -135,25 +135,28 @@ export default function UploadDocumentForm() {
 							{touched.accesibility && errors.accesibility}
 						</FormHelperText>
 					</FormControl>
-					<FormControl fullWidth>
-						<InputLabel id="unidad-label">Unidad</InputLabel>
-						<Select
-							labelId="unidad-label"
-							label="Unidad"
-							fullWidth
-							{...getFieldProps('unidad')}
-							error={Boolean(touched.unidad && errors.unidad)}
-							inputProps={{}}>
-							{unidades?.map(und => (
-								<MenuItem key={und.id} value={und.id}>
-									{und.nombre}
-								</MenuItem>
-							))}
-						</Select>
-						<FormHelperText sx={{ color: 'error.main' }}>
-							{touched.unidad && errors.unidad}
-						</FormHelperText>
-					</FormControl>
+					{
+						user.tag_rol === "SUPER"? (<FormControl fullWidth>
+							<InputLabel id="unidad-label">Unidad</InputLabel>
+							<Select
+								labelId="unidad-label"
+								label="Unidad"
+								fullWidth
+								{...getFieldProps('unidad')}
+								error={Boolean(touched.unidad && errors.unidad)}
+								inputProps={{}}>
+								{unidades?.map(und => (
+									<MenuItem key={und.id} value={und.id}>
+										{und.nombre}
+									</MenuItem>
+								))}
+							</Select>
+							<FormHelperText sx={{ color: 'error.main' }}>
+								{touched.unidad && errors.unidad}
+							</FormHelperText>
+						</FormControl>):<></>
+					}
+					
 					{values.accesibility === 'privado' && (
 						<>
 							<TextField

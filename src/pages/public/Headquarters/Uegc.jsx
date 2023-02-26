@@ -37,7 +37,7 @@ export default function Uegc() {
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 7);
-			setNews(r.data);
+			setNews(r.data.data);
 		} catch (e) {
 			console.log(e);
 		}

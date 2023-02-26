@@ -35,7 +35,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CreateNewForm() {
 	const dispatch = useDispatch();
 	const { unidades } = useSelector(state => state.unidad);
-	const { token } = useSelector(state => state.account);
+	const { token, rol } = useSelector(state => state.account);
 	const navigate = useNavigate();
 
 	// const theme = useTheme();
@@ -69,7 +69,7 @@ export default function CreateNewForm() {
 		validationSchema: Yup.object({
 			title: Yup.string().required('El titulo es obligatorio'),
 			descripcion: Yup.string().required('La descripcion de la noticia es obligatorio'),
-			unidad: Yup.string().required('Debe elegir una unidad.'),
+			unidad: rol==="SUPER"?Yup.string().required('Debe elegir una unidad.'):Yup.string(),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			values = { ...values, cover: coverFile, files: files };
@@ -183,25 +183,27 @@ export default function CreateNewForm() {
 						error={Boolean(touched.descripcion && errors.descripcion)}
 						helperText={touched.descripcion && errors.descripcion}
 					/>
-					<FormControl fullWidth>
-						<InputLabel id="unidad-label">Unidad</InputLabel>
-						<Select
-							labelId="unidad-label"
-							label="Unidad"
-							fullWidth
-							{...getFieldProps('unidad')}
-							error={Boolean(touched.unidad && errors.unidad)}
-							inputProps={{}}>
-							{unidades?.map(und => (
-								<MenuItem key={und.id} value={und.id}>
-									{und.nombre}
-								</MenuItem>
-							))}
-						</Select>
-						<FormHelperText sx={{ color: 'error.main' }}>
-							{touched.unidad && errors.unidad}
-						</FormHelperText>
-					</FormControl>
+					{
+						rol === "SUPER"?(<FormControl fullWidth>
+							<InputLabel id="unidad-label">Unidad</InputLabel>
+							<Select
+								labelId="unidad-label"
+								label="Unidad"
+								fullWidth
+								{...getFieldProps('unidad')}
+								error={Boolean(touched.unidad && errors.unidad)}
+								inputProps={{}}>
+								{unidades?.map(und => (
+									<MenuItem key={und.id} value={und.id}>
+										{und.nombre}
+									</MenuItem>
+								))}
+							</Select>
+							<FormHelperText sx={{ color: 'error.main' }}>
+								{touched.unidad && errors.unidad}
+							</FormHelperText>
+						</FormControl>):<></>
+					}
 					<UploadFiles handleChangeFiles={handleChangeFiles} />
 					<CardActions sx={{ display: 'flex' }}>
 						<Button

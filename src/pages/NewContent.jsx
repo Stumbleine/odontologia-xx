@@ -27,6 +27,9 @@ const styles = {
 		width: '600px',
 		margin: '0px 20px 10px 0px',
 	},
+	img:{
+		objectFit: 'fill'
+	}
 };
 
 export default function NewContent() {
@@ -45,7 +48,7 @@ export default function NewContent() {
 					<CardContent sx={{ flexGrow: 1 }}>
 						<div style={styles.container}>
 							<div style={styles.floated}>
-								<img src={data?.foto} alt={data?.titulo} width="600" height="600" />
+								<img src={data?.foto} alt={data?.titulo} style={styles.img} width="600" height="600" />
 							</div>
 							<Typography
 								sx={{
