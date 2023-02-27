@@ -33,16 +33,16 @@ export default function EditUser({ user, disabled }) {
 	};
 	const formik = useFormik({
 		initialValues: {
-			nombres: '',
-			apellidos: '',
-			email: '',
+			nombres: user.nombres,
+			apellidos: user.apellidos,
+			// email: '',
 			unidad: '',
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object().shape({
 			nombres: Yup.string().required(),
 			apellidos: Yup.string().required(),
-			email: Yup.string().required(),
+			// email: Yup.string().required(),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			const login = async () => {
@@ -103,14 +103,14 @@ export default function EditUser({ user, disabled }) {
 									helperText={touched.apellidos && errors.apellidos}
 									error={Boolean(touched.apellidos && errors.apellidos)}
 								/>
-								<TextField
+								{/* <TextField
 									fullWidth
 									autoComplete="email"
 									label="Correo electronico"
 									{...getFieldProps('email')}
 									helperText={touched.email && errors.email}
 									error={Boolean(touched.email && errors.email)}
-								/>
+								/> */}
 
 								<DialogActions sx={{ p: 0 }}>
 									<Button
