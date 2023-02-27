@@ -21,6 +21,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { updateNew } from '../../store/NewsSlice';
+import { fireAlert } from '../../Utils/Sweet';
 
 export default function EditNew({ newest, disabled }) {
 	const dispatch = useDispatch();
@@ -65,10 +66,14 @@ export default function EditNew({ newest, disabled }) {
 				.then(r => {
 					// resetForm();
 					handleClose();
+					fireAlert({ title: 'Noticia actualizada exitosamente', icon: 'success' });
+
 					setSubmitting(false);
 				})
 				.catch(e => {
 					console.log(e);
+					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
+
 					setSubmitting(false);
 				});
 			setSubmitting(false);

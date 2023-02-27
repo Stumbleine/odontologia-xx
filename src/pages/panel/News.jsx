@@ -9,6 +9,7 @@ import {
 	InputLabel,
 	MenuItem,
 	OutlinedInput,
+	Pagination,
 	Select,
 	Stack,
 	Typography,
@@ -23,25 +24,28 @@ import Filter from '../../components/Forms/Filter';
 export default function News() {
 	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
 
-	const { news } = useSelector(state => state.news);
-
+	const { news, total } = useSelector(state => state.news);
+	const [page, setPage] = useState(0);
+	const count = Math.ceil(total / 20);
 	const { token, rol } = useSelector(state => state.account);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const listar = () => {
-			dispatch(getNews(token, null, filter.search, filter.unidad));
+			dispatch(getNews(token, page, null, filter.search, filter.unidad));
 		};
 		listar();
 	}, []);
 	const handleUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
-		dispatch(getNews(token, null, filter.search, event.target.value));
+		dispatch(getNews(token, page, null, filter.search, event.target.value));
 	};
 	const handleSearch = values => {
 		setFilter({ ...filter, search: values.search });
-		dispatch(getNews(token, null, values.search, filter.unidad));
+		dispatch(getNews(token, page, null, values.search, filter.unidad));
 	};
-
+	const handlePageActual = (event, value) => {
+		setPage(parseInt(value) - 1);
+	};
 	return (
 		<Page settings={{ pt: 5, pb: 10 }}>
 			<Container maxWidth="xl" sx={{}}>
@@ -76,6 +80,15 @@ export default function News() {
 						</Grid>
 					))}
 				</Grid>
+				<Stack spacing={2} sx={{ mt: 2 }} alignItems="center">
+					<Pagination
+						count={count}
+						variant="outlined"
+						shape="rounded"
+						page={parseInt(page) + 1}
+						onChange={handlePageActual}
+					/>
+				</Stack>
 			</Container>
 		</Page>
 	);

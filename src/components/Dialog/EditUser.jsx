@@ -18,6 +18,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { updateUser } from '../../store/UsersSlice';
+import { fireAlert } from '../../Utils/Sweet';
 
 export default function EditUser({ user, disabled }) {
 	const dispatch = useDispatch();
@@ -49,12 +50,13 @@ export default function EditUser({ user, disabled }) {
 			};
 			login()
 				.then(r => {
-					console.log('Login exitoso');
 					resetForm();
+					fireAlert({ title: 'Usuario actualizado exitosamente', icon: 'success' });
 					setSubmitting(false);
 				})
 				.catch(e => {
 					console.log(e);
+					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
 					setSubmitting(false);
 				});
 		},

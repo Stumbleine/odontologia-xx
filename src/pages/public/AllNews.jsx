@@ -20,11 +20,11 @@ import NewCard from '../../components/Card/NewCard';
 import Msg from '../../components/Box/Msg';
 
 export default function AllNews() {
-	const { news } = useSelector(state => state.news);
+	const { news, total } = useSelector(state => state.news);
 	const { token } = useSelector(state => state.account);
 	const dispatch = useDispatch();
 	const [page, setPage] = useState(0);
-	const count = Math.ceil(20 / 20);
+	const count = Math.ceil(total / 20);
 	useEffect(() => {
 		const listar = () => {
 			dispatch(getPublicNews(token, null, 'all', 'all'));

@@ -6,16 +6,19 @@ export default function HeadInformation({ head }) {
 	return (
 		<Box sx={{ display: 'flex', flexGrow: 0 }}>
 			<Stack sx={{ px: 2, textAlign: 'end' }}>
-				<Typography fontWeight={600}>{head.nombres}</Typography>
-				<Typography>{head.email}</Typography>
-				<Typography>{head.cargo}</Typography>
+				<Typography fontWeight={600}>
+					{head?.nombres} {head?.apellidos}
+				</Typography>
+
+				<Typography>{head?.email}</Typography>
+				<Typography>{head?.cargo}</Typography>
 			</Stack>
-			<Box
+			{/* <Box
 				component="img"
 				style={{ height: 100, withd: 100, borderRadius: '10px' }}
 				src={head?.picture}
 				alt="foto responsable de jefatura"
-			/>
+			/> */}
 		</Box>
 	);
 }

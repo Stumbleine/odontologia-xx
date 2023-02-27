@@ -63,7 +63,10 @@ export default function UploadDocumentForm() {
 		},
 		validationSchema: Yup.object({
 			accesibility: Yup.string().required('La accesibilidad es obligatorio'),
-			unidad: user.tag_rol === "SUPER"? (Yup.string().required('Debe elegir una unidad.')):Yup.string(),
+			unidad:
+				user.tag_rol === 'SUPER'
+					? Yup.string().required('Debe elegir una unidad.')
+					: Yup.string(),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			values = { ...values, files: files };
@@ -86,7 +89,7 @@ export default function UploadDocumentForm() {
 				})
 				.catch(e => {
 					fireAlert(
-						{ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' },
+						{ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' },
 						navigate
 					);
 					console.log(e);
@@ -135,8 +138,8 @@ export default function UploadDocumentForm() {
 							{touched.accesibility && errors.accesibility}
 						</FormHelperText>
 					</FormControl>
-					{
-						user.tag_rol === "SUPER"? (<FormControl fullWidth>
+					{user.tag_rol === 'SUPER' ? (
+						<FormControl fullWidth>
 							<InputLabel id="unidad-label">Unidad</InputLabel>
 							<Select
 								labelId="unidad-label"
@@ -154,9 +157,11 @@ export default function UploadDocumentForm() {
 							<FormHelperText sx={{ color: 'error.main' }}>
 								{touched.unidad && errors.unidad}
 							</FormHelperText>
-						</FormControl>):<></>
-					}
-					
+						</FormControl>
+					) : (
+						<></>
+					)}
+
 					{values.accesibility === 'privado' && (
 						<>
 							<TextField

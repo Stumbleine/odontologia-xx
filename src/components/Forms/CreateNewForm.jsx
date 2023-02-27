@@ -69,7 +69,8 @@ export default function CreateNewForm() {
 		validationSchema: Yup.object({
 			title: Yup.string().required('El titulo es obligatorio'),
 			descripcion: Yup.string().required('La descripcion de la noticia es obligatorio'),
-			unidad: rol==="SUPER"?Yup.string().required('Debe elegir una unidad.'):Yup.string(),
+			unidad:
+				rol === 'SUPER' ? Yup.string().required('Debe elegir una unidad.') : Yup.string(),
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			values = { ...values, cover: coverFile, files: files };
@@ -91,7 +92,7 @@ export default function CreateNewForm() {
 				.catch(e => {
 					console.log(e);
 					setSubmitting(false);
-					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' });
+					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
 				});
 			setSubmitting(false);
 		},
@@ -183,8 +184,8 @@ export default function CreateNewForm() {
 						error={Boolean(touched.descripcion && errors.descripcion)}
 						helperText={touched.descripcion && errors.descripcion}
 					/>
-					{
-						rol === "SUPER"?(<FormControl fullWidth>
+					{rol === 'SUPER' ? (
+						<FormControl fullWidth>
 							<InputLabel id="unidad-label">Unidad</InputLabel>
 							<Select
 								labelId="unidad-label"
@@ -202,8 +203,10 @@ export default function CreateNewForm() {
 							<FormHelperText sx={{ color: 'error.main' }}>
 								{touched.unidad && errors.unidad}
 							</FormHelperText>
-						</FormControl>):<></>
-					}
+						</FormControl>
+					) : (
+						<></>
+					)}
 					<UploadFiles handleChangeFiles={handleChangeFiles} />
 					<CardActions sx={{ display: 'flex' }}>
 						<Button

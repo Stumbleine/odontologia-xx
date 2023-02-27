@@ -3,6 +3,7 @@ import {
 	CardActionArea,
 	Dialog,
 	DialogContent,
+	Grid,
 	IconButton,
 	LinearProgress,
 	Typography,
@@ -15,6 +16,7 @@ import { OpenInFull, Save } from '@mui/icons-material';
 import UploadFiles from '../Forms/UploadFiles';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFilesDirectory } from '../../store/DocumentSlice';
+import Document from '../Card/Document';
 
 export default function DirectoryContent({ children, directory, openWithIcon }) {
 	const [open, setOpen] = React.useState(false);
@@ -81,7 +83,15 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 					</Typography>
 				</Box>
 				<DialogContent sx={{ px: 3, pb: 3, bgcolor: 'terciary.main' }}>
-					<DocumentsGrid documents={directory?.archivos} />
+					{/* <DocumentsGrid documents={directory?.archivos} /> */}
+
+					<Grid container spacing={{ xs: 1, xl: 2 }}>
+						{directory?.archivos.map((doc, index) => (
+							<Grid key={index} xl={4} xs={12} lg={6}>
+								<Document doc={doc} />
+							</Grid>
+						))}
+					</Grid>
 					<Box sx={{ mt: 1 }}>
 						<Typography>Agregar mas documentos</Typography>
 						<UploadFiles handleChangeFiles={handleChangeFiles}>

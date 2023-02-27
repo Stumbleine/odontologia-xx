@@ -14,11 +14,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import API from '../../../Utils/Connection';
 import { getPublicDocuments } from '../../../store/DocumentSlice';
 import { getNews } from '../../../store/NewsSlice';
+import { getResponsable } from '../../../store/UnidadSlice';
 
 export default function Clinic() {
 	const [documents, setDocuments] = useState(null);
 	const [news, setNews] = useState(null);
-
+	const [responsable, setResponsable] = useState(null);
 	const theme = useTheme();
 	const head = {
 		nombres: 'Dr. Roberto Juan Barrientos Salazar',
@@ -26,7 +27,7 @@ export default function Clinic() {
 		cargo: 'Jefe de internado rotatorio',
 		picture: '/imgs/profileFake.jpg',
 	};
-
+	const dispatch = useDispatch();
 	const fetchNews = async () => {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 5);
@@ -44,13 +45,19 @@ export default function Clinic() {
 			console.log(e);
 		}
 	};
+
+	const fetchResponsable = async () => {
+		const r = await dispatch(getResponsable(5));
+		setResponsable(r.data);
+	};
+
 	useEffect(() => {
 		fetchNews();
 		fetchDocuments();
+		fetchResponsable();
 	}, []);
 
 	const router = useLocation();
-	const [modePrivate, setModePrivate] = useState(false);
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ pb: 10 }}>
@@ -71,7 +78,7 @@ export default function Clinic() {
 									Clinica
 								</Typography>
 							</Box>
-							<HeadInformation head={head} />
+							<HeadInformation head={responsable} />
 						</Box>
 						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
 							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
@@ -120,35 +127,6 @@ export default function Clinic() {
 					</Box>
 					{/* noticias */}
 					<Box sx={{ p: 2, py: 3, background: theme.palette.terciary.main }}>
-						{/* <Stack
-							spacing={2}
-							direction="row"
-							sx={{
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'flex-end',
-								mb: 2,
-							}}>
-							<Button
-								onClick={() => {
-									setModePrivate(!modePrivate);
-								}}
-								variant="contained"
-								color="primary"
-								component={Link}
-								to={modePrivate ? '/jefaturas/clinica' : '/jefaturas/clinica/directory'}
-								startIcon={<Lock />}>
-								{modePrivate ? 'Publico' : 'Privado'}
-							</Button>
-							<Button
-								variant="contained"
-								color="auxiliar"
-								component={Link}
-								to="/subir-documento"
-								startIcon={<Add />}>
-								Documento
-							</Button>
-						</Stack> */}
 						{router.pathname === '/jefaturas/clinica' && (
 							<DocumentsGrid documents={documents} />
 						)}

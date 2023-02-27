@@ -14,7 +14,7 @@ export default function Resources() {
 	const [page, setPage] = useState(0);
 	const count = Math.ceil(totalPD / 20);
 	useEffect(() => {
-		console.log(totalPD, page);
+		// console.log(totalPD, page);
 		dispatch(getPublicDocuments(page, filter.search));
 	}, [page]);
 
@@ -28,7 +28,7 @@ export default function Resources() {
 	};
 
 	const handlePageActual = (event, value) => {
-		dispatch(setPage(parseInt(value) - 1));
+		setPage(parseInt(value) - 1);
 	};
 
 	return (

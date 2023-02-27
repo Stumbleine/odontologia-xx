@@ -44,10 +44,12 @@ export default function EditNewFiles({ disabled, newest }) {
 		};
 		fetch()
 			.then(r => {
+				fireAlert({ title: 'Noticia actualizada exitosamente', icon: 'success' });
+
 				console.log('Archivo eliminada exitosamente.', 'success');
 			})
 			.catch(e => {
-				fireAlert({title: "Ha ocurrido un error", icon: 'error'})
+				fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
 			});
 	};
 
@@ -154,7 +156,10 @@ export default function EditNewFiles({ disabled, newest }) {
 						disabled={isSubmitting}
 						fullWidth
 						startIcon={<Save />}
-						onClick={() => {dispatch(updateNewFiles(token, newest.id, files)); handleClose()}}
+						onClick={() => {
+							dispatch(updateNewFiles(token, newest.id, files));
+							handleClose();
+						}}
 						variant="contained">
 						Guardar
 					</Button>

@@ -6,7 +6,8 @@ import { fireAlert } from '../Utils/Sweet';
 
 const initialState = {
 	news: [],
-	page: 0,
+	total: 0,
+	// pagFilter:0
 };
 
 const newsSlice = createSlice({
@@ -16,10 +17,13 @@ const newsSlice = createSlice({
 		setNews: (state, { payload }) => {
 			state.news = payload;
 		},
+		setTotal: (state, { payload }) => {
+			state.page = payload;
+		},
 	},
 });
 
-export const { setNews } = newsSlice.actions;
+export const { setNews, setTotal } = newsSlice.actions;
 export default newsSlice.reducer;
 
 export const create = (token, values) => async dispatch => {
@@ -46,24 +50,25 @@ export const create = (token, values) => async dispatch => {
 	}
 };
 
-const constructURL = (search, unidad, id) => {
+const constructURL = (offset, search, unidad, id) => {
 	if (search !== 'all' || unidad !== 'all') {
-		return `/noticia/filtro?search=${search}&unidad=${unidad}`;
+		return `/noticia/filtro?offset=${offset}&search=${search}&unidad=${unidad}`;
 	} else if (id !== undefined && id !== null) {
-		return `/noticia/listar-noticias?id_noticia=${id}`;
+		return `/noticia/listar-noticias?offset=${offset}&id_noticia=${id}`;
 	}
-	return `/noticia/filtro`;
+	return `/noticia/filtro?offset=${offset}`;
 };
 
 export const getNews =
-	(token, id = null, search = 'all', unidad = 'all') =>
+	(token, offset = 0, id = null, search = 'all', unidad = 'all') =>
 	async dispatch => {
-		let url = constructURL(search, unidad, id);
+		let url = constructURL(offset, search, unidad, id);
 		try {
 			const r = await API.get(url, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			dispatch(setNews(r.data.data));
+			dispatch(setTotal(r.data.total));
 		} catch (e) {
 			throw new Error(e);
 		}
@@ -86,6 +91,7 @@ export const getPublicNews =
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			dispatch(setNews(r.data.data));
+			dispatch(setTotal(r.data.total));
 		} catch (e) {
 			throw new Error(e);
 		}

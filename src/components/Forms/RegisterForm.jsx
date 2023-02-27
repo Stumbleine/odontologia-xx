@@ -65,13 +65,13 @@ export default function RegisterForm() {
 					setSubmitting(false);
 				})
 				.catch(e => {
-					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'warning' });
+					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
 					console.log(e);
 					setSubmitting(false);
 				});
 		},
 	});
-	const { getFieldProps, values, errors, touched, isSubmitting } = formik;
+	const { getFieldProps, handleSubmitvalues, errors, touched, isSubmitting } = formik;
 	return (
 		<FormikProvider value={formik}>
 			<Form>
