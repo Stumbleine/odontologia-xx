@@ -26,7 +26,11 @@ export default function DashboardLayout({ navlinks }) {
 	return (
 		<>
 			<Navbar onOpenSidebar={() => setOpenSB(true)} navlinks={navlinks} />
-			<Sidebar openSideBar={openSB} onCloseSideBar={() => setOpenSB(false)} />
+			<Sidebar
+				openSideBar={openSB}
+				onCloseSideBar={() => setOpenSB(false)}
+				navlinks={navlinks}
+			/>
 			<Outlet />
 		</>
 	);

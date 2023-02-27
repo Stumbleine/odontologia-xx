@@ -105,7 +105,7 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 
 	return (
 		<AppBar
-			position="sticky"
+			position="static"
 			elevation={1}
 			sx={{ zIndex: 'tooltip', background: 'white', position: 'relative' }}>
 			<Container maxWidth="xl">
@@ -176,26 +176,12 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 								</>
 							);
 						})}
-						{/* <ItemNav href="/acerca-de-la-carrera" text="Acerca de la carrera" />
-						<ItemNav href="/direccion-de-carrera" text="Dirección de carrera" />
-						<ItemDropDown
-							href="/jefaturas"	
-							text="Jefaturas"
-							dropdown={true}
-							ddItems={ddItems}
-						/>
-						<ItemNav href="/contacto" text="Contacto" />
-						<ItemNav href="/noticias" text="Noticias" />
-						{!isAuth && <ItemNav href="/login" text="Ingresar" />}
-						{isAuth && <ItemNav href="/users" text="Usuarios" />} */}
 					</Box>
 					{!isAuth && (
 						<Button
 							component={Link}
 							to="/login"
-							// size="small"
 							sx={{
-								// color: active ? 'auxiliar.main' : 'text.disabled',
 								mx: 1,
 								color: 'terciary.main',
 							}}>
@@ -209,13 +195,8 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 								alignItems: 'center',
 							}}>
 							<Button
-								// component={Link}
-								// to={props.href}
-								// variant="outlined"
-								// size="small"
 								onClick={() => dispatch(logout())}
 								sx={{
-									// color: active ? 'auxiliar.main' : 'text.disabled',
 									mx: 1,
 									color: 'terciary.main',
 								}}>
@@ -247,30 +228,3 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 		</AppBar>
 	);
 }
-
-export const ddItems = [
-	{
-		href: '/jefaturas',
-		text: 'Jefaturas',
-	},
-	{
-		href: '/jefaturas/academica',
-		text: 'Jefatura académica',
-	},
-	{
-		href: '/jefaturas/extension',
-		text: 'Jefatura de extensión',
-	},
-	{
-		href: '/jefaturas/clinica',
-		text: 'Jefatura de clínicas',
-	},
-	{
-		href: '/jefaturas/internado-rotatorio',
-		text: 'Jefatura de internado rotatorio',
-	},
-	{
-		href: '/jefaturas/investigacion',
-		text: 'Jefatura de investigación',
-	},
-];

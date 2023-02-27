@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useLocation, Link as RouterLink } from 'react-router-dom';
 import LogoSXX from '../components/LogoSXX';
 
-export default function Sidebar({ openSideBar, onCloseSideBar }) {
+export default function Sidebar({ openSideBar, onCloseSideBar, navlinks }) {
 	const theme = useTheme();
 	const { pathname } = useLocation();
 	//	const { user } = useSelector(state => state.user);
@@ -16,9 +16,9 @@ export default function Sidebar({ openSideBar, onCloseSideBar }) {
 	}, [pathname]);
 	return (
 		<Drawer open={openSideBar} onClose={onCloseSideBar} position="sticky">
-			<Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-				<LogoSXX />
-			</Box>
+			{/* <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', mt: 10 }}>
+					<LogoSXX />
+				</Box> */}
 			{/* <Box sx={{ mb: 5, mx: 2 }}>
 				<Link underline="none" component={RouterLink} to="#">
 					<Box
@@ -45,134 +45,22 @@ export default function Sidebar({ openSideBar, onCloseSideBar }) {
 				</Link>
 			</Box> */}
 			{/* contenido */}
-			<Box sx={{ px: 2.5 }}>
-				<MenuItem
-					sx={{
-						py: 2,
-						px: 2,
-						borderRadius: 2,
-						color: 'text.secondary',
-					}}
-					component={RouterLink}
-					to="/">
-					{/* <Box
-							component="img"
-							src={`/svgs/icons/nav/${item.icon}.svg`}
-							style={{ color: 'red' }}
-							sx={{
-								marginRight: '20px',
-								width: 26,
-								height: 26,
-							}}
-						/> */}
-					Inicio
-				</MenuItem>
-
-				<MenuItem
-					sx={{
-						py: 2,
-						px: 2,
-						borderRadius: 2,
-						color: 'text.secondary',
-					}}
-					component={RouterLink}
-					to="/direccion-de-carrera">
-					{/* <Box
-							component="img"
-							src={`/svgs/icons/nav/${item.icon}.svg`}
-							style={{ color: 'red' }}
-							sx={{
-								marginRight: '20px',
-								width: 26,
-								height: 26,
-							}}
-						/> */}
-					Dirección de carrera
-				</MenuItem>
-				<MenuItem
-					sx={{
-						py: 2,
-						px: 2,
-						borderRadius: 2,
-						color: 'text.secondary',
-					}}
-					component={RouterLink}
-					to="/uegc">
-					{/* <Box
-							component="img"
-							src={`/svgs/icons/nav/${item.icon}.svg`}
-							style={{ color: 'red' }}
-							sx={{
-								marginRight: '20px',
-								width: 26,
-								height: 26,
-							}}
-						/> */}
-					Unidad de evaluación y gestión de calidad
-				</MenuItem>
-				<MenuItem
-					sx={{
-						py: 2,
-						px: 2,
-						borderRadius: 2,
-						color: 'text.secondary',
-					}}
-					component={RouterLink}
-					to="/jefaturas">
-					{/* <Box
-							component="img"
-							src={`/svgs/icons/nav/${item.icon}.svg`}
-							style={{ color: 'red' }}
-							sx={{
-								marginRight: '20px',
-								width: 26,
-								height: 26,
-							}}
-						/> */}
-					Jefaturas
-				</MenuItem>
-				<MenuItem
-					sx={{
-						py: 2,
-						px: 2,
-						borderRadius: 2,
-						color: 'text.secondary',
-					}}
-					component={RouterLink}
-					to="/recursos">
-					{/* <Box
-							component="img"
-							src={`/svgs/icons/nav/${item.icon}.svg`}
-							style={{ color: 'red' }}
-							sx={{
-								marginRight: '20px',
-								width: 26,
-								height: 26,
-							}}
-						/> */}
-					Recursos
-				</MenuItem>
-				<MenuItem
-					sx={{
-						py: 2,
-						px: 2,
-						borderRadius: 2,
-						color: 'text.secondary',
-					}}
-					component={RouterLink}
-					to="/contacto">
-					{/* <Box
-							component="img"
-							src={`/svgs/icons/nav/${item.icon}.svg`}
-							style={{ color: 'red' }}
-							sx={{
-								marginRight: '20px',
-								width: 26,
-								height: 26,
-							}}
-						/> */}
-					Contacto
-				</MenuItem>
+			<Box sx={{ px: 2.5, mt: 13 }}>
+				{navlinks?.map((nav, index) => (
+					<MenuItem
+						key={index}
+						sx={{
+							py: 2,
+							px: 2,
+							borderRadius: 2,
+							color: 'text.terciary',
+							fontWeight: 'bold',
+						}}
+						component={RouterLink}
+						to={nav.path}>
+						{nav.text}
+					</MenuItem>
+				))}
 			</Box>
 		</Drawer>
 	);
