@@ -10,17 +10,15 @@ import { Add } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
 import { documents } from '../../../Utils/Constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import API from '../../../Utils/Connection';
+import { getResponsable } from '../../../store/UnidadSlice';
 
 export default function Investigation() {
 	const theme = useTheme();
-	const head = {
-		nombres: 'Dr. Roberto Juan Barrientos Salazar',
-		email: 'robertsal.12@gmail.com',
-		cargo: 'Jefe de internado rotatorio',
-		picture: '/imgs/profileFake.jpg',
-	};
+	const [responsable, setResponsable] = useState(null);
+
+	const dispatch = useDispatch();
 
 	const [documents, setDocuments] = useState(null);
 	const [news, setNews] = useState(null);
@@ -41,9 +39,14 @@ export default function Investigation() {
 			console.log(e);
 		}
 	};
+	const fetchResponsable = async () => {
+		const r = await dispatch(getResponsable(2));
+		setResponsable(r.data);
+	};
 	useEffect(() => {
 		fetchNews();
 		fetchDocuments();
+		fetchResponsable();
 	}, []);
 
 	return (
@@ -66,7 +69,7 @@ export default function Investigation() {
 									de Investigación
 								</Typography>
 							</Box>
-							<HeadInformation head={head} />
+							<HeadInformation head={responsable} />
 						</Box>
 						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
 							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo

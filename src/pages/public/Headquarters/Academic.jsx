@@ -9,17 +9,15 @@ import { Link } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
 import { documents } from '../../../Utils/Constants';
 import Page from '../../../components/Box/Page';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import API from '../../../Utils/Connection';
+import { getResponsable } from '../../../store/UnidadSlice';
 
 export default function Academic() {
 	const theme = useTheme();
-	const head = {
-		nombres: 'Dr. Roberto Juan Barrientos Salazar',
-		email: 'robertsal.12@gmail.com',
-		cargo: 'Jefe de internado rotatorio',
-		picture: '/imgs/profileFake.jpg',
-	};
+	const [responsable, setResponsable] = useState(null);
+
+	const dispatch = useDispatch();
 	const [documents, setDocuments] = useState(null);
 	const [news, setNews] = useState(null);
 	const fetchNews = async () => {
@@ -29,6 +27,11 @@ export default function Academic() {
 		} catch (e) {
 			console.log(e);
 		}
+	};
+
+	const fetchResponsable = async () => {
+		const r = await dispatch(getResponsable(4));
+		setResponsable(r.data);
 	};
 
 	const fetchDocuments = async () => {
@@ -42,6 +45,7 @@ export default function Academic() {
 	useEffect(() => {
 		fetchNews();
 		fetchDocuments();
+		fetchResponsable();
 	}, []);
 	return (
 		<Page>
@@ -63,7 +67,7 @@ export default function Academic() {
 									Academica
 								</Typography>
 							</Box>
-							<HeadInformation head={head} />
+							<HeadInformation head={responsable} />
 						</Box>
 						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
 							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo

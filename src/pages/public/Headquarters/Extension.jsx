@@ -10,18 +10,17 @@ import { Add } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import HeadInformation from '../../../components/Box/HeadInformation';
 import { documents } from '../../../Utils/Constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import API from '../../../Utils/Connection';
+import { getResponsable } from '../../../store/UnidadSlice';
 
 export default function Extension() {
 	const theme = useTheme();
-	const head = {
-		nombres: 'Dr. Roberto Juan Barrientos Salazar',
-		email: 'robertsal.12@gmail.com',
-		cargo: 'Jefe de internado rotatorio',
-		picture: '/imgs/profileFake.jpg',
-	};
+
 	const [documents, setDocuments] = useState(null);
+	const [responsable, setResponsable] = useState(null);
+	const dispatch = useDispatch();
+
 	const [news, setNews] = useState(null);
 	const fetchNews = async () => {
 		try {
@@ -31,7 +30,10 @@ export default function Extension() {
 			console.log(e);
 		}
 	};
-
+	const fetchResponsable = async () => {
+		const r = await dispatch(getResponsable(1));
+		setResponsable(r.data);
+	};
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 1);
@@ -43,6 +45,7 @@ export default function Extension() {
 	useEffect(() => {
 		fetchNews();
 		fetchDocuments();
+		fetchResponsable();
 	}, []);
 	return (
 		<Page>
@@ -64,7 +67,7 @@ export default function Extension() {
 									de Extension
 								</Typography>
 							</Box>
-							<HeadInformation head={head} />
+							<HeadInformation head={responsable} />
 						</Box>
 						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
 							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo

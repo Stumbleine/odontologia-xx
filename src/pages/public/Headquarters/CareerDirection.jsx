@@ -13,15 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getNews } from '../../../store/NewsSlice';
 import { getPublicDocuments } from '../../../store/DocumentSlice';
 import API from '../../../Utils/Connection';
+import { getResponsable } from '../../../store/UnidadSlice';
 
 export default function CareerDirection() {
 	const theme = useTheme();
-	const head = {
-		nombres: 'Dr. Roberto Juan Barrientos Salazar',
-		email: 'robertsal.12@gmail.com',
-		cargo: 'Jefe de internado rotatorio',
-		picture: '/imgs/profileFake.jpg',
-	};
+	const [responsable, setResponsable] = useState(null);
+
+	const dispatch = useDispatch();
 
 	const [documents, setDocuments] = useState(null);
 	const [news, setNews] = useState(null);
@@ -42,9 +40,15 @@ export default function CareerDirection() {
 			console.log(e);
 		}
 	};
+
+	const fetchResponsable = async () => {
+		const r = await dispatch(getResponsable(6));
+		setResponsable(r.data);
+	};
 	useEffect(() => {
 		fetchNews();
 		fetchDocuments();
+		fetchResponsable();
 	}, []);
 
 	return (
@@ -67,7 +71,7 @@ export default function CareerDirection() {
 									Direccion de carrera
 								</Typography> */}
 							</Box>
-							<HeadInformation head={head} />
+							<HeadInformation head={responsable} />
 						</Box>
 						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
 							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo

@@ -8,18 +8,16 @@ import Page from '../../../components/Box/Page';
 import NewsCarousel from '../../../components/NewsCarousel';
 import { documents } from '../../../Utils/Constants';
 import DocumentsGrid from '../../../components/Grid/DocumentsGrid';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import API from '../../../Utils/Connection';
+import { getResponsable } from '../../../store/UnidadSlice';
 
 export default function RotatingInternship() {
 	const theme = useTheme();
-	const head = {
-		nombres: 'Dr. Roberto Juan Barrientos Salazar',
-		email: 'robertsal.12@gmail.com',
-		cargo: 'Jefe de internado rotatorio',
-		picture: '/imgs/profileFake.jpg',
-	};
+	const [responsable, setResponsable] = useState(null);
+
+	const dispatch = useDispatch();
 	const [documents, setDocuments] = useState(null);
 	const [news, setNews] = useState(null);
 	const fetchNews = async () => {
@@ -39,9 +37,14 @@ export default function RotatingInternship() {
 			console.log(e);
 		}
 	};
+	const fetchResponsable = async () => {
+		const r = await dispatch(getResponsable(3));
+		setResponsable(r.data);
+	};
 	useEffect(() => {
 		fetchNews();
 		fetchDocuments();
+		fetchResponsable();
 	}, []);
 	return (
 		<Page>
@@ -63,7 +66,7 @@ export default function RotatingInternship() {
 									Internado Rotatorio
 								</Typography>
 							</Box>
-							<HeadInformation head={head} />
+							<HeadInformation head={responsable} />
 						</Box>
 						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
 							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
