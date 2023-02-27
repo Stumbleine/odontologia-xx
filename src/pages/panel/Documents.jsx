@@ -62,12 +62,12 @@ export default function Documents() {
 	const handleDirectoriesUnidad = event => {
 		setFilterDir({ ...filterDir, unidad: event.target.value });
 		dispatch(
-			getPersonalPublicDocuments(token, pagePD, filterDir.search, event.target.value)
+			getDirectories(token, pagePD, filterDir.search, event.target.value)
 		);
 	};
 	const handleDirectoriesSearch = values => {
 		setFilterDir({ ...filterDir, search: values.search });
-		dispatch(getDirectories(token, values.search, filterDir.unidad));
+		dispatch(getDirectories(token, pagePD, values.search, filterDir.unidad));
 	};
 	const handlePagePublic = (event, value) => {
 		dispatch(setPagePD(parseInt(value) - 1));
@@ -123,7 +123,7 @@ export default function Documents() {
 						// to="/panel/archivos"
 						startIcon={<Public />}
 						variant={mode === 'public' ? 'contained' : 'outlined'}>
-						Publico
+						Público
 					</Button>
 					<Button
 						color="terciary"

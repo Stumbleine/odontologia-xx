@@ -33,7 +33,7 @@ export default function Clinic() {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 5);
 			setDocuments(r.data);
 		} catch (e) {
-			console.log(e);
+			
 		}
 	};
 
@@ -42,7 +42,7 @@ export default function Clinic() {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 5);
 			setNews(r.data.data);
 		} catch (e) {
-			console.log(e);
+			
 		}
 	};
 

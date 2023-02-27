@@ -27,7 +27,6 @@ export default function Investigation() {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 2);
 			setDocuments(r.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 
@@ -36,7 +35,6 @@ export default function Investigation() {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 2);
 			setNews(r.data.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 	const fetchResponsable = async () => {

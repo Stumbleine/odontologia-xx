@@ -80,7 +80,6 @@ export default function CreateNewForm() {
 
 			createNew()
 				.then(r => {
-					console.log('Registro de noticia exitoso');
 					resetForm();
 					setSubmitting(false);
 					fireAlert({
@@ -90,7 +89,6 @@ export default function CreateNewForm() {
 					});
 				})
 				.catch(e => {
-					console.log(e);
 					setSubmitting(false);
 					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
 				});

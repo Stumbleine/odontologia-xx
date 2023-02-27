@@ -46,7 +46,6 @@ export default function EditNewFiles({ disabled, newest }) {
 			.then(r => {
 				fireAlert({ title: 'Noticia actualizada exitosamente', icon: 'success' });
 
-				console.log('Archivo eliminada exitosamente.', 'success');
 			})
 			.catch(e => {
 				fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });

@@ -66,7 +66,6 @@ export default function RegisterForm() {
 				})
 				.catch(e => {
 					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
-					console.log(e);
 					setSubmitting(false);
 				});
 		},

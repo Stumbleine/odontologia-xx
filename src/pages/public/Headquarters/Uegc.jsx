@@ -27,7 +27,6 @@ export default function Uegc() {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 7);
 			setDocuments(r.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 
@@ -36,7 +35,6 @@ export default function Uegc() {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 7);
 			setNews(r.data.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 	const fetchResponsable = async () => {

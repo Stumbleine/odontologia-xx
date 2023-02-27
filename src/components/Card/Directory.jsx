@@ -32,10 +32,8 @@ export default function Directory({ directory }) {
 		};
 		fetch()
 			.then(r => {
-				console.log('Directorio eliminado exitosamente.', 'success');
 			})
 			.catch(e => {
-				console.log('Algo salió, vuelva a intentarlo.', 'error');
 			});
 	};
 	return (
@@ -53,7 +51,7 @@ export default function Directory({ directory }) {
 					{directory?.nombre_unidad}
 				</Typography>
 				<Typography sx={{ color: 'text.terciary' }} noWrap>
-					{directory?.descripciom}
+					{directory?.descripcion}
 				</Typography>
 				<Typography
 					noWrap
@@ -63,7 +61,7 @@ export default function Directory({ directory }) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing sx={{ justifyContent: 'flex-end' }}>
-				{rol === 'ADM' && (
+				{rol === 'ADM' || rol === 'SUPER' && (
 					<DeleteAlert
 						deleteFetch={deleteFetch}
 						item={{ name: directory.nombre, id: directory.id, type: 'directorio' }}

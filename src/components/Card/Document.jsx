@@ -96,7 +96,7 @@ export default function Document({ doc, onlyRead = false }) {
 					// background: 'red',s
 					py: 0.5,
 				}}>
-				{rol === 'ADM' && onlyRead === false && (
+				{(rol === 'ADM' || rol === 'SUPER') && onlyRead === false && (
 					<DeleteAlert
 						item={{ name: doc.nombre, type: 'archivo', id: doc.id }}
 						deleteFetch={deleteFetch}

@@ -25,10 +25,8 @@ export default function NewCard({ newest }) {
 		};
 		fetch()
 			.then(r => {
-				console.log('Archivo eliminada exitosamentes.', 'success');
 			})
 			.catch(e => {
-				console.log('Algo salió, vuelva a intentarlo.', 'error');
 			});
 	};
 
@@ -81,7 +79,7 @@ export default function NewCard({ newest }) {
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ pt: 0, justifyContent: 'flex-end' }}>
-				{rol === 'ADM' && (
+				{rol === 'ADM' || rol === 'SUPER' && (
 					<>
 						<DeleteAlert
 							deleteFetch={deleteFetch}

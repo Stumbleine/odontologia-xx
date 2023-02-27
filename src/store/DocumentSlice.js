@@ -33,9 +33,9 @@ const constructDocumentURL = (page, search, unidad) => {
 	return `/public/listar-archivos-publicos?offset=${page}`;
 };
 
-const constructPersonalDocumentURL = (page, search) => {
-	if (search !== 'all') {
-		return `/archivo-publico/listar?offset=${page}&search=${search}`;
+const constructPersonalDocumentURL = (page, search, unidad) => {
+	if (search !== 'all' || unidad !== 'all') {
+		return `/archivo-publico/listar?offset=${page}&search=${search}&unidad=${unidad}`;
 	}
 	return `/archivo-publico/listar?offset=${page}`;
 };
@@ -53,10 +53,9 @@ export const getPublicDocuments =
 	};
 
 export const getPersonalPublicDocuments =
-	(token, page, search = 'all') =>
+	(token, page, search = 'all', unidad = 'all') =>
 	async dispatch => {
-		console.log(search);
-		let url = constructPersonalDocumentURL(page, search);
+		let url = constructPersonalDocumentURL(page, search, unidad);
 		try {
 			const r = await API.get(url, {
 				headers: {
@@ -199,7 +198,6 @@ export const updateFilesDirectory = (token, files, idDirectory) => async dispatc
 			},
 		});
 		dispatch(getDirectories(token));
-		dispatch(getPublicDocuments(token));
 	} catch (e) {
 		throw new Error(e);
 	}

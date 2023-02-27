@@ -25,7 +25,6 @@ export default function RotatingInternship() {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 3);
 			setDocuments(r.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 
@@ -34,7 +33,6 @@ export default function RotatingInternship() {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 3);
 			setNews(r.data.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 	const fetchResponsable = async () => {

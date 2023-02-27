@@ -15,7 +15,7 @@ import React from 'react';
 import EditUser from '../Dialog/EditUser';
 import DeleteAlert from '../Card/DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser } from '../../store/UsersSlice';
+import { deleteUser, getUsers } from '../../store/UsersSlice';
 
 export default function UsersTable({ users }) {
 	const { token } = useSelector(state => state.account);
@@ -35,10 +35,9 @@ export default function UsersTable({ users }) {
 		};
 		fetch()
 			.then(r => {
-				console.log('usuario eliminada exitosamente.', 'success');
+				dispatch(getUsers(token, "all", "all", "all"))
 			})
 			.catch(e => {
-				console.log('usuario salió, vuelva a intentarlo.', 'error');
 			});
 	};
 
@@ -82,8 +81,9 @@ export default function UsersTable({ users }) {
 								sx={{
 									color: 'text.terciary',
 								}}>
-								{user.tag_rol === 'ADMIN' && 'Administrador'}
+								{user.tag_rol === 'ADM' && 'Administrador'}
 								{user.tag_rol === 'SUPER' && 'Super Administrador'}
+								{user.tag_rol === 'SCRE' && 'Secretaria'}
 							</TableCell>
 							<TableCell
 								sx={{

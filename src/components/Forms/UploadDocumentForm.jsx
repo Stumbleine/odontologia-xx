@@ -31,7 +31,7 @@ import { fireAlert } from '../../Utils/Sweet';
 import { useNavigate } from 'react-router-dom';
 
 export default function UploadDocumentForm() {
-	const { token, user } = useSelector(state => state.account);
+	const { token, rol } = useSelector(state => state.account);
 	const { unidades } = useSelector(state => state.unidad);
 
 	const dispatch = useDispatch();
@@ -64,7 +64,7 @@ export default function UploadDocumentForm() {
 		validationSchema: Yup.object({
 			accesibility: Yup.string().required('La accesibilidad es obligatorio'),
 			unidad:
-				user.tag_rol === 'SUPER'
+				rol === 'SUPER'
 					? Yup.string().required('Debe elegir una unidad.')
 					: Yup.string(),
 		}),
@@ -92,7 +92,6 @@ export default function UploadDocumentForm() {
 						{ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' },
 						navigate
 					);
-					console.log(e);
 					setSubmitting(false);
 				});
 		},
@@ -138,7 +137,7 @@ export default function UploadDocumentForm() {
 							{touched.accesibility && errors.accesibility}
 						</FormHelperText>
 					</FormControl>
-					{user.tag_rol === 'SUPER' ? (
+					{rol === 'SUPER' ? (
 						<FormControl fullWidth>
 							<InputLabel id="unidad-label">Unidad</InputLabel>
 							<Select

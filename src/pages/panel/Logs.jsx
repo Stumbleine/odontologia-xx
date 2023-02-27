@@ -28,9 +28,8 @@ export default function Logs() {
 				setTotal(r.data.total);
 			})
 			.catch(e => {
-				console.log('error', e);
 			});
-	}, []);
+	}, [page]);
 
 	const handlePageActual = (event, value) => {
 		setPage(parseInt(value) - 1);

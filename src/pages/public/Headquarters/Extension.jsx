@@ -27,7 +27,6 @@ export default function Extension() {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 1);
 			setDocuments(r.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 	const fetchResponsable = async () => {
@@ -39,7 +38,6 @@ export default function Extension() {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 1);
 			setNews(r.data.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 	useEffect(() => {

@@ -35,10 +35,8 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 		};
 		fetch()
 			.then(r => {
-				console.log('actualizado', r.data);
 			})
 			.catch(e => {
-				console.log(e);
 			});
 	};
 	const [files, setFiles] = useState(null);
@@ -87,7 +85,10 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 
 					<Grid container spacing={{ xs: 1, xl: 2 }}>
 						{directory?.archivos.map((doc, index) => (
-							<Grid key={index} xl={4} xs={12} lg={6}>
+							<Grid key={index} xl={4} xs={12} lg={6} sx={{
+								maxWidth: 200,
+								minWidth: 200
+							}}>
 								<Document doc={doc} />
 							</Grid>
 						))}

@@ -33,7 +33,7 @@ export const getunidades = token => async dispatch => {
 
 export const getResponsable = idUnidad => async dispatch => {
 	try {
-		await API.get(`/public/get-jefe?id_unidad=${idUnidad}`);
+		return await API.get(`/public/get-jefe?id_unidad=${idUnidad}`);
 	} catch (e) {
 		throw new Error(e);
 	}

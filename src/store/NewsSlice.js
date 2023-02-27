@@ -18,7 +18,7 @@ const newsSlice = createSlice({
 			state.news = payload;
 		},
 		setTotal: (state, { payload }) => {
-			state.page = payload;
+			state.total = payload;
 		},
 	},
 });
@@ -34,9 +34,11 @@ export const create = (token, values) => async dispatch => {
 	newFormData.append('unidad', values.unidad);
 	newFormData.append('foto', foto);
 
-	values.files.forEach(element => {
-		newFormData.append('files[]', element);
-	});
+	if(values.files){
+		values.files.forEach(element => {
+			newFormData.append('files[]', element);
+		});
+	}
 
 	try {
 		const r = await API.post('/noticia/crear', newFormData, {

@@ -25,7 +25,6 @@ export default function Academic() {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 4);
 			setDocuments(r.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 
@@ -39,7 +38,6 @@ export default function Academic() {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 4);
 			setNews(r.data.data);
 		} catch (e) {
-			console.log(e);
 		}
 	};
 	useEffect(() => {

@@ -71,7 +71,6 @@ export default function EditNew({ newest, disabled }) {
 					setSubmitting(false);
 				})
 				.catch(e => {
-					console.log(e);
 					fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
 
 					setSubmitting(false);
