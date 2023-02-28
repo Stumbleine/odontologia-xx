@@ -22,6 +22,7 @@ import { type } from '@testing-library/user-event/dist/type';
 import DeleteAlert from './DeleteAlert';
 import { deleteDocument } from '../../store/DocumentSlice';
 import { fireAlert } from '../../Utils/Sweet';
+import moment from 'moment';
 
 export default function Document({ doc, onlyRead = false }) {
 	const { token, rol } = useSelector(state => state.account);
@@ -82,8 +83,9 @@ export default function Document({ doc, onlyRead = false }) {
 						}}>
 						{doc.nombre}
 					</Typography>
+
 					<Typography noWrap color="secondary" sx={{ lineHeight: 1 }}>
-						{doc.nombre_unidad}
+						{moment(doc.fecha_creacion).format('LL')}
 					</Typography>
 				</Box>
 			</CardContent>

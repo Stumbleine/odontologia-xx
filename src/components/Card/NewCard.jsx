@@ -79,7 +79,7 @@ export default function NewCard({ newest }) {
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ pt: 0, justifyContent: 'flex-end' }}>
-				{rol === 'ADM' || rol === 'SUPER' && (
+				{(rol === 'ADM' || rol === 'SUPER') && (
 					<>
 						<DeleteAlert
 							deleteFetch={deleteFetch}

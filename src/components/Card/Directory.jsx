@@ -61,7 +61,7 @@ export default function Directory({ directory }) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing sx={{ justifyContent: 'flex-end' }}>
-				{rol === 'ADM' || rol === 'SUPER' && (
+				{(rol === 'ADM' || rol === 'SUPER') && (
 					<DeleteAlert
 						deleteFetch={deleteFetch}
 						item={{ name: directory.nombre, id: directory.id, type: 'directorio' }}

@@ -137,7 +137,6 @@ export default function Router() {
 				{ path: 'noticias/:id', element: <NewContent /> },
 
 				{ path: 'usuarios', element: <Users /> },
-				{ path: 'resumen', element: <Summary /> },
 				{
 					path: 'subir-documento',
 					element: <CreateDocument />,
