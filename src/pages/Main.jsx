@@ -19,6 +19,7 @@ export default function Main() {
 						sx={{
 							position: 'absolute',
 							zIndex: 5,
+							// alignContent: 'center',
 						}}>
 						{/* titles */}
 						<Stack
@@ -28,10 +29,26 @@ export default function Main() {
 							alignContent="center"
 							justifyContent="center"
 							justifyItems="center">
-							<Typography variant="h3" sx={{ fontWeight: 'bold', fontSize:60 ,WebkitTextStroke: "2px white", color:"green" }}>
+							<Typography
+								variant="h3"
+								align="center"
+								sx={{
+									fontWeight: 'bold',
+									fontSize: 60,
+									WebkitTextStroke: '2px white',
+									color: 'green',
+								}}>
 								Carrera de Odontología
 							</Typography>
-							<Typography fontWeight="bolder" sx={{ letterSpacing: 1, color: "red", fontSize:35, WebkitTextStroke: "1px blue" }}>
+							<Typography
+								fontWeight="bolder"
+								align="center"
+								sx={{
+									letterSpacing: 1,
+									color: 'red',
+									fontSize: 35,
+									WebkitTextStroke: '1px blue',
+								}}>
 								UNSXX
 							</Typography>
 						</Stack>
@@ -41,7 +58,7 @@ export default function Main() {
 								sx={{ borderRadius: 2, display: 'flex', maxWidth: 'lg', maxHeight: 150 }}>
 								<CardMedia
 									component="img"
-									sx={{ width: 'auto', height: 300 }}
+									sx={{ width: { xs: 300, md: 'auto' }, height: 300 }}
 									image="imgs/imageMain.png"
 									alt="UNSXX"
 								/>
@@ -59,7 +76,7 @@ export default function Main() {
 							</Card>
 							<Stack
 								spacing={2}
-								direction={'row'}
+								direction={{ md: 'row', xs: 'column' }}
 								alignContent={'space-around'}
 								maxWidth={'lg'}>
 								<Card
@@ -76,7 +93,11 @@ export default function Main() {
 										Misión
 									</Typography>
 									<Typography sx={{ color: 'white' }}>
-									Formar profesionales orgánicos e idóneos en el área de la odontología, conforme a la concepción curricular de la Universidad Nacional “Siglo XX”, orientada a la solución de los problemas de salud bucodental y socio-sanitarias; para contribuir al mejoramiento de la calidad de vida del ser humano.
+										Formar profesionales orgánicos e idóneos en el área de la odontología,
+										conforme a la concepción curricular de la Universidad Nacional “Siglo
+										XX”, orientada a la solución de los problemas de salud bucodental y
+										socio-sanitarias; para contribuir al mejoramiento de la calidad de
+										vida del ser humano.
 									</Typography>
 								</Card>
 								<Card
@@ -88,7 +109,10 @@ export default function Main() {
 										Visión
 									</Typography>
 									<Typography sx={{ color: 'white' }}>
-									La Carrera de Odontología de la Universidad Nacional “Siglo XX”, es una unidad académica acreditada a nivel nacional e internacional; líder en la formación de profesionales orgánicos e integrales en el área de la odontología.
+										La Carrera de Odontología de la Universidad Nacional “Siglo XX”, es
+										una unidad académica acreditada a nivel nacional e internacional;
+										líder en la formación de profesionales orgánicos e integrales en el
+										área de la odontología.
 									</Typography>
 								</Card>
 								<Card
@@ -100,19 +124,22 @@ export default function Main() {
 										Perfil profesional
 									</Typography>
 									<Typography sx={{ color: 'white' }}>
-									El/la Cirujano(a) Odontólogo(a) formado en la Carrera de Odontología de la Universidad Nacional “Siglo XX”, será: <br />
-
-UN PROFESIONAL CON SÓLIDA FORMACIÓN GENERAL, TÉCNICO, CIENTÍFICO Y TECNOLÓGICO EN EL EJERCICIO DE LA SALUD BUCO DENTAL, CAPACITADO PARA REALIZAR ACCIONES DE DIAGNÓSTICO, PROMOCIÓN, PREVENCIÓN, TRATAMIENTO Y REHABILITACIÓN DEL SISTEMA ESTOMATOGNÁTICO DEL INDIVIDUO Y LA COMUNIDAD, PROVISTO DE VALORES ÉTICOS Y COMPROMISO CON VISIÓN DE TRANSFORMACIÓN SOCIAL.
+										El/la Cirujano(a) Odontólogo(a) formado en la Carrera de Odontología
+										de la Universidad Nacional “Siglo XX”, será: <br />
+										UN PROFESIONAL CON SÓLIDA FORMACIÓN GENERAL, TÉCNICO, CIENTÍFICO Y
+										TECNOLÓGICO EN EL EJERCICIO DE LA SALUD BUCO DENTAL, CAPACITADO PARA
+										REALIZAR ACCIONES DE DIAGNÓSTICO, PROMOCIÓN, PREVENCIÓN, TRATAMIENTO Y
+										REHABILITACIÓN DEL SISTEMA ESTOMATOGNÁTICO DEL INDIVIDUO Y LA
+										COMUNIDAD, PROVISTO DE VALORES ÉTICOS Y COMPROMISO CON VISIÓN DE
+										TRANSFORMACIÓN SOCIAL.
 									</Typography>
 								</Card>
-						
 							</Stack>
 							<Stack
 								spacing={1}
 								direction={'row'}
 								alignContent={'space-around'}
 								maxWidth={'lg'}>
-
 								<Card sx={{ borderRadius: 2, maxWidth: 'lg', background: 'white', p: 2 }}>
 									<Typography
 										variant="h6"
@@ -121,43 +148,58 @@ UN PROFESIONAL CON SÓLIDA FORMACIÓN GENERAL, TÉCNICO, CIENTÍFICO Y TECNOLÓG
 										Objetivos especificos
 									</Typography>
 									<Typography sx={{ color: 'text.black', whiteSpace: 'pre-line' }}>
-									Instructivos:
-								<ul>
-									<li>
-Realizar acciones de promoción, educación, prevención y tratamiento de los problemas de la salud bucodental del individuo y la comunidad.
-									</li>
-									<li>
-Caracterizar los principales problemas de la salud buco dental considerando los factores biopsicosociales del individuo y la comunidad.
-									</li>
-									<li>
-Desarrollar procesos de diagnóstico y pronóstico para establecer un plan de tratamiento con el apoyo de estudios complementarios de las patologías bucodentales, del individuo y la comunidad.
-									</li>
-									<li>
-Aplicar procedimientos clínicos para la atención integral de los problemas de salud del sistema estomatognático, tomando en cuenta las medidas de bioseguridad y conducta ética.
-									</li>
-								</ul>
-
-Educativos:
-<ul>
-	<li>
-Participar crítica y reflexivamente en la comprensión y solución de los problemas de la salud buco dental.
-	</li>
-	<li>
-Demostrar responsabilidad, ética y bioética en el desenvolvimiento personal y profesional.
-	</li>
-	<li>
-Utilizar la comunicación en segunda lengua (quechua, aymara o inglés) en el contexto de la vida cotidiana y el ejercicio de la profesión.
-	</li>
-	<li>
-Utilizar el método científico como instrumento básico de perfeccionamiento para el desarrollo de su profesión.
-	</li>
-	<li>
-Capacidad de reflexión de la importancia de la transformación social en la búsqueda de mejorar las condiciones de vida.
-	</li>
-	<li>
-Participar activamente en proyectos y programas de la salud bucodental en equipos desde una perspectiva multi e interdisciplinar.
-	</li>
-</ul>
+										Instructivos:
+										<ul>
+											<li>
+												Realizar acciones de promoción, educación, prevención y
+												tratamiento de los problemas de la salud bucodental del individuo
+												y la comunidad.
+											</li>
+											<li>
+												Caracterizar los principales problemas de la salud buco dental
+												considerando los factores biopsicosociales del individuo y la
+												comunidad.
+											</li>
+											<li>
+												Desarrollar procesos de diagnóstico y pronóstico para establecer
+												un plan de tratamiento con el apoyo de estudios complementarios de
+												las patologías bucodentales, del individuo y la comunidad.
+											</li>
+											<li>
+												Aplicar procedimientos clínicos para la atención integral de los
+												problemas de salud del sistema estomatognático, tomando en cuenta
+												las medidas de bioseguridad y conducta ética.
+											</li>
+										</ul>
+										Educativos:
+										<ul>
+											<li>
+												Participar crítica y reflexivamente en la comprensión y solución
+												de los problemas de la salud buco dental.
+											</li>
+											<li>
+												Demostrar responsabilidad, ética y bioética en el desenvolvimiento
+												personal y profesional.
+											</li>
+											<li>
+												Utilizar la comunicación en segunda lengua (quechua, aymara o
+												inglés) en el contexto de la vida cotidiana y el ejercicio de la
+												profesión.
+											</li>
+											<li>
+												Utilizar el método científico como instrumento básico de
+												perfeccionamiento para el desarrollo de su profesión.
+											</li>
+											<li>
+												Capacidad de reflexión de la importancia de la transformación
+												social en la búsqueda de mejorar las condiciones de vida.
+											</li>
+											<li>
+												Participar activamente en proyectos y programas de la salud
+												bucodental en equipos desde una perspectiva multi e
+												interdisciplinar.
+											</li>
+										</ul>
 									</Typography>
 								</Card>
 							</Stack>
@@ -172,7 +214,7 @@ Participar activamente en proyectos y programas de la salud bucodental en equipo
 									<CardMedia
 										component="img"
 										image="/imgs/organigrama.jpeg"
-										sx={{ width: 880, height: 'auto' }}
+										sx={{ width: { xl: 880, md: 600, sm: 530, xs: 420 }, height: 'auto' }}
 									/>
 								</Card>
 							</Stack>

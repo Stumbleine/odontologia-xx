@@ -21,29 +21,20 @@ export default function Clinic() {
 	const [news, setNews] = useState(null);
 	const [responsable, setResponsable] = useState(null);
 	const theme = useTheme();
-	const head = {
-		nombres: 'Dr. Roberto Juan Barrientos Salazar',
-		email: 'robertsal.12@gmail.com',
-		cargo: 'Jefe de internado rotatorio',
-		picture: '/imgs/profileFake.jpg',
-	};
+
 	const dispatch = useDispatch();
 	const fetchNews = async () => {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 5);
 			setDocuments(r.data);
-		} catch (e) {
-			
-		}
+		} catch (e) {}
 	};
 
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 5);
 			setNews(r.data.data);
-		} catch (e) {
-			
-		}
+		} catch (e) {}
 	};
 
 	const fetchResponsable = async () => {
