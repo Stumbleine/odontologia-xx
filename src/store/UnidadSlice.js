@@ -38,3 +38,12 @@ export const getResponsable = idUnidad => async dispatch => {
 		throw new Error(e);
 	}
 };
+
+export const updateUnidad = values => async dispatch => {
+	try {
+		await API.post(`/public/get-jefe?id_unidad=${values.id}`, values);
+		dispatch(getResponsable(values.id));
+	} catch (e) {
+		throw new Error(e);
+	}
+};

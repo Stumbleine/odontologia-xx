@@ -26,16 +26,14 @@ export default function Uegc() {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 7);
 			setDocuments(r.data);
-		} catch (e) {
-		}
+		} catch (e) {}
 	};
 
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 7);
 			setNews(r.data.data);
-		} catch (e) {
-		}
+		} catch (e) {}
 	};
 	const fetchResponsable = async () => {
 		const r = await dispatch(getResponsable(7));
@@ -63,29 +61,32 @@ export default function Uegc() {
 									sx={{ fontWeight: 'bold', color: 'text.primary' }}>
 									Unidad de evaluación y gestión de calidad
 								</Typography>
-								{/* <Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
+								<Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
 									Direccion de carrera
-								</Typography> */}
+								</Typography>
 							</Box>
 							<HeadInformation head={responsable} />
 						</Box>
-						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
-							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-							ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-							parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
-							pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec
-							pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo,
-							rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede
-							mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper
-							nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-							consequat vitae, eleifend ac, enim. Aliquam
-						</Typography>
+
+						<Stack direction="row" spacing={2}>
+							<CardMedia
+								component="img"
+								sx={{ width: '50%', height: 'auto', borderRadius: 2 }}
+								image="/imgs/imageMain.png"
+							/>
+							<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
+								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+								ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
+								dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies
+								nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+								Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
+								enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
+								felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus
+								elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo
+								ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam
+							</Typography>
+						</Stack>
 					</Box>
-					<CardMedia
-						component="img"
-						sx={{ width: '100%', height: 300 }}
-						image="/imgs/imageMain.png"
-					/>
 				</Card>
 				<Card sx={{ mb: 2 }}>
 					<Box sx={{ background: theme.palette.auxiliar.main, p: 2 }}>
