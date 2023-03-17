@@ -12,10 +12,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import API from '../../../Utils/Connection';
 import { getResponsable } from '../../../store/UnidadSlice';
+import UnidadInformation from '../../../components/Box/UnidadInformation';
 
 export default function RotatingInternship() {
 	const theme = useTheme();
 	const [responsable, setResponsable] = useState(null);
+	const [unidad, setUnidad] = useState(null);
 
 	const dispatch = useDispatch();
 	const [documents, setDocuments] = useState(null);
@@ -24,20 +26,19 @@ export default function RotatingInternship() {
 		try {
 			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 3);
 			setDocuments(r.data);
-		} catch (e) {
-		}
+		} catch (e) {}
 	};
 
 	const fetchDocuments = async () => {
 		try {
 			const r = await API.get('/public/listar-noticias?id_unidad=' + 3);
 			setNews(r.data.data);
-		} catch (e) {
-		}
+		} catch (e) {}
 	};
 	const fetchResponsable = async () => {
 		const r = await dispatch(getResponsable(3));
-		setResponsable(r.data);
+		setResponsable(r.data[0]);
+		setUnidad(r.data[1]);
 	};
 	useEffect(() => {
 		fetchNews();
@@ -47,35 +48,8 @@ export default function RotatingInternship() {
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ pb: 10 }}>
-				<Card sx={{ background: 'white', borderRadius: 2, mt: 5, mb: 2 }}>
-					<Box sx={{ p: 4 }}>
-						<Box
-							sx={{
-								display: 'flex',
-								py: 1,
-							}}>
-							<Box sx={{ flexGrow: 1 }}>
-								<Typography
-									variant="h3"
-									sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-									Jefatura
-								</Typography>
-								<Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
-									Internado Rotatorio
-								</Typography>
-							</Box>
-							<HeadInformation head={responsable} />
-						</Box>
-						<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
-						La jefatura de internado rotatorio mantiene permanente coordinacion con los egresados de odontologia de la UNSXX, para programar adecuadamente el proceso de internado, de los estudiantes que culminaron el plan de estudios, que obtaron la modalidad de titulacion del internado rotatorio
-						</Typography>
-					</Box>
-					<CardMedia
-						component="img"
-						sx={{ width: '100%', height: 300 }}
-						image="/imgs/imageMain.png"
-					/>
-				</Card>
+				<UnidadInformation unidad={unidad} responsable={responsable} />
+
 				<Card sx={{ mb: 2 }}>
 					<Box sx={{ background: theme.palette.auxiliar.main, p: 2 }}>
 						<Typography

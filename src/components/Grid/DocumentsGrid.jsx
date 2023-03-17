@@ -6,7 +6,12 @@ import DocumentMinimal from '../Card/DocumentMinimal';
 import DirectoriesGrid from './DirectoriesGrid';
 import { directories } from '../../Utils/Constants';
 
-export default function DocumentsGrid({ documents, minimal, onlyRead = false }) {
+export default function DocumentsGrid({
+	documents,
+	minimal,
+	onlyRead = false,
+	isPublic = false,
+}) {
 	const msgDocsNull = () => {
 		return (
 			<Stack
@@ -40,7 +45,7 @@ export default function DocumentsGrid({ documents, minimal, onlyRead = false }) 
 									{minimal ? (
 										<DocumentMinimal doc={doc} />
 									) : (
-										<Document onlyRead={onlyRead} doc={doc} />
+										<Document onlyRead={onlyRead} doc={doc} isPublic={isPublic} />
 									)}
 								</Grid>
 						  ))

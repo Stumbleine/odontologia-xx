@@ -28,7 +28,6 @@ export default function DeleteAlert({ disabled, item, deleteFetch }) {
 			<IconButton disabled={disabled || false} size="small" onClick={handleClickOpen}>
 				<Delete
 					sx={{
-						color: disabled ? 'disabled' : 'text.auxiliar',
 						'&:hover': {
 							color: 'error.light',
 						},

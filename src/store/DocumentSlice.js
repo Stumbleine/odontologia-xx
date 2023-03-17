@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import API from '../Utils/Connection';
+import { fireAlert } from '../Utils/Sweet';
 
 const initialState = {
 	publicDocuments: null,
 	totalPD: 0,
 	directories: null,
 	totalD: 0,
+	hideDocuments: null,
 };
 
 const documentsSlice = createSlice({
@@ -20,10 +22,13 @@ const documentsSlice = createSlice({
 			state.directories = payload.data;
 			state.totalD = payload.total;
 		},
+		setHideDocuments: (state, { payload }) => {
+			state.hideDocuments = payload;
+		},
 	},
 });
 
-export const { setDocuments, setDirectories } = documentsSlice.actions;
+export const { setDocuments, setDirectories, setHideDocuments } = documentsSlice.actions;
 export default documentsSlice.reducer;
 
 const constructDocumentURL = (page, search, unidad) => {
@@ -198,6 +203,34 @@ export const updateFilesDirectory = (token, files, idDirectory) => async dispatc
 			},
 		});
 		dispatch(getDirectories(token));
+	} catch (e) {
+		throw new Error(e);
+	}
+};
+
+// hide
+export const changeVisibilityDocument = (token, idNew, visibility) => async dispatch => {
+	try {
+		const r = await API.post('/noticia/ocultar?id=' + idNew, visibility, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		fireAlert({ title: 'Visibilidad cambiado correctamente', icon: 'success' });
+		dispatch(getPublicDocuments(token));
+	} catch (e) {
+		throw new Error(e);
+	}
+};
+
+export const getHideDocuments = token => async dispatch => {
+	try {
+		const r = await API.get('/noticia/noticias-ocultas', {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		dispatch(setHideDocuments(r.data));
 	} catch (e) {
 		throw new Error(e);
 	}

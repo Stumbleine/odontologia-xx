@@ -13,7 +13,7 @@ import {
 	Typography,
 } from '@mui/material';
 import { Link, Outlet, useLocation, useRoutes } from 'react-router-dom';
-import { Add, Lock, Public } from '@mui/icons-material';
+import { Add, Lock, Public, VisibilityOff } from '@mui/icons-material';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import DirectoriesGrid from '../../components/Grid/DirectoriesGrid';
@@ -28,7 +28,7 @@ export default function Documents() {
 	// const [jefatura, setJefatura] = useState('All');
 	const [mode, setMode] = useState('public');
 	const { token, rol } = useSelector(state => state.account);
-	const { publicDocuments, directories, totalPD, totalD } = useSelector(
+	const { publicDocuments, directories, totalPD, totalD, hideDocuments } = useSelector(
 		state => state.documents
 	);
 	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
@@ -61,9 +61,7 @@ export default function Documents() {
 	};
 	const handleDirectoriesUnidad = event => {
 		setFilterDir({ ...filterDir, unidad: event.target.value });
-		dispatch(
-			getDirectories(token, pagePD, filterDir.search, event.target.value)
-		);
+		dispatch(getDirectories(token, pagePD, filterDir.search, event.target.value));
 	};
 	const handleDirectoriesSearch = values => {
 		setFilterDir({ ...filterDir, search: values.search });
@@ -117,10 +115,6 @@ export default function Documents() {
 						onClick={() => {
 							setMode('public');
 						}}
-						// disabled={disabledBtn}
-						// component={Link}
-						// to="/panel/subir-documento"
-						// to="/panel/archivos"
 						startIcon={<Public />}
 						variant={mode === 'public' ? 'contained' : 'outlined'}>
 						Público
@@ -129,6 +123,8 @@ export default function Documents() {
 						color="terciary"
 						sx={{
 							borderTopLeftRadius: 0,
+							borderTopRightRadius: 0,
+
 							borderBottomLeftRadius: 0,
 							borderBottomRightRadius: 0,
 							borderColor: 'none',
@@ -138,14 +134,26 @@ export default function Documents() {
 						onClick={() => {
 							setMode('private');
 						}}
-						// color="terciary"
-						// disabled={disabledBtn}
-						// component={Link}
-						// to="/panel/subir-documento"
-						// to="/panel/archivos/directory"
 						startIcon={<Lock />}
 						variant={mode === 'private' ? 'contained' : 'outlined'}>
 						Privado
+					</Button>
+					<Button
+						color="terciary"
+						sx={{
+							borderTopLeftRadius: 0,
+							borderBottomLeftRadius: 0,
+							borderBottomRightRadius: 0,
+							borderColor: 'none',
+							color: mode === 'hide' ? 'white' : 'text.terciary',
+							boxShadow: 'none',
+						}}
+						onClick={() => {
+							setMode('hide');
+						}}
+						startIcon={<VisibilityOff />}
+						variant={mode === 'hide' ? 'contained' : 'outlined'}>
+						Ocultos
 					</Button>
 				</Stack>
 				<Box
@@ -167,7 +175,7 @@ export default function Documents() {
 							/>
 							<Box sx={{ my: 2 }}></Box>
 							{publicDocuments?.length > 0 ? (
-								<DocumentsGrid documents={publicDocuments} />
+								<DocumentsGrid documents={publicDocuments} isPublic={true} />
 							) : (
 								<Msg msg={'No se encontraron archivos publicos.'} />
 							)}
@@ -182,7 +190,7 @@ export default function Documents() {
 								/>
 							</Stack>
 						</>
-					) : (
+					) : mode === 'private' ? (
 						<>
 							<Filter
 								dark={true}
@@ -206,6 +214,14 @@ export default function Documents() {
 									onChange={handlePageDirectories}
 								/>
 							</Stack>
+						</>
+					) : (
+						<>
+							{hideDocuments?.length > 0 ? (
+								<DirectoriesGrid directories={directories} />
+							) : (
+								<Msg msg={'No se encontraron archivos ocultos.'} />
+							)}
 						</>
 					)}
 				</Box>

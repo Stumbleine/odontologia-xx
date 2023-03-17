@@ -4,13 +4,14 @@ import {
 	CardContent,
 	CardMedia,
 	IconButton,
+	Tooltip,
 	Typography,
 } from '@mui/material';
 import React from 'react';
 import DeleteAlert from './DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteNew } from '../../store/NewsSlice';
-import { OpenInNew } from '@mui/icons-material';
+import { changeVisibilityNew, deleteNew } from '../../store/NewsSlice';
+import { OpenInNew, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EditNew from '../Dialog/EditNew';
 import EditNewFiles from '../Dialog/EditNewFiles';
@@ -24,10 +25,8 @@ export default function NewCard({ newest }) {
 			await dispatch(deleteNew(token, id));
 		};
 		fetch()
-			.then(r => {
-			})
-			.catch(e => {
-			});
+			.then(r => {})
+			.catch(e => {});
 	};
 
 	const navigate = useNavigate();
@@ -88,6 +87,34 @@ export default function NewCard({ newest }) {
 						<EditNewFiles newest={newest} />
 						<EditNew newest={newest} />
 					</>
+				)}
+				{rol === 'ADM' && (
+					<Tooltip title={newest?.visibility ? 'Ocultar' : 'Mostrar'}>
+						<IconButton
+							onClick={() => {
+								dispatch(
+									changeVisibilityNew(token, newest?.id, !newest?.visibility || false)
+								);
+							}}>
+							{newest?.visibility ? (
+								<Visibility
+									sx={{
+										'&:hover': {
+											color: 'primary.light',
+										},
+									}}
+								/>
+							) : (
+								<VisibilityOff
+									sx={{
+										'&:hover': {
+											color: 'primary.main',
+										},
+									}}
+								/>
+							)}
+						</IconButton>
+					</Tooltip>
 				)}
 				<IconButton onClick={openNew}>
 					<OpenInNew />

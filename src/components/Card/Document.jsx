@@ -7,6 +7,7 @@ import {
 	Icon,
 	IconButton,
 	SvgIcon,
+	Tooltip,
 	Typography,
 } from '@mui/material';
 import React from 'react';
@@ -14,17 +15,23 @@ import { blue, green, grey, purple, red } from '@mui/material/colors';
 import { Box } from '@mui/system';
 import { Link, useLocation } from 'react-router-dom';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
-import { Delete, Download, OpenInNew } from '@mui/icons-material';
+import {
+	Delete,
+	Download,
+	OpenInNew,
+	Visibility,
+	VisibilityOff,
+} from '@mui/icons-material';
 import API, { URL } from '../../Utils/Connection';
 import fileDownload from 'js-file-download';
 import { useDispatch, useSelector } from 'react-redux';
 import { type } from '@testing-library/user-event/dist/type';
 import DeleteAlert from './DeleteAlert';
-import { deleteDocument } from '../../store/DocumentSlice';
+import { changeVisibilityDocument, deleteDocument } from '../../store/DocumentSlice';
 import { fireAlert } from '../../Utils/Sweet';
 import moment from 'moment';
 
-export default function Document({ doc, onlyRead = false }) {
+export default function Document({ doc, onlyRead = false, isPublic }) {
 	const { token, rol } = useSelector(state => state.account);
 	const location = useLocation();
 
@@ -98,6 +105,40 @@ export default function Document({ doc, onlyRead = false }) {
 					// background: 'red',s
 					py: 0.5,
 				}}>
+				{isPublic &&
+					rol ===
+						'ADM'(
+							<Tooltip title={document?.visibility ? 'Ocultar' : 'Mostrar'}>
+								<IconButton
+									onClick={() => {
+										dispatch(
+											changeVisibilityDocument(
+												token,
+												document?.id,
+												!document?.visibility || false
+											)
+										);
+									}}>
+									{document?.visibility ? (
+										<Visibility
+											sx={{
+												'&:hover': {
+													color: 'primary.light',
+												},
+											}}
+										/>
+									) : (
+										<VisibilityOff
+											sx={{
+												'&:hover': {
+													color: 'primary.main',
+												},
+											}}
+										/>
+									)}
+								</IconButton>
+							</Tooltip>
+						)}
 				{(rol === 'ADM' || rol === 'SUPER') && onlyRead === false && (
 					<DeleteAlert
 						item={{ name: doc.nombre, type: 'archivo', id: doc.id }}
@@ -115,13 +156,25 @@ export default function Document({ doc, onlyRead = false }) {
 							handleDownload();
 						}
 					}}>
-					<Download />
+					<Download
+						sx={{
+							'&:hover': {
+								color: 'primary.main',
+							},
+						}}
+					/>
 				</IconButton>
 				<IconButton
 					onClick={() => {
 						window.open(URL + doc?.direccion, '__blank');
 					}}>
-					<OpenInNew />
+					<OpenInNew
+						sx={{
+							'&:hover': {
+								color: 'primary.main',
+							},
+						}}
+					/>
 				</IconButton>
 			</CardActions>
 		</Card>

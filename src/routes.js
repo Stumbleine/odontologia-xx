@@ -32,7 +32,7 @@ import Uegc from './pages/public/Headquarters/Uegc';
 
 export default function Router() {
 	const { isAuth } = useSelector(state => state.auth);
-	const { rol } = useSelector(state => state.account);
+	const { rol, user } = useSelector(state => state.account);
 
 	const router = useLocation();
 	const navlinks = getNavlinks(rol);
@@ -101,10 +101,6 @@ export default function Router() {
 					path: 'recursos',
 					element: <Resources />,
 				},
-				{
-					path: 'contacto',
-					element: <Contact />,
-				},
 
 				{
 					path: 'users',
@@ -153,6 +149,10 @@ export default function Router() {
 					path: 'logs',
 					element: <Logs />,
 				},
+				{
+					path: 'mi-unidad',
+					element: getMyUnidad(user.id_unidad),
+				},
 			],
 		},
 		// not found
@@ -161,10 +161,21 @@ export default function Router() {
 			element: <LogoLayout />,
 			children: [
 				{ path: '404', element: <NotFound /> },
-				{ path: '403', element: <NotFound /> },
 				{ path: '*', element: <Navigate to="/error/404" replace /> },
 			],
 		},
 		{ path: '*', element: <Navigate to="/error/404" replace /> },
 	]);
 }
+
+const getMyUnidad = idUnidad => {
+	if (idUnidad === 1) return <Extension />;
+	if (idUnidad === 2) return <Investigation />;
+	if (idUnidad === 3) return <RotatingInternship />;
+	if (idUnidad === 4) return <Academic />;
+	if (idUnidad === 5) return <Clinic />;
+	if (idUnidad === 6) return <CareerDirection />;
+	if (idUnidad === 7) return <Uegc />;
+	if (idUnidad === 8) return <Uegc />;
+	if (idUnidad === 9) return <Uegc />;
+};

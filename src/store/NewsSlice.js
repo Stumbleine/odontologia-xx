@@ -7,6 +7,7 @@ import { fireAlert } from '../Utils/Sweet';
 const initialState = {
 	news: [],
 	total: 0,
+	hideNews: [],
 	// pagFilter:0
 };
 
@@ -20,10 +21,13 @@ const newsSlice = createSlice({
 		setTotal: (state, { payload }) => {
 			state.total = payload;
 		},
+		setHideNews: (state, { payload }) => {
+			state.hideNews = payload;
+		},
 	},
 });
 
-export const { setNews, setTotal } = newsSlice.actions;
+export const { setNews, setTotal, setHideNews } = newsSlice.actions;
 export default newsSlice.reducer;
 
 export const create = (token, values) => async dispatch => {
@@ -34,7 +38,7 @@ export const create = (token, values) => async dispatch => {
 	newFormData.append('unidad', values.unidad);
 	newFormData.append('foto', foto);
 
-	if(values.files){
+	if (values.files) {
 		values.files.forEach(element => {
 			newFormData.append('files[]', element);
 		});
@@ -162,6 +166,34 @@ export const updateNewFiles = (token, idNew, files) => async dispatch => {
 		});
 		fireAlert({ title: 'Archivo añadido correctamente', icon: 'success' });
 		dispatch(getNews(token));
+	} catch (e) {
+		throw new Error(e);
+	}
+};
+
+// hide
+export const changeVisibilityNew = (token, idNew, visibility) => async dispatch => {
+	try {
+		const r = await API.post('/noticia/ocultar?id=' + idNew, visibility, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		fireAlert({ title: 'Visibilidad cambiado correctamente', icon: 'success' });
+		dispatch(getNews(token));
+	} catch (e) {
+		throw new Error(e);
+	}
+};
+
+export const getHideNews = token => async dispatch => {
+	try {
+		const r = await API.get('/noticia/noticias-ocultas', {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		dispatch(setHideNews(r.data));
 	} catch (e) {
 		throw new Error(e);
 	}

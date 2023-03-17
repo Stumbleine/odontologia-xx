@@ -15,16 +15,16 @@ import {
 	Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { Add } from '@mui/icons-material';
+import { Add, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNews } from '../../store/NewsSlice';
+import { getHideNews, getNews } from '../../store/NewsSlice';
 import NewCard from '../../components/Card/NewCard';
 import Filter from '../../components/Forms/Filter';
 
 export default function News() {
 	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
-
-	const { news, total } = useSelector(state => state.news);
+	const [showHideNews, setShowHideNews] = useState(false);
+	const { news, total, hideNews } = useSelector(state => state.news);
 	const [page, setPage] = useState(0);
 	const count = Math.ceil(total / 20);
 	const { token, rol } = useSelector(state => state.account);
@@ -32,6 +32,7 @@ export default function News() {
 	useEffect(() => {
 		const listar = () => {
 			dispatch(getNews(token, page, null, filter.search, filter.unidad));
+			// dispatch(getHideNews(token,filter.unidad));
 		};
 		listar();
 	}, []);
@@ -63,23 +64,45 @@ export default function News() {
 					spacing={2}
 					sx={{ mb: 2, justifyContent: 'space-between' }}>
 					<Filter handleSearch={handleSearch} handleUnidad={handleUnidad} />
-					<Button
-						sx={{ width: { xs: '100%', md: 'auto' } }}
-						// disabled={disabledBtn}
-						component={Link}
-						to="/panel/añadir-noticia"
-						startIcon={<Add />}
-						variant="contained">
-						Noticia
-					</Button>
+					<Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+						<Button
+							sx={{ width: { xs: '100%', md: 'auto' } }}
+							// disabled={disabledBtn}
+							onClick={() => {
+								setShowHideNews(!showHideNews);
+							}}
+							startIcon={showHideNews ? <Visibility /> : <VisibilityOff />}
+							variant="contained">
+							{showHideNews ? 'Ver publicos' : 'Ver ocultos'}
+						</Button>
+						<Button
+							sx={{ width: { xs: '100%', md: 'auto' } }}
+							component={Link}
+							to="/panel/añadir-noticia"
+							startIcon={<Add />}
+							variant="contained">
+							Noticia
+						</Button>
+					</Stack>
 				</Stack>
-				<Grid container spacing={{ xs: 1 }}>
-					{news?.map(n => (
-						<Grid item key={n.id} xs={6} md={4} lg={4} xl={3}>
-							<NewCard newest={n} />
-						</Grid>
-					))}
-				</Grid>
+				{showHideNews ? (
+					<Grid container spacing={{ xs: 1 }}>
+						{hideNews?.map(n => (
+							<Grid item key={n.id} xs={6} md={4} lg={4} xl={3}>
+								<NewCard newest={n} />
+							</Grid>
+						))}
+					</Grid>
+				) : (
+					<Grid container spacing={{ xs: 1 }}>
+						{news?.map(n => (
+							<Grid item key={n.id} xs={6} md={4} lg={4} xl={3}>
+								<NewCard newest={n} />
+							</Grid>
+						))}
+					</Grid>
+				)}
+
 				<Stack spacing={2} sx={{ mt: 2 }} alignItems="center">
 					<Pagination
 						count={count}

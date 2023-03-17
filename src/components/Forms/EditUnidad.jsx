@@ -18,7 +18,7 @@ export default function EditUnidad({ unidad }) {
 
 	const formik = useFormik({
 		initialValues: {
-			id: unidad.id || '',
+			id: unidad?.id || '',
 			nombre: unidad?.nombre || '',
 			descripcion: unidad?.descripcion || '',
 			cover: unidad?.cover || '',

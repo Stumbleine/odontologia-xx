@@ -51,12 +51,7 @@ export const publicNavlinks = [
 		icon: '',
 		dropdown: false,
 	},
-	{
-		path: '/contacto',
-		text: 'Contacto',
-		icon: '',
-		dropdown: false,
-	},
+
 	{
 		path: '/noticias',
 		text: 'Noticias',
@@ -76,6 +71,8 @@ export const panelADM = [
 	{ path: '/', text: 'Inicio', icon: '' },
 	{ path: '/panel/archivos', text: 'Archivos', icon: '' },
 	{ path: '/panel/noticias', text: 'Noticias', icon: '' },
+	{ path: '/panel/mi-unidad', text: 'Mi Unidad', icon: '' },
+
 	// { path: '/panel/usuarios', text: 'Usuarios', icon: '' },
 ];
 

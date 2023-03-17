@@ -14,10 +14,13 @@ import { getNews } from '../../../store/NewsSlice';
 import { getPublicDocuments } from '../../../store/DocumentSlice';
 import API from '../../../Utils/Connection';
 import { getResponsable } from '../../../store/UnidadSlice';
+import EditUnidadDialog from '../../../components/Dialog/EditUnidadDialog';
+import UnidadInformation from '../../../components/Box/UnidadInformation';
 
 export default function Uegc() {
 	const theme = useTheme();
 	const [responsable, setResponsable] = useState(null);
+	const [unidad, setUnidad] = useState(null);
 
 	const dispatch = useDispatch();
 	const [documents, setDocuments] = useState(null);
@@ -37,7 +40,8 @@ export default function Uegc() {
 	};
 	const fetchResponsable = async () => {
 		const r = await dispatch(getResponsable(7));
-		setResponsable(r.data);
+		setResponsable(r.data[0]);
+		setUnidad(r.data[1]);
 	};
 	useEffect(() => {
 		fetchNews();
@@ -48,46 +52,7 @@ export default function Uegc() {
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ pb: 10 }}>
-				<Card sx={{ background: 'white', borderRadius: 2, mt: 5, mb: 2 }}>
-					<Box sx={{ p: 4 }}>
-						<Box
-							sx={{
-								display: 'flex',
-								py: 1,
-							}}>
-							<Box sx={{ flexGrow: 1 }}>
-								<Typography
-									variant="h3"
-									sx={{ fontWeight: 'bold', color: 'text.primary' }}>
-									Unidad de evaluación y gestión de calidad
-								</Typography>
-								<Typography variant="h5" sx={{ color: 'text.primary', mb: 2 }}>
-									Direccion de carrera
-								</Typography>
-							</Box>
-							<HeadInformation head={responsable} />
-						</Box>
-
-						<Stack direction="row" spacing={2}>
-							<CardMedia
-								component="img"
-								sx={{ width: '50%', height: 'auto', borderRadius: 2 }}
-								image="/imgs/imageMain.png"
-							/>
-							<Typography variant="h6" align="center" sx={{ color: 'text.black' }}>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-								ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
-								dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies
-								nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-								Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
-								enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
-								felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus
-								elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo
-								ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam
-							</Typography>
-						</Stack>
-					</Box>
-				</Card>
+				<UnidadInformation unidad={unidad} responsable={responsable} />
 				<Card sx={{ mb: 2 }}>
 					<Box sx={{ background: theme.palette.auxiliar.main, p: 2 }}>
 						<Typography

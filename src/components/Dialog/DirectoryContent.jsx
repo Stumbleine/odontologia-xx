@@ -34,10 +34,8 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 			await dispatch(updateFilesDirectory(token, files, directory.id));
 		};
 		fetch()
-			.then(r => {
-			})
-			.catch(e => {
-			});
+			.then(r => {})
+			.catch(e => {});
 	};
 	const [files, setFiles] = useState(null);
 
@@ -49,7 +47,13 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 		<>
 			{openWithIcon ? (
 				<IconButton onClick={handleClickOpen}>
-					<OpenInFull />
+					<OpenInFull
+						sx={{
+							'&:hover': {
+								color: 'primary.main',
+							},
+						}}
+					/>
 				</IconButton>
 			) : (
 				<CardActionArea onClick={handleClickOpen}>{children}</CardActionArea>
@@ -85,10 +89,15 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 
 					<Grid container spacing={{ xs: 1, xl: 2 }}>
 						{directory?.archivos.map((doc, index) => (
-							<Grid key={index} xl={4} xs={12} lg={6} sx={{
-								maxWidth: 200,
-								minWidth: 200
-							}}>
+							<Grid
+								key={index}
+								xl={4}
+								xs={12}
+								lg={6}
+								sx={{
+									maxWidth: 200,
+									minWidth: 200,
+								}}>
 								<Document doc={doc} />
 							</Grid>
 						))}
