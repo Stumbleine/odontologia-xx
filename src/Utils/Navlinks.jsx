@@ -1,6 +1,4 @@
 export const publicNavlinks = [
-	{ path: '/', text: 'Inicio', icon: '' },
-
 	{
 		path: '/direccion-de-carrera',
 		text: 'Dirección de carrera',

@@ -48,7 +48,7 @@ export default function Router() {
 			children: [
 				{
 					path: '/',
-					element: <Main />,
+					element: <Navigate to="/direccion-de-carrera" replace />,
 				},
 				{
 					path: 'login',
@@ -151,7 +151,7 @@ export default function Router() {
 				},
 				{
 					path: 'mi-unidad',
-					element: getMyUnidad(user.id_unidad),
+					element: getMyUnidad(user?.id_unidad),
 				},
 			],
 		},
@@ -178,4 +178,5 @@ const getMyUnidad = idUnidad => {
 	if (idUnidad === 7) return <Uegc />;
 	if (idUnidad === 8) return <Uegc />;
 	if (idUnidad === 9) return <Uegc />;
+	return <></>;
 };
