@@ -8,6 +8,7 @@ const initialState = {
 	news: [],
 	total: 0,
 	hideNews: [],
+	totalH: 0
 	// pagFilter:0
 };
 
@@ -22,7 +23,8 @@ const newsSlice = createSlice({
 			state.total = payload;
 		},
 		setHideNews: (state, { payload }) => {
-			state.hideNews = payload;
+			state.hideNews = payload.data;
+			state.totalH = payload.total
 		},
 	},
 });
@@ -109,6 +111,7 @@ export const deleteNew = (token, idNew) => async dispatch => {
 			headers: { Authorization: `Bearer ${token}` },
 		});
 		dispatch(getNews(token));
+		dispatch(getHideNews(token))
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -131,6 +134,7 @@ export const updateNew = (token, values) => async dispatch => {
 		});
 		fireAlert({ title: 'Noticia actualizada con exito', icon: 'success' });
 		dispatch(getNews(token));
+		dispatch(getHideNews(token))
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -145,6 +149,7 @@ export const deleteNewFile = (token, idNew, idFile) => async dispatch => {
 			}
 		);
 		dispatch(getNews(token));
+		dispatch(getHideNews(token))
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -166,6 +171,8 @@ export const updateNewFiles = (token, idNew, files) => async dispatch => {
 		});
 		fireAlert({ title: 'Archivo añadido correctamente', icon: 'success' });
 		dispatch(getNews(token));
+		dispatch(getHideNews(token))
+
 	} catch (e) {
 		throw new Error(e);
 	}
@@ -174,27 +181,39 @@ export const updateNewFiles = (token, idNew, files) => async dispatch => {
 // hide
 export const changeVisibilityNew = (token, idNew, visibility) => async dispatch => {
 	try {
-		const r = await API.post('/noticia/ocultar?id=' + idNew, visibility, {
+		const r = await API.post('/noticia/cambiar-estado?id=' + idNew, visibility, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		fireAlert({ title: 'Visibilidad cambiado correctamente', icon: 'success' });
+		fireAlert({ title: 'Visibilidad cambiada correctamente', icon: 'success' });
 		dispatch(getNews(token));
+		dispatch(getHideNews(token))
 	} catch (e) {
 		throw new Error(e);
 	}
 };
 
-export const getHideNews = token => async dispatch => {
-	try {
-		const r = await API.get('/noticia/noticias-ocultas', {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		dispatch(setHideNews(r.data));
-	} catch (e) {
-		throw new Error(e);
+
+const constructURLH = (offset, search, unidad, id) => {
+	if (search !== 'all' || unidad !== 'all') {
+		return `/noticia/listar-ocultos?offset=${offset}&search=${search}&unidad=${unidad}`;
+	} else if (id !== undefined && id !== null) {
+		return `/noticia/listar-ocultos?offset=${offset}&id_noticia=${id}`;
 	}
+	return `/noticia/listar-ocultos?offset=${offset}`;
 };
+
+export const getHideNews =
+	(token, offset = 0, id = null, search = 'all', unidad = 'all') =>
+	async dispatch => {
+		let url = constructURLH(offset, search, unidad, id);
+		try {
+			const r = await API.get(url, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			dispatch(setHideNews(r.data));
+		} catch (e) {
+			throw new Error(e);
+		}
+	};

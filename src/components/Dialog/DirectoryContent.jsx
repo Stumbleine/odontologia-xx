@@ -87,9 +87,10 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 				<DialogContent sx={{ px: 3, pb: 3, bgcolor: 'terciary.main' }}>
 					{/* <DocumentsGrid documents={directory?.archivos} /> */}
 
-					<Grid container spacing={{ xs: 1, xl: 2 }}>
+					<Grid container spacing={2}>
 						{directory?.archivos.map((doc, index) => (
 							<Grid
+								item
 								key={index}
 								xl={4}
 								xs={12}

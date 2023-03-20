@@ -8,6 +8,7 @@ const initialState = {
 	directories: null,
 	totalD: 0,
 	hideDocuments: null,
+	totalH: 0
 };
 
 const documentsSlice = createSlice({
@@ -23,7 +24,8 @@ const documentsSlice = createSlice({
 			state.totalD = payload.total;
 		},
 		setHideDocuments: (state, { payload }) => {
-			state.hideDocuments = payload;
+			state.hideDocuments = payload.data;
+			state.totalH = payload.total
 		},
 	},
 });
@@ -40,9 +42,9 @@ const constructDocumentURL = (page, search, unidad) => {
 
 const constructPersonalDocumentURL = (page, search, unidad) => {
 	if (search !== 'all' || unidad !== 'all') {
-		return `/archivo-publico/listar?offset=${page}&search=${search}&unidad=${unidad}`;
+		return `/archivo-publico/listar?offset=${page !== undefined?page:0}&search=${search}&unidad=${unidad}`;
 	}
-	return `/archivo-publico/listar?offset=${page}`;
+	return `/archivo-publico/listar?offset=${page !== undefined?page:0}`;
 };
 
 export const getPublicDocuments =
@@ -172,6 +174,7 @@ export const deleteDocument = (token, idDocument) => async dispatch => {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			dispatch(getPersonalPublicDocuments(token));
+			dispatch(getHideDocuments(token))
 		} catch (error) {
 			throw new Error(e);
 		}
@@ -211,21 +214,29 @@ export const updateFilesDirectory = (token, files, idDirectory) => async dispatc
 // hide
 export const changeVisibilityDocument = (token, idNew, visibility) => async dispatch => {
 	try {
-		const r = await API.post('/noticia/ocultar?id=' + idNew, visibility, {
+		const r = await API.post('/archivo-publico/cambiar-estado?id=' + idNew, visibility, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		});
 		fireAlert({ title: 'Visibilidad cambiado correctamente', icon: 'success' });
-		dispatch(getPublicDocuments(token));
+		dispatch(getPersonalPublicDocuments(token));
+		dispatch(getHideDocuments(token))
 	} catch (e) {
 		throw new Error(e);
 	}
 };
 
-export const getHideDocuments = token => async dispatch => {
+const constructHiddenURL = (page, search, unidad) => {
+	if (search !== 'all' || unidad !== 'all') {
+		return `/archivo-publico/listar-ocultos?offset=${page !== undefined?page:0}&search=${search}&unidad=${unidad}`;
+	}
+	return `/archivo-publico/listar-ocultos?offset=${page !== undefined?page:0}&id_unidad=${unidad}`;
+};
+export const getHideDocuments = (token, page, search = 'all', unidad = 'all') => async dispatch => {
+	let url = constructHiddenURL(page, search, unidad);
 	try {
-		const r = await API.get('/noticia/noticias-ocultas', {
+		const r = await API.get(url, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

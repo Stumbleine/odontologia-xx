@@ -106,28 +106,20 @@ export default function Document({ doc, onlyRead = false, isPublic }) {
 					py: 0.5,
 				}}>
 				{isPublic &&
-					rol ===
-						'ADM'(
-							<Tooltip title={document?.visibility ? 'Ocultar' : 'Mostrar'}>
+					(rol ===
+						'ADM' || rol === "SUPER") &&(
+							<Tooltip title={doc?.visible ? 'Ocultar' : 'Mostrar'}>
 								<IconButton
 									onClick={() => {
 										dispatch(
 											changeVisibilityDocument(
 												token,
-												document?.id,
-												!document?.visibility || false
+												doc?.id,
+												!doc?.visible || false
 											)
 										);
 									}}>
-									{document?.visibility ? (
-										<Visibility
-											sx={{
-												'&:hover': {
-													color: 'primary.light',
-												},
-											}}
-										/>
-									) : (
+									{doc?.visible ?(
 										<VisibilityOff
 											sx={{
 												'&:hover': {
@@ -135,7 +127,15 @@ export default function Document({ doc, onlyRead = false, isPublic }) {
 												},
 											}}
 										/>
-									)}
+									): (
+										<Visibility
+											sx={{
+												'&:hover': {
+													color: 'primary.light',
+												},
+											}}
+										/>
+									) }
 								</IconButton>
 							</Tooltip>
 						)}

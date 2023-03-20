@@ -20,7 +20,7 @@ export default function DirectoriesGrid({directories}) {
 		);
 	};
   return (
-    <Grid container spacing={{ xs: 1, lg: 2 }}>
+    <Grid container spacing={2}>
 			{
 				directories
 					? directories.map((dir, index) => (

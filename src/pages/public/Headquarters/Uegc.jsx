@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/system';
-import { Box, Button, Card, CardMedia, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Grid, Stack, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import NewsCarousel from '../../../components/NewsCarousel';
 import DocumentsGrid from '../../../components/Grid/DocumentsGrid';

@@ -33,31 +33,44 @@ export default function Filter({
 		}
 	};
 	const initialPblic = { searchPublic: '' };
-	const initialDir = { searchDir: '' };
+	const initialDir = { search: '' };
+	const initialHidden = { searchHidden: '' };
+
+
 
 	const formik = useFormik({
-		initialValues: prefixId === 'public' ? initialPblic : initialDir,
+		initialValues: {...initialDir, ...initialHidden, ...initialPblic},
 		validationSchema:
-			prefixId === 'public'
+			(prefixId === 'public')
 				? Yup.object({
 						searchPublic: Yup.string().required(),
 				  })
-				: Yup.object({
+				: (prefixId === "directory"
+					? Yup.object({
 						search: Yup.string().required(),
-				  }),
+				  }): 
+				  Yup.object({
+					searchHidden: Yup.string().required(),
+			  	  })),
 		onSubmit: values => {
+			console.log(values);
 			handleSearch(values);
 		},
 	});
+
 	const { getFieldProps, values } = formik;
 	useEffect(() => {
 		if (prefixId === 'public') {
 			if (values.searchPublic === '' && backScapePressed) {
 				handleSearch({ searchPublic: 'all' });
 			}
-		} else {
+		} else if(prefixId === "directory"){
 			if (values.search === '' && backScapePressed) {
 				handleSearch({ search: 'all' });
+			}
+		}else if(prefixId === "hidden"){
+			if (values.searchHidden === '' && backScapePressed) {
+				handleSearch({ searchHidden: 'all' });
 			}
 		}
 	}, [backScapePressed, values]);
@@ -104,7 +117,7 @@ export default function Filter({
 						size="small"
 						// name="search"
 						onKeyDown={handleKeyDown}
-						{...getFieldProps(prefixId === 'public' ? 'searchPublic' : 'search')}
+						{...getFieldProps(prefixId === 'public' ? 'searchPublic' : (prefixId === 'directory') ? 'search' : 'searchHidden')}
 						variant="outlined"
 						placerholder="Buscar usuario"
 						fullWidth

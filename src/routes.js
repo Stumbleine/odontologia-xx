@@ -4,7 +4,6 @@ import Login from './pages/public/Login';
 import DashboardLayout from './layouts/DashboardLayout';
 import Headquarters from './pages/public/Headquarters';
 import CreateDocument from './pages/CreateDocument';
-import Contact from './pages/public/Contact';
 import CreateNew from './pages/CreateNew';
 import Users from './pages/panel/Users';
 import AllNews from './pages/public/AllNews';
@@ -29,6 +28,8 @@ import CareerDirection from './pages/public/Headquarters/CareerDirection';
 import Resources from './pages/public/Resources';
 import Logs from './pages/panel/Logs';
 import Uegc from './pages/public/Headquarters/Uegc';
+import StudentsCenter from './pages/public/Headquarters/StudentsCenter';
+import Cientific from './pages/public/Headquarters/Cientific';
 
 export default function Router() {
 	const { isAuth } = useSelector(state => state.auth);
@@ -43,7 +44,7 @@ export default function Router() {
 			element: !isAuth ? (
 				<DashboardLayout navlinks={publicNavlinks} />
 			) : (
-				<Navigate to="/panel" replace />
+				<Navigate to="/panel/archivos" replace />
 			),
 			children: [
 				{
@@ -61,6 +62,14 @@ export default function Router() {
 				{
 					path: 'direccion-de-carrera',
 					element: <CareerDirection />,
+				},
+				{
+					path: 'centro-estudiantes',
+					element: <StudentsCenter />,
+				},
+				{
+					path: 'sociedad-cientifica',
+					element: <Cientific />,
 				},
 				{
 					path: 'jefaturas',
@@ -121,10 +130,9 @@ export default function Router() {
 			element: isAuth ? (
 				<DashboardLayout navlinks={navlinks} />
 			) : (
-				<Navigate to="/" replace />
+				<Navigate to="/direccion-de-carrera" replace />
 			),
 			children: [
-				{ path: '', element: <Main /> },
 				{
 					path: 'archivos',
 					element: <Documents />,

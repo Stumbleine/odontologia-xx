@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Page from '../../../components/Box/Page';
 import { Container } from '@mui/system';
-import { Box, Button, Card, CardMedia, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Grid, Stack, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import NewCard from '../../../components/Card/NewCard';
 import NewsCarousel from '../../../components/NewsCarousel';

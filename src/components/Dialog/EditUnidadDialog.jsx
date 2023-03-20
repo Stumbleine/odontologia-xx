@@ -1,6 +1,6 @@
 import { Edit, Image } from '@mui/icons-material';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import EditUnidad from '../Forms/EditUnidad';
 import {
 	Button,
@@ -16,8 +16,10 @@ import { Box, Stack } from '@mui/system';
 import { Form, Formik, FormikProvider, useFormik } from 'formik';
 import { green } from '@mui/material/colors';
 import { updateUnidad } from '../../store/UnidadSlice';
+import { fireAlert } from '../../Utils/Sweet';
 export default function EditUnidadDialog({ unidad, disabled }) {
 	const dispatch = useDispatch();
+	const { token } = useSelector(state => state.account);
 	const [open, setOpen] = useState(false);
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -27,7 +29,7 @@ export default function EditUnidadDialog({ unidad, disabled }) {
 		setOpen(false);
 	};
 
-	const [coverImage, setCoverImage] = useState(null);
+	const [coverImage, setCoverImage] = useState(unidad.cover);
 	const [coverFile, setCoverFile] = useState(null);
 	const handleChangeCover = e => {
 		setCoverFile(e.target.files);
@@ -43,11 +45,25 @@ export default function EditUnidadDialog({ unidad, disabled }) {
 			direccion: unidad?.direccion || '',
 			cover: unidad?.cover || '',
 		},
+		enableReinitialize: true,
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			values = { ...values, cover: coverFile };
 			const update = async () => {
-				await dispatch(updateUnidad(values));
+				await dispatch(updateUnidad(values, token));
 			};
+
+			update().then(() => {
+				handleClose()
+				// window.location.reload()
+				setSubmitting(false);
+
+			})
+			.catch(e => {
+				handleClose()
+				fireAlert({ title: 'Algo salio mal vuelva a intentarlo', icon: 'error' });
+
+				setSubmitting(false);
+			});
 		},
 	});
 	const {
@@ -86,7 +102,7 @@ export default function EditUnidadDialog({ unidad, disabled }) {
 				// TransitionComponent={Transition}
 			>
 				<DialogTitle>Editar unidad </DialogTitle>
-				<FormikProvider value={Formik}>
+				<FormikProvider value={formik}>
 					<Form>
 						<Stack spacing={2} sx={{ p: 2, borderRadius: 2, background: 'white' }}>
 							<Box

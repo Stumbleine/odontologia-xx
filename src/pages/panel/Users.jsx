@@ -60,7 +60,7 @@ export default function Users() {
 					<Filter
 						handleSearch={handleSearch}
 						handleUnidad={handleUnidad}
-						prefixId="users">
+						prefixId="directory">
 						<FormControl
 							sx={{ minWidth: { xs: 1, sm: 160 } }}
 							size="small"
