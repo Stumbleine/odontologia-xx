@@ -1,8 +1,4 @@
-import { Height } from '@mui/icons-material';
-import { Typography } from '@mui/material';
-import { Box, Container } from '@mui/system';
-import React, { useEffect } from 'react';
-import Footer from '../Footer';
+import { Box } from '@mui/system';
 
 export default function Page({ children, settings }) {
 	return (

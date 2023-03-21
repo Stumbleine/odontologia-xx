@@ -5,13 +5,11 @@ import {
 	DialogContent,
 	Grid,
 	IconButton,
-	LinearProgress,
 	Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import moment from 'moment';
 import React, { useState } from 'react';
-import DocumentsGrid from '../Grid/DocumentsGrid';
 import { OpenInFull, Save } from '@mui/icons-material';
 import UploadFiles from '../Forms/UploadFiles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -87,9 +85,10 @@ export default function DirectoryContent({ children, directory, openWithIcon }) 
 				<DialogContent sx={{ px: 3, pb: 3, bgcolor: 'terciary.main' }}>
 					{/* <DocumentsGrid documents={directory?.archivos} /> */}
 
-					<Grid container spacing={{ xs: 1, xl: 2 }}>
+					<Grid container spacing={2}>
 						{directory?.archivos.map((doc, index) => (
 							<Grid
+								item
 								key={index}
 								xl={4}
 								xs={12}

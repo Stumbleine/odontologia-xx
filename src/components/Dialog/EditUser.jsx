@@ -1,7 +1,6 @@
 import { Edit } from '@mui/icons-material';
 import {
 	Button,
-	Card,
 	CircularProgress,
 	Dialog,
 	DialogActions,
@@ -9,12 +8,11 @@ import {
 	DialogTitle,
 	IconButton,
 	TextField,
-	Typography,
 } from '@mui/material';
 import { green } from '@mui/material/colors';
 import { Box, Stack } from '@mui/system';
 import { Form, FormikProvider, useFormik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { getUsers, updateUser } from '../../store/UsersSlice';
@@ -66,7 +64,7 @@ export default function EditUser({ user, disabled }) {
 				});
 		},
 	});
-	const { errors, touched, handleSubmit, values, getFieldProps, isSubmitting } = formik;
+	const { errors, touched, getFieldProps, isSubmitting } = formik;
 	return (
 		<>
 			<IconButton disabled={disabled} size="small" onClick={handleClickOpen}>

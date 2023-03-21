@@ -7,12 +7,11 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import React from 'react';
 import DeleteAlert from './DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVisibilityNew, deleteNew } from '../../store/NewsSlice';
 import { OpenInNew, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EditNew from '../Dialog/EditNew';
 import EditNewFiles from '../Dialog/EditNewFiles';
 
@@ -39,7 +38,7 @@ export default function NewCard({ newest }) {
 		});
 	};
 	return (
-		<Card sx={{ borderRadius: 2, width: 'auto', height: 'auto', mx: 1 }}>
+		<Card sx={{ borderRadius: 2, width:"97%", height: 'auto', mx: 1 }}>
 			<CardMedia
 				component="img"
 				sx={{ width: '100%', height: 140 }}
@@ -88,27 +87,27 @@ export default function NewCard({ newest }) {
 						<EditNew newest={newest} />
 					</>
 				)}
-				{rol === 'ADM' && (
-					<Tooltip title={newest?.visibility ? 'Ocultar' : 'Mostrar'}>
+				{(rol === 'ADM' || rol === 'SUPER') && (
+					<Tooltip title={newest?.visible ? 'Ocultar' : 'Mostrar'}>
 						<IconButton
 							onClick={() => {
 								dispatch(
-									changeVisibilityNew(token, newest?.id, !newest?.visibility || false)
+									changeVisibilityNew(token, newest?.id, !newest?.visible || false)
 								);
 							}}>
-							{newest?.visibility ? (
-								<Visibility
-									sx={{
-										'&:hover': {
-											color: 'primary.light',
-										},
-									}}
-								/>
-							) : (
+							{newest?.visible ?  (
 								<VisibilityOff
 									sx={{
 										'&:hover': {
 											color: 'primary.main',
+										},
+									}}
+								/>
+							): (
+								<Visibility
+									sx={{
+										'&:hover': {
+											color: 'primary.light',
 										},
 									}}
 								/>

@@ -1,5 +1,5 @@
 import { Container } from '@mui/system';
-import { Box, Button, Card, CardMedia, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Grid, Stack, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import { Add } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
@@ -65,22 +65,6 @@ export default function RotatingInternship() {
 							p: 2,
 							background: theme.palette.secondary.main,
 						}}>
-						{/* <Box
-							sx={{
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'flex-end',
-								mb: 2,
-							}}>
-							<Button
-								variant="contained"
-								color="auxiliar"
-								component={Link}
-								to="/añadir-noticia"
-								startIcon={<Add />}>
-								Noticia
-							</Button>
-						</Box> */}
 						<NewsCarousel news={news} />
 					</Box>
 				</Card>

@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function HeadInformation({ head }) {
 	const [cargo, setCargo] = useState("");
@@ -27,7 +27,7 @@ export default function HeadInformation({ head }) {
 					setCargo("Director de la carrera")
 					break
 				case 7:
-					setCargo("Encargado de la unidad de evaluación y gestión de calidad")
+					setCargo("Encargado de la unidad")
 					break
 				default:
 					break;
@@ -35,20 +35,14 @@ export default function HeadInformation({ head }) {
 		}
 	}, [head])
 	return (
-		<Box sx={{ display: 'flex', flexGrow: 0 }}>
-			<Stack sx={{ px: 2, textAlign: 'end' }}>
+		<Box sx={{ display: 'flex', flexGrow: 0, justifyContent:"flex-end" }}>
+			<Stack sx={{ px: 0, textAlign:"end"}}>
 				<Typography fontWeight={600}>
 					{head?.nombres} {head?.apellidos}
 				</Typography>
 
 				<Typography>{cargo}</Typography>
 			</Stack>
-			{/* <Box
-				component="img"
-				style={{ height: 100, withd: 100, borderRadius: '10px' }}
-				src={head?.picture}
-				alt="foto responsable de jefatura"
-			/> */}
 		</Box>
 	);
 }

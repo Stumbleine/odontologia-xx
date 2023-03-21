@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Page from '../../../components/Box/Page';
 import { Container } from '@mui/system';
-import { Box, Button, Card, CardMedia, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Grid, Stack, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import NewCard from '../../../components/Card/NewCard';
 import NewsCarousel from '../../../components/NewsCarousel';
@@ -86,10 +86,7 @@ export default function Clinic() {
 					</Box>
 					{/* noticias */}
 					<Box sx={{ p: 2, py: 3, background: theme.palette.terciary.main }}>
-						{router.pathname === '/jefaturas/clinica' && (
-							<DocumentsGrid documents={documents} />
-						)}
-						<Outlet />
+						<DocumentsGrid documents={documents} />
 					</Box>
 				</Card>
 			</Container>

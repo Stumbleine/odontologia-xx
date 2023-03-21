@@ -39,9 +39,20 @@ export const getResponsable = idUnidad => async dispatch => {
 	}
 };
 
-export const updateUnidad = values => async dispatch => {
+export const updateUnidad = (values, token) => async dispatch => {
+
+	if (values.cover) {
+		const foto = await convertToB64(values.cover);
+		values.cover = foto
+	}else{
+		delete values.cover
+	}
+
 	try {
-		await API.post(`/public/get-jefe?id_unidad=${values.id}`, values);
+		
+		await API.put(`/unidad/actualizar`, values,{
+			headers: { Authorization: `Bearer ${token}` },
+		});
 		dispatch(getResponsable(values.id));
 	} catch (e) {
 		throw new Error(e);

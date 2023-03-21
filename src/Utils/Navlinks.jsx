@@ -6,6 +6,12 @@ export const publicNavlinks = [
 		dropdown: false,
 	},
 	{
+		path: '/centro-estudiantes',
+		text: 'Centro de estudiantes',
+		icon: '',
+		dropdown: false,
+	},
+	{
 		path: '/uegc',
 		text: 'Unidad de evaluación y gestión de calidad',
 		icon: '',
@@ -17,10 +23,6 @@ export const publicNavlinks = [
 		icon: '',
 		dropdown: true,
 		ddItems: [
-			{
-				href: '/jefaturas',
-				text: 'Jefaturas',
-			},
 			{
 				href: '/jefaturas/academica',
 				text: 'Jefatura académica',
@@ -44,12 +46,17 @@ export const publicNavlinks = [
 		],
 	},
 	{
+		path: '/sociedad-cientifica',
+		text: 'Sociedad cientifica',
+		icon: '',
+		dropdown: false,
+	},
+	{
 		path: '/recursos',
 		text: 'Recursos virtuales',
 		icon: '',
 		dropdown: false,
 	},
-
 	{
 		path: '/noticias',
 		text: 'Noticias',
@@ -59,14 +66,12 @@ export const publicNavlinks = [
 ];
 
 export const panelSUPER = [
-	{ path: '/', text: 'Inicio', icon: '' },
-	{ path: '/panel/archivos', text: 'Archivos', icon: '' },
+ 	{ path: '/panel/archivos', text: 'Archivos', icon: '' },
 	{ path: '/panel/noticias', text: 'Noticias', icon: '' },
 	{ path: '/panel/usuarios', text: 'Usuarios', icon: '' },
 	{ path: '/panel/logs', text: 'Logs', icon: '' },
 ];
 export const panelADM = [
-	{ path: '/', text: 'Inicio', icon: '' },
 	{ path: '/panel/archivos', text: 'Archivos', icon: '' },
 	{ path: '/panel/noticias', text: 'Noticias', icon: '' },
 	{ path: '/panel/mi-unidad', text: 'Mi Unidad', icon: '' },

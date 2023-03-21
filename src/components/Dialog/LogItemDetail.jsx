@@ -6,7 +6,7 @@ import {
 	DialogTitle,
 	Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function LogItemDetail({ disabled, data }) {
 	const [open, setOpen] = useState(false);

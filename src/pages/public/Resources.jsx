@@ -46,7 +46,7 @@ export default function Resources() {
 					direction={{ xs: 'column', md: 'row' }}
 					spacing={2}
 					sx={{ mb: 2, justifyContent: 'space-between' }}>
-					<Filter handleSearch={handleSearch} handleUnidad={handleUnidad} />
+					<Filter handleSearch={handleSearch} handleUnidad={handleUnidad} prefixId="directory" />
 				</Stack>
 				{publicDocuments?.length > 0 ? (
 					<ResourcesTable resources={publicDocuments} />

@@ -1,22 +1,15 @@
 import {
 	Card,
-	CardActionArea,
 	CardActions,
 	CardContent,
-	CardMedia,
-	Icon,
 	IconButton,
-	SvgIcon,
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import React from 'react';
-import { blue, green, grey, purple, red } from '@mui/material/colors';
+import { grey} from '@mui/material/colors';
 import { Box } from '@mui/system';
-import { Link, useLocation } from 'react-router-dom';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
 import {
-	Delete,
 	Download,
 	OpenInNew,
 	Visibility,
@@ -25,15 +18,12 @@ import {
 import API, { URL } from '../../Utils/Connection';
 import fileDownload from 'js-file-download';
 import { useDispatch, useSelector } from 'react-redux';
-import { type } from '@testing-library/user-event/dist/type';
 import DeleteAlert from './DeleteAlert';
 import { changeVisibilityDocument, deleteDocument } from '../../store/DocumentSlice';
-import { fireAlert } from '../../Utils/Sweet';
 import moment from 'moment';
 
 export default function Document({ doc, onlyRead = false, isPublic }) {
 	const { token, rol } = useSelector(state => state.account);
-	const location = useLocation();
 
 	const handleDownload = () => {
 		API.get('/archivo-privado/obtener-archivo?id=' + doc.id, {
@@ -106,28 +96,20 @@ export default function Document({ doc, onlyRead = false, isPublic }) {
 					py: 0.5,
 				}}>
 				{isPublic &&
-					rol ===
-						'ADM'(
-							<Tooltip title={document?.visibility ? 'Ocultar' : 'Mostrar'}>
+					(rol ===
+						'ADM' || rol === "SUPER") &&(
+							<Tooltip title={doc?.visible ? 'Ocultar' : 'Mostrar'}>
 								<IconButton
 									onClick={() => {
 										dispatch(
 											changeVisibilityDocument(
 												token,
-												document?.id,
-												!document?.visibility || false
+												doc?.id,
+												!doc?.visible || false
 											)
 										);
 									}}>
-									{document?.visibility ? (
-										<Visibility
-											sx={{
-												'&:hover': {
-													color: 'primary.light',
-												},
-											}}
-										/>
-									) : (
+									{doc?.visible ?(
 										<VisibilityOff
 											sx={{
 												'&:hover': {
@@ -135,7 +117,15 @@ export default function Document({ doc, onlyRead = false, isPublic }) {
 												},
 											}}
 										/>
-									)}
+									): (
+										<Visibility
+											sx={{
+												'&:hover': {
+													color: 'primary.light',
+												},
+											}}
+										/>
+									) }
 								</IconButton>
 							</Tooltip>
 						)}

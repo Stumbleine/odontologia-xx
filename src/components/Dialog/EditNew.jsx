@@ -1,12 +1,8 @@
-import { Edit, Publish, Save, UploadFile } from '@mui/icons-material';
+import { Edit, Save, UploadFile } from '@mui/icons-material';
 import {
 	Button,
-	Card,
-	CardActionArea,
 	CardActions,
-	CircularProgress,
 	Dialog,
-	DialogActions,
 	DialogContent,
 	DialogTitle,
 	IconButton,
@@ -14,10 +10,9 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import { green } from '@mui/material/colors';
 import { Box, Stack } from '@mui/system';
 import { Form, FormikProvider, useFormik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { updateNew } from '../../store/NewsSlice';
@@ -79,9 +74,7 @@ export default function EditNew({ newest, disabled }) {
 		},
 	});
 	const {
-		values,
 		isSubmitting,
-		handleChange,
 		errors,
 		touched,
 		handleSubmit,

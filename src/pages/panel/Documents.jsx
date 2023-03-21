@@ -18,7 +18,7 @@ import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import DirectoriesGrid from '../../components/Grid/DirectoriesGrid';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDirectories, getPersonalPublicDocuments } from '../../store/DocumentSlice';
+import { getDirectories, getHideDocuments, getPersonalPublicDocuments } from '../../store/DocumentSlice';
 import { grey } from '@mui/material/colors';
 import Filter from '../../components/Forms/Filter';
 import Msg from '../../components/Box/Msg';
@@ -28,16 +28,22 @@ export default function Documents() {
 	// const [jefatura, setJefatura] = useState('All');
 	const [mode, setMode] = useState('public');
 	const { token, rol } = useSelector(state => state.account);
-	const { publicDocuments, directories, totalPD, totalD, hideDocuments } = useSelector(
+	const { publicDocuments, directories, totalPD, totalD, hideDocuments, totalH } = useSelector(
 		state => state.documents
 	);
 	const [filter, setFilter] = useState({ search: 'all', unidad: 'all' });
 	const [filterDir, setFilterDir] = useState({ search: 'all', unidad: 'all' });
+	const [filterHidden, setFilterHidden] = useState({ search: 'all', unidad: 'all' });
+
 	const [pagePD, setPagePD] = useState(0);
 	const [pageD, setPageD] = useState(0);
+	const [pageH, setPageH] = useState(0);
+
 
 	const countPD = Math.ceil(totalPD / 20);
 	const countD = Math.ceil(totalD / 20);
+	const countH = Math.ceil(totalH / 20);
+
 
 	const dispatch = useDispatch();
 
@@ -46,8 +52,12 @@ export default function Documents() {
 	}, [pagePD]);
 
 	useEffect(() => {
-		dispatch(getDirectories(token, pagePD, filterDir.search, filterDir.unidad));
+		dispatch(getDirectories(token, pageD, filterDir.search, filterDir.unidad));
 	}, [pageD]);
+
+	useEffect(() => {
+		dispatch(getHideDocuments(token, pageH, filterHidden.search, filterDir.unidad));
+	}, [pageH]);
 
 	const handlePublicUnidad = event => {
 		setFilter({ ...filter, unidad: event.target.value });
@@ -55,23 +65,40 @@ export default function Documents() {
 			getPersonalPublicDocuments(token, pagePD, filter.search, event.target.value)
 		);
 	};
+
+	const handlePublicUnidadH = event => {
+		setFilterHidden({ ...filter, unidad: event.target.value });
+		dispatch(
+			getHideDocuments(token, pageH, filter.search, event.target.value)
+		);
+	};
+
 	const handlePublicSearch = values => {
 		setFilter({ ...filter, search: values.searchPublic });
 		dispatch(getPersonalPublicDocuments(token, pagePD, values.searchPublic));
 	};
 	const handleDirectoriesUnidad = event => {
 		setFilterDir({ ...filterDir, unidad: event.target.value });
-		dispatch(getDirectories(token, pagePD, filterDir.search, event.target.value));
+		dispatch(getDirectories(token, pageD, filterDir.search, event.target.value));
 	};
+
+	const handleDocumentsHidden = values => {
+		setFilterHidden({ ...filterHidden, search: values.searchHidden });
+		dispatch(getHideDocuments(token, pageH, values.searchHidden));
+	};
+
 	const handleDirectoriesSearch = values => {
 		setFilterDir({ ...filterDir, search: values.search });
-		dispatch(getDirectories(token, pagePD, values.search, filterDir.unidad));
+		dispatch(getDirectories(token, pageD, values.search, filterDir.unidad));
 	};
 	const handlePagePublic = (event, value) => {
-		dispatch(setPagePD(parseInt(value) - 1));
+		setPagePD(parseInt(value) - 1);
 	};
 	const handlePageDirectories = (event, value) => {
-		dispatch(setPageD(parseInt(value) - 1));
+		setPageD(parseInt(value) - 1);
+	};
+	const handlePageHidden = (event, value) => {
+		setPageH(parseInt(value) - 1);
 	};
 	return (
 		<Page settings={{ pt: 5, pb: 10 }}>
@@ -217,11 +244,28 @@ export default function Documents() {
 						</>
 					) : (
 						<>
+						<Filter
+								dark={true}
+								handleSearch={handleDocumentsHidden}
+								handleUnidad={handlePublicUnidadH}
+								prefixId="hidden"
+							/>
+							<Box sx={{ my: 2 }}></Box>
 							{hideDocuments?.length > 0 ? (
-								<DirectoriesGrid directories={directories} />
+								<DocumentsGrid documents={hideDocuments} isPublic={true} />
 							) : (
 								<Msg msg={'No se encontraron archivos ocultos.'} />
 							)}
+							<Stack spacing={2} sx={{ mt: 2 }} alignItems="center">
+								<Pagination
+									count={countH}
+									variant="outlined"
+									shape="rounded"
+									page={parseInt(pageH) + 1}
+									sx={{ color: 'primary' }}
+									onChange={handlePageHidden}
+								/>
+							</Stack>
 						</>
 					)}
 				</Box>

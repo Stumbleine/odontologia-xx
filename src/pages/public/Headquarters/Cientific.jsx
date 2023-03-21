@@ -16,43 +16,40 @@ import API from '../../../Utils/Connection';
 import { getResponsable } from '../../../store/UnidadSlice';
 import UnidadInformation from '../../../components/Box/UnidadInformation';
 
-export default function CareerDirection() {
-	const theme = useTheme();
-	const [responsable, setResponsable] = useState(null);
-
-	const dispatch = useDispatch();
-	const [unidad, setUnidad] = useState(null);
-
+export default function Cientific() {
 	const [documents, setDocuments] = useState(null);
 	const [news, setNews] = useState(null);
+	const [responsable, setResponsable] = useState(null);
+	const theme = useTheme();
+	const [unidad, setUnidad] = useState(null);
+
+	const dispatch = useDispatch();
 	const fetchNews = async () => {
 		try {
-			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 6);
+			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 9);
 			setDocuments(r.data);
 		} catch (e) {}
 	};
 
 	const fetchDocuments = async () => {
 		try {
-			const r = await API.get('/public/listar-noticias?id_unidad=' + 6);
+			const r = await API.get('/public/listar-noticias?id_unidad=' + 9);
 			setNews(r.data.data);
 		} catch (e) {}
 	};
 
 	const fetchResponsable = async () => {
-		const r = await dispatch(getResponsable(6));
+		const r = await dispatch(getResponsable(9));
 		setResponsable(r.data[0]);
 		setUnidad(r.data[1]);
 	};
+
 	useEffect(() => {
 		fetchNews();
 		fetchDocuments();
 		fetchResponsable();
 	}, []);
-	// sx={{
-	// 	display: 'flex',
-	// 	py: 1,
-	// }}
+
 	return (
 		<Page>
 			<Container maxWidth="xl" sx={{ pb: 10 }}>

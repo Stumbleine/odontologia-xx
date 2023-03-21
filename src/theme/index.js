@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { grey, orange, red, blue } from '@mui/material/colors';
+import { orange, red } from '@mui/material/colors';
 import ComponentsOverrides from './ComponentsOverrides';
 
 export const customTheme = createTheme({
