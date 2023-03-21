@@ -5,13 +5,11 @@ import {
 	DialogContent,
 	Grid,
 	IconButton,
-	LinearProgress,
 	Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import moment from 'moment';
 import React, { useState } from 'react';
-import DocumentsGrid from '../Grid/DocumentsGrid';
 import { OpenInFull, Save } from '@mui/icons-material';
 import UploadFiles from '../Forms/UploadFiles';
 import { useDispatch, useSelector } from 'react-redux';

@@ -26,20 +26,20 @@ export default function Cientific() {
 	const dispatch = useDispatch();
 	const fetchNews = async () => {
 		try {
-			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 5);
+			const r = await API.get('/public/listar-archivos-publicos?id_unidad=' + 9);
 			setDocuments(r.data);
 		} catch (e) {}
 	};
 
 	const fetchDocuments = async () => {
 		try {
-			const r = await API.get('/public/listar-noticias?id_unidad=' + 5);
+			const r = await API.get('/public/listar-noticias?id_unidad=' + 9);
 			setNews(r.data.data);
 		} catch (e) {}
 	};
 
 	const fetchResponsable = async () => {
-		const r = await dispatch(getResponsable(5));
+		const r = await dispatch(getResponsable(9));
 		setResponsable(r.data[0]);
 		setUnidad(r.data[1]);
 	};

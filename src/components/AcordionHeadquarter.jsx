@@ -5,9 +5,8 @@ import {
 	Button,
 	Typography,
 } from '@mui/material';
-import React from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Stack } from '@mui/system';
+import { Stack } from '@mui/system';
 import { Link } from 'react-router-dom';
 export default function AcordionHeadquarter({ name, description, path }) {
 	return (

@@ -1,22 +1,14 @@
 import {
-	Delete,
-	Edit,
 	Folder,
-	FolderOpen,
-	NoteAdd,
-	OpenInFull,
 } from '@mui/icons-material';
 import {
 	Card,
-	CardActionArea,
 	CardActions,
 	CardContent,
 	Icon,
-	IconButton,
 	Typography,
 } from '@mui/material';
 import moment from 'moment';
-import React from 'react';
 import DirectoryContent from '../Dialog/DirectoryContent';
 import DeleteAlert from './DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';

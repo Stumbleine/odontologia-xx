@@ -1,22 +1,15 @@
 import {
 	Card,
-	CardActionArea,
 	CardActions,
 	CardContent,
-	CardMedia,
-	Icon,
 	IconButton,
-	SvgIcon,
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import React from 'react';
-import { blue, green, grey, purple, red } from '@mui/material/colors';
+import { grey} from '@mui/material/colors';
 import { Box } from '@mui/system';
-import { Link, useLocation } from 'react-router-dom';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
 import {
-	Delete,
 	Download,
 	OpenInNew,
 	Visibility,
@@ -25,15 +18,12 @@ import {
 import API, { URL } from '../../Utils/Connection';
 import fileDownload from 'js-file-download';
 import { useDispatch, useSelector } from 'react-redux';
-import { type } from '@testing-library/user-event/dist/type';
 import DeleteAlert from './DeleteAlert';
 import { changeVisibilityDocument, deleteDocument } from '../../store/DocumentSlice';
-import { fireAlert } from '../../Utils/Sweet';
 import moment from 'moment';
 
 export default function Document({ doc, onlyRead = false, isPublic }) {
 	const { token, rol } = useSelector(state => state.account);
-	const location = useLocation();
 
 	const handleDownload = () => {
 		API.get('/archivo-privado/obtener-archivo?id=' + doc.id, {

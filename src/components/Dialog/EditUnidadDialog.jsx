@@ -1,19 +1,17 @@
 import { Edit, Image } from '@mui/icons-material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import EditUnidad from '../Forms/EditUnidad';
 import {
 	Button,
 	CircularProgress,
 	Dialog,
 	DialogActions,
 	DialogTitle,
-	Fab,
 	TextField,
 	Typography,
 } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import { Form, Formik, FormikProvider, useFormik } from 'formik';
+import { Form, FormikProvider, useFormik } from 'formik';
 import { green } from '@mui/material/colors';
 import { updateUnidad } from '../../store/UnidadSlice';
 import { fireAlert } from '../../Utils/Sweet';
@@ -46,7 +44,7 @@ export default function EditUnidadDialog({ unidad, disabled }) {
 			cover: unidad?.cover || '',
 		},
 		enableReinitialize: true,
-		onSubmit: (values, { resetForm, setSubmitting }) => {
+		onSubmit: (values, { setSubmitting }) => {
 			values = { ...values, cover: coverFile };
 			const update = async () => {
 				await dispatch(updateUnidad(values, token));
@@ -67,12 +65,9 @@ export default function EditUnidadDialog({ unidad, disabled }) {
 		},
 	});
 	const {
-		values,
 		isSubmitting,
-		handleChange,
 		errors,
 		touched,
-		handleSubmit,
 		getFieldProps,
 	} = formik;
 	return (

@@ -1,12 +1,11 @@
-import { Box, Card, CardMedia, Grid, Stack, Typography } from '@mui/material';
-import React from 'react';
+import { Box, Card, CardMedia, Grid, Typography } from '@mui/material';
 import HeadInformation from './HeadInformation';
 import EditUnidadDialog from '../Dialog/EditUnidadDialog';
 import { useSelector } from 'react-redux';
 
 export default function UnidadInformation({ unidad, responsable, title, subtitle }) {
 	const { isAuth } = useSelector(state => state.auth);
-	const { rol, user } = useSelector(state => state.account);
+	const { rol } = useSelector(state => state.account);
 	return (
 		<Card sx={{ background: 'white', borderRadius: 2, mt: 5, mb: 2, p: 4 }}>
 				<Box sx={{ p: 4 }}>

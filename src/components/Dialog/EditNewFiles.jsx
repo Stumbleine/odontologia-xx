@@ -1,4 +1,4 @@
-import { Delete, DriveFileRenameOutlineRounded, Edit, Save } from '@mui/icons-material';
+import { Delete, DriveFileRenameOutlineRounded, Save } from '@mui/icons-material';
 import {
 	Button,
 	Card,
@@ -12,7 +12,7 @@ import {
 	LinearProgress,
 	Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UploadFiles from '../Forms/UploadFiles';
 import { FileIcon, extensions } from '../../Utils/extensionsFile';
@@ -25,7 +25,7 @@ export default function EditNewFiles({ disabled, newest }) {
 	const dispatch = useDispatch();
 	const { token } = useSelector(state => state.account);
 	const [open, setOpen] = useState(false);
-	const [isSubmitting, setSubmitting] = useState(false);
+	const [isSubmitting] = useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);

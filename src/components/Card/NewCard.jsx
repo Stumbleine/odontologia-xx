@@ -7,12 +7,11 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import React from 'react';
 import DeleteAlert from './DeleteAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeVisibilityNew, deleteNew } from '../../store/NewsSlice';
 import { OpenInNew, Visibility, VisibilityOff } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EditNew from '../Dialog/EditNew';
 import EditNewFiles from '../Dialog/EditNewFiles';
 

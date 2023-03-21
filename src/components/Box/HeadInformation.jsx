@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function HeadInformation({ head }) {
 	const [cargo, setCargo] = useState("");
