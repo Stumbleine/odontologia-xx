@@ -42,7 +42,7 @@ export default function RegisterForm() {
 			apellidos: '',
 			email: '',
 			password: '',
-			// rol: '',
+			rol: '',
 			unidad: '',
 		},
 		enableReinitialize: true,
@@ -52,6 +52,7 @@ export default function RegisterForm() {
 			email: Yup.string().required('El correo electronico es requerido'),
 			password: Yup.string().required('La contrañesa es requerido'),
 			unidad: Yup.string().required('Debe elegir una unidad.'),
+			rol: Yup.string().required('Debe elegir un rol.')
 		}),
 		onSubmit: (values, { resetForm, setSubmitting }) => {
 			const login = async () => {
@@ -82,7 +83,7 @@ export default function RegisterForm() {
 					sx={{ p: 2, borderRadius: 2, background: 'white' }}>
 					<Box>
 						<Typography variant="h5" align="center" sx={{ color: 'text.black' }}>
-							Registrar Usuario Administrador
+							Registrar Usuario
 						</Typography>
 					</Box>
 					<TextField
@@ -96,7 +97,7 @@ export default function RegisterForm() {
 					<TextField
 						fullWidth
 						autoComplete="apellidos"
-						label="apellidos"
+						label="Apellidos"
 						{...getFieldProps('apellidos')}
 						helperText={touched.apellidos && errors.apellidos}
 						error={Boolean(touched.apellidos && errors.apellidos)}
@@ -127,7 +128,7 @@ export default function RegisterForm() {
 							),
 						}}
 					/>
-					{/* <FormControl fullWidth>
+					<FormControl fullWidth>
 						<InputLabel id="role-label">Rol</InputLabel>
 						<Select
 							labelId="role-label"
@@ -145,7 +146,7 @@ export default function RegisterForm() {
 						<FormHelperText sx={{ color: 'error.main' }}>
 							{touched.rol && errors.rol}
 						</FormHelperText>
-					</FormControl> */}
+					</FormControl>
 					<FormControl fullWidth>
 						<InputLabel id="unidad-label">Unidad</InputLabel>
 						<Select
@@ -198,6 +199,6 @@ export default function RegisterForm() {
 }
 export const rols = [
 	{ id_rol: 2, rol: 'administrador', label: 'Administrador' },
-	// { id_rol: 1, rol: 'secretaria', label: 'Secretaria' },
+	{ id_rol: 1, rol: 'secretaria', label: 'Secretaria' },
 	// { id_rol: 1, rol: 'superadministrador', label: 'Super administrador' },
 ];

@@ -87,7 +87,7 @@ export default function NewCard({ newest }) {
 						<EditNew newest={newest} />
 					</>
 				)}
-				{(rol === 'ADM' || rol === 'SUPER') && (
+				{(rol === 'ADM' || rol === 'SUPER' || rol === 'SCRE') && (
 					<Tooltip title={newest?.visible ? 'Ocultar' : 'Mostrar'}>
 						<IconButton
 							onClick={() => {

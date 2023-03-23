@@ -74,6 +74,7 @@ export default function Users() {
 								input={<OutlinedInput id={'rol-filter'} label="Rol" />}>
 								<MenuItem value="all">Todos</MenuItem>
 								<MenuItem value="ADM">Administrador</MenuItem>
+								<MenuItem value="SCRE">Secretaria</MenuItem>
 								<MenuItem value="SUPER">Super Administrador</MenuItem>
 								{/* <MenuItem value="EXPIRADO">Expirado</MenuItem> */}
 							</Select>

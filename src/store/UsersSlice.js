@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import API from '../Utils/Connection';
+import { fireAlert } from '../Utils/Sweet';
 
 const initialState = {
 	users: null,
@@ -66,3 +67,17 @@ export const deleteUser = (token, idUser) => async dispatch => {
 		throw new Error(e);
 	}
 };
+
+export const changePass = (token, values) => async dispatch => {
+	try {
+		const r =  await API.put('/user/cambiar-contra', values, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		if(r){
+		   fireAlert({ title: 'Contraseña cambiada correctamente', icon: 'success' });
+		}
+
+	   } catch (error) {
+		   fireAlert({ title: 'Por favor revise que los datos sean correctos', icon: 'error' });
+	   }
+}

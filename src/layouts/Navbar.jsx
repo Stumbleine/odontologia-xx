@@ -18,6 +18,7 @@ import LogoSXX from '../components/LogoSXX';
 import { useDispatch, useSelector } from 'react-redux';
 import { grey } from '@mui/material/colors';
 import { logout } from '../store/AuthSlice';
+import ChangePasswordForm from '../components/Dialog/ChangePasword';
 export default function Navbar({ onOpenSidebar, navlinks }) {
 	const { isAuth } = useSelector(state => state.auth);
 	const { user, token } = useSelector(state => state.account);
@@ -194,6 +195,7 @@ export default function Navbar({ onOpenSidebar, navlinks }) {
 								display: 'flex',
 								alignItems: 'center',
 							}}>
+								<ChangePasswordForm></ChangePasswordForm>
 							<Button
 								onClick={() => dispatch(logout())}
 								sx={{

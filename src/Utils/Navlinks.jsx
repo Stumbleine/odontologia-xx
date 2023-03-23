@@ -82,5 +82,6 @@ export const panelADM = [
 export const getNavlinks = (rol = 'guest') => {
 	if (rol === 'guest') return publicNavlinks;
 	if (rol === 'ADM') return panelADM;
+	if(rol === "SCRE") return panelADM;
 	if (rol === 'SUPER') return panelSUPER;
 };

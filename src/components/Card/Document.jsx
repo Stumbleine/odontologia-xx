@@ -97,7 +97,7 @@ export default function Document({ doc, onlyRead = false, isPublic }) {
 				}}>
 				{isPublic &&
 					(rol ===
-						'ADM' || rol === "SUPER") &&(
+						'ADM' || rol === "SUPER" || rol === "SCRE") &&(
 							<Tooltip title={doc?.visible ? 'Ocultar' : 'Mostrar'}>
 								<IconButton
 									onClick={() => {
